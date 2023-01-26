@@ -1,0 +1,12 @@
+services:
+
+    db:
+        image: postgres:15
+        container_name: tcc_db
+        restart: always
+        ports:
+          - 5432:5432
+        environment:
+            - POSTGRES_USER=tcc
+            - POSTGRES_PASSWORD=1234
+            - POSTGRES_DB=erp_sales
