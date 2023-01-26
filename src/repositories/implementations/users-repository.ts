@@ -26,7 +26,13 @@ export class UsersRepository implements IUsersRepository {
     return users;
   }
 
-  findById(id: string): Promise<User | null> {
-    throw new Error("Method not implemented.");
+  async findById(id: string): Promise<User | null> {
+    const user = await prisma.user.findFirst({
+      where: {
+        id,
+      },
+    })
+
+    return user;
   }
 }
