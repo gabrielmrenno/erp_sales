@@ -3,7 +3,7 @@ import { CreateUserUseCase } from "../../useCases/create-user/create-user-usecas
 import { IUsersRepository } from "../../repositories/users-repository-interface";
 import { userRepositoryInMemory } from "../../repositories/in-memory/users-repository-inmemory";
 import { ICreateUser } from "../../dtos/user-dtos";
-import { compare } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { ListUserByIdUseCase } from "../../useCases/list-user-by-id/list-user-by-id-usecase";
 import { ListAllUsersUseCase } from "../../useCases/list-all-users/list-all-users-usecase";
 import { User } from "../../entities/user";
@@ -27,14 +27,12 @@ beforeAll(async () => {
   newUserData = {
     name: "John Doe",
     username: "johndoe",
-    password: "123456",
     role: "admin",
   };
 
   newUserData2 = {
     name: "John Doe2",
     username: "johndoe2",
-    password: "123456",
     role: "production",
   }
 
@@ -51,7 +49,6 @@ test("should not create a user with an existing username", async () => {
     const newUserData3: ICreateUser = {
       name: "John Doe2",
       username: "johndoe",
-      password: "1234567",
       role: "admin",
     };
 
@@ -63,12 +60,15 @@ test("should isAdmin be false when create a new user", async () => {
   expect(user?.isAdmin).toBe(false);
 });
 
-test("should create an user with password encrypted", async () => {
-  const passwordIsHashed = await compare(newUserData.password, user?.password!)
+test("should create an user with password encrypted and be mudar@123", async () => {
+  const passwordIsHashed = await compare("mudar@123", user.password);
 
   expect(passwordIsHashed).toBe(true);
-
 })
+
+test("should resetPassword be true when create a new user", async () => {
+  expect(user?.resetPassword).toBe(true);
+});
 
 test("should isAdmin be true when create a new user", async () => {
   // TODO

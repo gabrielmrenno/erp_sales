@@ -10,7 +10,7 @@ export class CreateUserUseCase {
     constructor(private userRepository: IUsersRepository) {}
 
     async execute(newUser: ICreateUser): Promise<User>{
-        const { name, username, password } = newUser;
+        const { name, username } = newUser;
         // Check if user already exists, username is already in use
         const userAlreadyExists = await this.userRepository.findByUniqueValues({ username, name });
 
@@ -20,7 +20,7 @@ export class CreateUserUseCase {
 
         const user = new User({
             ...newUser,
-            password: await hash(password, 10),
+            password: await hash("mudar@123", 10),
         });
 
         await this.userRepository.save(user);

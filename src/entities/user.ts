@@ -8,6 +8,7 @@ export class User {
     password: string;
     role: string;
     isAdmin: boolean;
+    resetPassword: boolean;
     createdAt: Date;
     updatedAt: Date;
 
@@ -15,9 +16,10 @@ export class User {
         this.id = randomUUID();
         this.name = props.name;
         this.username = props.username;
-        this.password = props.password;
+        this.password = props.password || "";
         this.role = props.role;
         this.isAdmin = false;
+        this.resetPassword = true;
         this.createdAt = new Date();
         this.updatedAt = new Date();
     }

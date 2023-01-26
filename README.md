@@ -8,8 +8,8 @@ Deve ser possível criar um novo usuário.
 **RN**
 O usuário não pode ser criado com um nome e username e name já existente. x
 O usuário deve ser criado com isAdmin como "false" por padrão. x
-O usuário deve ser criado com resetPassword "true" por padrão. 
-O usuário deve ser criado com password "mudar@123" por padrão. 
+O usuário deve ser criado com resetPassword "true" por padrão. x
+O usuário deve ser criado com password "mudar@123" por padrão. x
 A senha do usuário deve ser criada com hash. x
 Para se criar um usuário, deve-se ter um usuário com isAdmin como "true". // TODO
 
