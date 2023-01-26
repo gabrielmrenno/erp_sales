@@ -9,22 +9,22 @@ import { hash } from "bcrypt";
 export class CreateUserUseCase {
     constructor(private userRepository: IUsersRepository) {}
 
-    async execute(newUser: ICreateUser): Promise<void>{
+    async execute(newUser: ICreateUser): Promise<User>{
+        const { name, username, password } = newUser;
         // Check if user already exists, username is already in use
-        const userAlreadyExists = await this.userRepository.findByUsername(newUser.username);
+        const userAlreadyExists = await this.userRepository.findByUniqueValues({ username, name });
 
         if(userAlreadyExists){
             throw new Error("User already exists");
         }
 
         const user = new User({
-            id: randomUUID(),
             ...newUser,
-            password: await hash(newUser.password, 10),
-            createdAt: new Date(),
-            updatedAt: new Date()
+            password: await hash(password, 10),
         });
 
         await this.userRepository.save(user);
+
+        return user;
     }
 }

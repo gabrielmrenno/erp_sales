@@ -1,4 +1,5 @@
 import { prisma } from "../../database/prisma-client";
+import { IFindUserByUniqueValues } from "../../dtos/user-dtos";
 import { User } from "../../entities/user";
 import { IUsersRepository } from "../users-repository-interface";
 
@@ -9,10 +10,10 @@ export class UsersRepository implements IUsersRepository {
     });
   }
 
-  async findByUsername(username: string): Promise<User | null> {
-    const user = await prisma.user.findUnique({
+  async findByUniqueValues({ name, username }: IFindUserByUniqueValues): Promise<User | null> {
+    const user = await prisma.user.findFirst({
       where: {
-        username,
+        OR: [{name}, {username}],
       },
     });
 

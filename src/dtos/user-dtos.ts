@@ -4,3 +4,8 @@ export interface ICreateUser {
     password: string;
     role: string;
 }
+
+export interface IFindUserByUniqueValues {
+    username: string;
+    name: string;
+}

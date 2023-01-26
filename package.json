@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --respawn --poll --ignore-watch node_modules src/server.ts",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "keywords": [],
   "author": "",

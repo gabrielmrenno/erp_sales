@@ -6,6 +6,7 @@ import { ICreateUser } from "../../dtos/user-dtos";
 import { compare } from "bcrypt";
 import { ListUserByIdUseCase } from "../../useCases/list-user-by-id/list-user-by-id-usecase";
 import { ListAllUsersUseCase } from "../../useCases/list-all-users/list-all-users-usecase";
+import { User } from "../../entities/user";
 
 let userRepository: IUsersRepository;
 let createUserUseCase: CreateUserUseCase;
@@ -14,6 +15,8 @@ let listUserByIdUseCase: ListUserByIdUseCase;
 
 let newUserData: ICreateUser;
 let newUserData2: ICreateUser;
+
+let user: User;
 
 beforeAll(async () => {
   userRepository = new userRepositoryInMemory();
@@ -34,13 +37,12 @@ beforeAll(async () => {
     password: "123456",
     role: "production",
   }
+
+  user = await createUserUseCase.execute(newUserData);
+
 });
 
 test("should create a user", async () => {
-  await createUserUseCase.execute(newUserData);
-
-  const user = await userRepository.findByUsername(newUserData.username);
-
   expect(user).toHaveProperty("id");
 });
 
@@ -58,14 +60,10 @@ test("should not create a user with an existing username", async () => {
 });
 
 test("should isAdmin be false when create a new user", async () => {
-  const user = await userRepository.findByUsername(newUserData.username);
-
   expect(user?.isAdmin).toBe(false);
 });
 
 test("should create an user with password encrypted", async () => {
-  const user = await userRepository.findByUsername(newUserData.username);
-
   const passwordIsHashed = await compare(newUserData.password, user?.password!)
 
   expect(passwordIsHashed).toBe(true);
@@ -83,7 +81,6 @@ test("should be able to list all users", async () => {
 })
 
 test("should be able to list a user by id", async () => {
-  const user = await userRepository.findByUsername(newUserData.username);
   const findedUser = await listUserByIdUseCase.execute(user?.id!);
 
   expect(findedUser).toEqual(user);

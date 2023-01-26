@@ -1,3 +1,4 @@
+import { IFindUserByUniqueValues } from "../../dtos/user-dtos";
 import { User } from "../../entities/user";
 import { IUsersRepository } from "../users-repository-interface";
 
@@ -8,8 +9,8 @@ export class userRepositoryInMemory implements IUsersRepository {
         this.users.push(user);
     }
 
-    async findByUsername(username: string): Promise<User | null> {
-        const user = this.users.find(user => user.username === username);
+    async findByUniqueValues({ username, name }: IFindUserByUniqueValues): Promise<User | null> {
+        const user = this.users.find(user => user.username === username || user.name === name);
 
         return user || null;
     }
