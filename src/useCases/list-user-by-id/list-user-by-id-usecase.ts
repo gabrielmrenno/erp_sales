@@ -1,8 +1,8 @@
 import { User } from "@prisma/client";
-import { UsersRepository } from "../../repositories/implementations/users-repository";
+import { IUsersRepository } from "../../repositories/users-repository-interface";
 
 export class ListUserByIdUseCase {
-  constructor(private userRepository: UsersRepository) {}
+  constructor(private userRepository: IUsersRepository) {}
 
   async execute(id: string): Promise<User> {
     const user = await this.userRepository.findById(id);

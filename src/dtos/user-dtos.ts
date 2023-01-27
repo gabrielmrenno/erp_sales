@@ -9,3 +9,8 @@ export interface IFindUserByUniqueValues {
     username: string;
     name: string;
 }
+
+export interface IUpdateUser {
+    name: string;
+    role: string;
+}

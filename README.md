@@ -26,12 +26,12 @@ Deve ser admin para listar usuários. // TODO
 ### Update user
 
 **RF**
-Deve ser possível atualizar um usuário (name e/ou role) pelo seu id.
+Deve ser possível atualizar um usuário (name e/ou role) pelo seu id. x
 Deve ser possível resetar a senha do usuário pelo seu id.
 Deve ser possível alterar o isAdmin do usuário pelo seu id.
 
 **RN**
-Caso o usuário não exista, deve ser retornado um erro.
+Caso o usuário não exista, deve ser retornado um erro. x
 Deve ser admin para atualizar usuários.
 Deve ser admin para alterar a senha de outros usuários.
 Deve ser admin para alterar o isAdmin de outros usuários.

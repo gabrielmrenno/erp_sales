@@ -1,4 +1,4 @@
-import { IFindUserByUniqueValues } from "../../dtos/user-dtos";
+import { IFindUserByUniqueValues, IUpdateUser } from "../../dtos/user-dtos";
 import { User } from "../../entities/user";
 import { IUsersRepository } from "../users-repository-interface";
 
@@ -23,5 +23,19 @@ export class userRepositoryInMemory implements IUsersRepository {
         const user = this.users.find(user => user.id === id);
 
         return user || null;
+    }
+
+    async update(id: string, data: IUpdateUser): Promise<User> {
+        const user = await this.findById(id);
+        const index = await this.users.findIndex(user => user?.id === id);
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const updatedUser = Object.assign(user, data);
+        this.users[index] = updatedUser;
+
+        return this.users[index];
     }
 }

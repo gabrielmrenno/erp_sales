@@ -2,16 +2,18 @@ import { beforeAll, expect, test } from "vitest";
 import { CreateUserUseCase } from "../../useCases/create-user/create-user-usecase";
 import { IUsersRepository } from "../../repositories/users-repository-interface";
 import { userRepositoryInMemory } from "../../repositories/in-memory/users-repository-inmemory";
-import { ICreateUser } from "../../dtos/user-dtos";
+import { ICreateUser, IUpdateUser } from "../../dtos/user-dtos";
 import { compare, hash } from "bcrypt";
 import { ListUserByIdUseCase } from "../../useCases/list-user-by-id/list-user-by-id-usecase";
 import { ListAllUsersUseCase } from "../../useCases/list-all-users/list-all-users-usecase";
 import { User } from "../../entities/user";
+import { UpdateUserUseCase } from "../../useCases/update-user/update-user-usecase";
 
 let userRepository: IUsersRepository;
 let createUserUseCase: CreateUserUseCase;
 let listAllUsersUseCase: ListAllUsersUseCase;
 let listUserByIdUseCase: ListUserByIdUseCase;
+let updateUserUseCase: UpdateUserUseCase;
 
 let newUserData: ICreateUser;
 let newUserData2: ICreateUser;
@@ -23,6 +25,7 @@ beforeAll(async () => {
   createUserUseCase = new CreateUserUseCase(userRepository);
   listAllUsersUseCase = new ListAllUsersUseCase(userRepository);
   listUserByIdUseCase = new ListUserByIdUseCase(userRepository);
+  updateUserUseCase = new UpdateUserUseCase(userRepository);
 
   newUserData = {
     name: "John Doe",
@@ -89,5 +92,26 @@ test("should be able to list a user by id", async () => {
 test("should throw an error if user doing not exists, finding by id", async () => {
   expect(async () => {
     await listUserByIdUseCase.execute("123");
+  }).rejects.toBeInstanceOf(Error);
+})
+
+test("should be able to update an user", async () => {
+  const updateUserData: IUpdateUser = {
+    name: "John Doe2",
+    role: "production",
+  }
+  const updateUser = await updateUserUseCase.execute(user?.id!, updateUserData);
+
+  expect(updateUser.name).toBe(updateUserData.name);
+  expect(updateUser.role).toBe(updateUserData.role);
+})
+
+test("should throw an error if user to be updated not exists, updating", async () => {
+  expect(async () => {
+    const updateUserData: IUpdateUser = {
+      name: "John Doe2",
+      role: "production",
+    }
+    await updateUserUseCase.execute("123", updateUserData);
   }).rejects.toBeInstanceOf(Error);
 })
