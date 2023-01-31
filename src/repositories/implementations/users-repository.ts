@@ -1,5 +1,5 @@
 import { prisma } from "../../database/prisma-client";
-import { IFindUserByUniqueValues } from "../../dtos/user-dtos";
+import { IFindUserByUniqueValues, IUpdateUser } from "../../dtos/user-dtos";
 import { User } from "../../entities/user";
 import { IUsersRepository } from "../users-repository-interface";
 
@@ -10,10 +10,13 @@ export class UsersRepository implements IUsersRepository {
     });
   }
 
-  async findByUniqueValues({ name, username }: IFindUserByUniqueValues): Promise<User | null> {
+  async findByUniqueValues({
+    name,
+    username,
+  }: IFindUserByUniqueValues): Promise<User | null> {
     const user = await prisma.user.findFirst({
       where: {
-        OR: [{name}, {username}],
+        OR: [{ name }, { username }],
       },
     });
 
@@ -31,7 +34,19 @@ export class UsersRepository implements IUsersRepository {
       where: {
         id,
       },
-    })
+    });
+
+    return user;
+  }
+
+  async update(id: string, data: IUpdateUser): Promise<User> {
+    // update with Prisma
+    const user = await prisma.user.update({
+      where: {
+        id,
+      },
+      data,
+    });
 
     return user;
   }
