@@ -17,7 +17,7 @@ Para se criar um usuário, deve-se ter um usuário com isAdmin como "true". // T
 
 **RF**
 Deve ser possível listar todos os usuários. x
-Deve ser possível listar um usuário pelo seu id. x   
+Deve ser possível listar um usuário pelo seu id. x
 
 **RN**
 Caso o usuário não exista, deve ser retornado um erro. x
@@ -32,6 +32,7 @@ Deve ser possível alterar o isAdmin do usuário pelo seu id.
 
 **RN**
 Caso o usuário não exista, deve ser retornado um erro. x
+Não deve ser possível alterar o nome do usuário para um nome já existente.
 Deve ser admin para atualizar usuários.
 Deve ser admin para alterar a senha de outros usuários.
 Deve ser admin para alterar o isAdmin de outros usuários.

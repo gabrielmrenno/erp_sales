@@ -1,16 +1,16 @@
 export interface ICreateUser {
-    name: string;
-    username: string;
-    role: string;
-    password?: string;
+  name: string;
+  username: string;
+  role: string;
+  password?: string;
 }
 
 export interface IFindUserByUniqueValues {
-    username: string;
-    name: string;
+  username?: string;
+  name?: string;
 }
 
 export interface IUpdateUser {
-    name: string;
-    role: string;
+  name?: string;
+  role?: string;
 }

@@ -9,7 +9,17 @@ export class UpdateUserUseCase {
     const user = await this.userRepository.findById(id);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new Error("User not found");
+    }
+
+    const nameAlreadyExists = await this.userRepository.findByName(
+      data.name || ""
+    );
+
+    const users = await this.userRepository.findAll();
+
+    if (nameAlreadyExists && nameAlreadyExists.id !== id) {
+      throw new Error("Name already exists");
     }
 
     const updatedUser = await this.userRepository.update(id, data);

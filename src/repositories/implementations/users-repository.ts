@@ -50,4 +50,13 @@ export class UsersRepository implements IUsersRepository {
 
     return user;
   }
+
+  findByName(name: string): Promise<User | null> {
+    const user = prisma.user.findFirst({
+      where: {
+        name,
+      },
+    });
+    return user;
+  }
 }
