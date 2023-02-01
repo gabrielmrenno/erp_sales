@@ -93,6 +93,15 @@ describe("User", () => {
   });
 
   it("should be able to list all active users", async () => {
+    const user3 = new User({
+      name: "John Doe3",
+      username: "johndoe3",
+      role: "admin",
+    });
+
+    await userRepository.save(user3);
+    await userRepository.deleteUser(user3.id!);
+
     const users = await listAllUsersUseCase.execute();
 
     expect(users).toEqual([user, user2]);
