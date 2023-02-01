@@ -10,6 +10,7 @@ import { User } from "../../entities/user";
 import { UpdateUserUseCase } from "../../useCases/update-user/update-user-usecase";
 import { UpdatePasswordUseCase } from "../../useCases/update-password/update-password-usecase";
 import { ResetPasswordUseCase } from "../../useCases/reset-password/reset-password-usecase";
+import { TurnAdminUseCase } from "../../useCases/turn-admin/turn-admin-usecase";
 
 let userRepository: IUsersRepository;
 let createUserUseCase: CreateUserUseCase;
@@ -18,6 +19,7 @@ let listUserByIdUseCase: ListUserByIdUseCase;
 let updateUserUseCase: UpdateUserUseCase;
 let updatePasswordUseCase: UpdatePasswordUseCase;
 let resetPasswordUseCase: ResetPasswordUseCase;
+let turnAdminUseCase: TurnAdminUseCase;
 
 let newUserData: ICreateUser;
 let newUserData2: ICreateUser;
@@ -35,6 +37,7 @@ describe("User", () => {
     updateUserUseCase = new UpdateUserUseCase(userRepository);
     updatePasswordUseCase = new UpdatePasswordUseCase(userRepository);
     resetPasswordUseCase = new ResetPasswordUseCase(userRepository);
+    turnAdminUseCase = new TurnAdminUseCase(userRepository);
 
     newUserData = {
       name: "John Doe",
@@ -164,5 +167,11 @@ describe("User", () => {
 
     expect(resetPasswordUser.resetPassword).toBe(true);
     expect(passwordIsHashed).toBe(true);
+  });
+
+  it("should be able to turn an user in admin", async () => {
+    const adminUser = await turnAdminUseCase.execute(user?.id!);
+
+    expect(adminUser.isAdmin).toBe(true);
   });
 });

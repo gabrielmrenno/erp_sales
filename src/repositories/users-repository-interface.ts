@@ -15,4 +15,5 @@ export interface IUsersRepository {
   update(id: string, data: IUpdateUser): Promise<User>;
   updatePassword(id: string, password: string): Promise<User>;
   resetPassword(id: string): Promise<User>;
+  turnAdmin(id: string): Promise<User>;
 }

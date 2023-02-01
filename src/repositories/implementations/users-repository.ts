@@ -88,4 +88,17 @@ export class UsersRepository implements IUsersRepository {
 
     return user;
   }
+
+  async turnAdmin(id: string): Promise<User> {
+    const user = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        isAdmin: true,
+      },
+    });
+
+    return user;
+  }
 }

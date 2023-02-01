@@ -71,4 +71,16 @@ export class userRepositoryInMemory implements IUsersRepository {
 
     return this.users[index];
   }
+
+  async turnAdmin(id: string): Promise<User> {
+    const user = this.users.find((user) => user.id === id);
+    const index = this.users.findIndex((user) => user?.id === id);
+
+    const updatedUser = Object.assign(user!, {
+      isAdmin: true,
+    });
+    this.users[index] = updatedUser;
+
+    return this.users[index];
+  }
 }
