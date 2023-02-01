@@ -1,3 +1,4 @@
+import { hash } from "bcrypt";
 import { IFindUserByUniqueValues, IUpdateUser } from "../../dtos/user-dtos";
 import { User } from "../../entities/user";
 import { IUsersRepository } from "../users-repository-interface";
@@ -40,11 +41,7 @@ export class userRepositoryInMemory implements IUsersRepository {
     const user = await this.findById(id);
     const index = await this.users.findIndex((user) => user?.id === id);
 
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    const updatedUser = Object.assign(user, data);
+    const updatedUser = Object.assign(user!, data);
     this.users[index] = updatedUser;
 
     return this.users[index];
@@ -53,11 +50,23 @@ export class userRepositoryInMemory implements IUsersRepository {
     const user = this.users.find((user) => user.id === id);
     const index = this.users.findIndex((user) => user?.id === id);
 
-    if (!user) {
-      throw new Error("User not found");
-    }
+    const updatedUser = Object.assign(user!, {
+      password,
+      resetPassword: false,
+    });
+    this.users[index] = updatedUser;
 
-    const updatedUser = Object.assign(user, { password, resetPassword: false });
+    return this.users[index];
+  }
+
+  async resetPassword(id: string): Promise<User> {
+    const user = this.users.find((user) => user.id === id);
+    const index = this.users.findIndex((user) => user?.id === id);
+
+    const updatedUser = Object.assign(user!, {
+      resetPassword: true,
+      password: await hash("mudar@123", 8),
+    });
     this.users[index] = updatedUser;
 
     return this.users[index];

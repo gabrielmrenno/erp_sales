@@ -4,6 +4,7 @@ import listAllUsersController from "../useCases/list-all-users";
 import listUserById from "../useCases/list-user-by-id";
 import updateUserController from "../useCases/update-user";
 import updatePasswordController from "../useCases/update-password";
+import resetPasswordController from "../useCases/reset-password";
 
 const userRoutes = Router();
 
@@ -25,6 +26,10 @@ userRoutes.put("/user/:id", (request, response) => {
 
 userRoutes.patch("/user/:id/update-password", (request, response) => {
   return updatePasswordController().handle(request, response);
+});
+
+userRoutes.patch("/reset-password", (request, response) => {
+  return resetPasswordController().handle(request, response);
 });
 
 export { userRoutes };

@@ -1,3 +1,4 @@
+import { hash } from "bcrypt";
 import { prisma } from "../../database/prisma-client";
 import { IFindUserByUniqueValues, IUpdateUser } from "../../dtos/user-dtos";
 import { User } from "../../entities/user";
@@ -65,12 +66,26 @@ export class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  findByName(name: string): Promise<User | null> {
-    const user = prisma.user.findFirst({
+  async findByName(name: string): Promise<User | null> {
+    const user = await prisma.user.findFirst({
       where: {
         name,
       },
     });
+    return user;
+  }
+
+  async resetPassword(id: string): Promise<User> {
+    const user = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        resetPassword: true,
+        password: await hash("mudar@123", 8),
+      },
+    });
+
     return user;
   }
 }

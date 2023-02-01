@@ -3,12 +3,13 @@ import { CreateUserUseCase } from "../../useCases/create-user/create-user-usecas
 import { IUsersRepository } from "../../repositories/users-repository-interface";
 import { userRepositoryInMemory } from "../../repositories/in-memory/users-repository-inmemory";
 import { ICreateUser, IUpdateUser } from "../../dtos/user-dtos";
-import { compare, hash } from "bcrypt";
+import { compare } from "bcrypt";
 import { ListUserByIdUseCase } from "../../useCases/list-user-by-id/list-user-by-id-usecase";
 import { ListAllUsersUseCase } from "../../useCases/list-all-users/list-all-users-usecase";
 import { User } from "../../entities/user";
 import { UpdateUserUseCase } from "../../useCases/update-user/update-user-usecase";
 import { UpdatePasswordUseCase } from "../../useCases/update-password/update-password-usecase";
+import { ResetPasswordUseCase } from "../../useCases/reset-password/reset-password-usecase";
 
 let userRepository: IUsersRepository;
 let createUserUseCase: CreateUserUseCase;
@@ -16,6 +17,7 @@ let listAllUsersUseCase: ListAllUsersUseCase;
 let listUserByIdUseCase: ListUserByIdUseCase;
 let updateUserUseCase: UpdateUserUseCase;
 let updatePasswordUseCase: UpdatePasswordUseCase;
+let resetPasswordUseCase: ResetPasswordUseCase;
 
 let newUserData: ICreateUser;
 let newUserData2: ICreateUser;
@@ -32,6 +34,7 @@ describe("User", () => {
     listUserByIdUseCase = new ListUserByIdUseCase(userRepository);
     updateUserUseCase = new UpdateUserUseCase(userRepository);
     updatePasswordUseCase = new UpdatePasswordUseCase(userRepository);
+    resetPasswordUseCase = new ResetPasswordUseCase(userRepository);
 
     newUserData = {
       name: "John Doe",
@@ -147,5 +150,19 @@ describe("User", () => {
 
     expect(updatedPaswordUser.resetPassword).toBe(false);
     expect(await compare(password, updatedPaswordUser.password)).toBe(true);
+  });
+
+  it("should be able to reset an user's password", async () => {
+    const resetPasswordUser = await resetPasswordUseCase.execute(user?.id!);
+
+    const newPassword: string = "mudar@123";
+
+    const passwordIsHashed = await compare(
+      newPassword,
+      resetPasswordUser.password
+    );
+
+    expect(resetPasswordUser.resetPassword).toBe(true);
+    expect(passwordIsHashed).toBe(true);
   });
 });
