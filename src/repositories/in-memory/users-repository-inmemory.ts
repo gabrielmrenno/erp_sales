@@ -21,8 +21,9 @@ export class userRepositoryInMemory implements IUsersRepository {
     return user || null;
   }
 
-  async findAll(): Promise<User[]> {
-    return this.users;
+  async findAllActive(): Promise<User[]> {
+    const activeUsers = this.users.filter((user) => user.active === true);
+    return activeUsers;
   }
 
   async findById(id: string): Promise<User | null> {

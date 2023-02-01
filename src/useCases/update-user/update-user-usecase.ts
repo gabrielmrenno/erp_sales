@@ -16,7 +16,7 @@ export class UpdateUserUseCase {
       data.name || ""
     );
 
-    const users = await this.userRepository.findAll();
+    const users = await this.userRepository.findAllActive();
 
     if (nameAlreadyExists && nameAlreadyExists.id !== id) {
       throw new Error("Name already exists");

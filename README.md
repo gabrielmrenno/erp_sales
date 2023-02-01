@@ -18,7 +18,7 @@ Para se criar um usuário, deve-se ter um usuário com isAdmin como "true". // T
 ### List users
 
 **RF**
-Deve ser possível listar todos os usuários. x
+Deve ser possível listar todos os usuários ativos. x
 Deve ser possível listar um usuário pelo seu id. x
 
 **RN**

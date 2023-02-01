@@ -92,10 +92,10 @@ describe("User", () => {
     // TODO
   });
 
-  it("should be able to list all users", async () => {
+  it("should be able to list all active users", async () => {
     const users = await listAllUsersUseCase.execute();
 
-    expect(users).toHaveLength(2);
+    expect(users).toEqual([user, user2]);
   });
 
   it("should be able to list a user by id", async () => {
