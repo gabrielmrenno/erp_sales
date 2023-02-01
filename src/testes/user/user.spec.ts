@@ -11,6 +11,7 @@ import { UpdateUserUseCase } from "../../useCases/update-user/update-user-usecas
 import { UpdatePasswordUseCase } from "../../useCases/update-password/update-password-usecase";
 import { ResetPasswordUseCase } from "../../useCases/reset-password/reset-password-usecase";
 import { TurnAdminUseCase } from "../../useCases/turn-admin/turn-admin-usecase";
+import { DeleteUserUseCase } from "../../useCases/delete-user/delete-user-usecase";
 
 let userRepository: IUsersRepository;
 let createUserUseCase: CreateUserUseCase;
@@ -20,6 +21,7 @@ let updateUserUseCase: UpdateUserUseCase;
 let updatePasswordUseCase: UpdatePasswordUseCase;
 let resetPasswordUseCase: ResetPasswordUseCase;
 let turnAdminUseCase: TurnAdminUseCase;
+let deleteUserUseCase: DeleteUserUseCase;
 
 let newUserData: ICreateUser;
 let newUserData2: ICreateUser;
@@ -38,6 +40,7 @@ describe("User", () => {
     updatePasswordUseCase = new UpdatePasswordUseCase(userRepository);
     resetPasswordUseCase = new ResetPasswordUseCase(userRepository);
     turnAdminUseCase = new TurnAdminUseCase(userRepository);
+    deleteUserUseCase = new DeleteUserUseCase(userRepository);
 
     newUserData = {
       name: "John Doe",
@@ -173,5 +176,21 @@ describe("User", () => {
     const adminUser = await turnAdminUseCase.execute(user?.id!);
 
     expect(adminUser.isAdmin).toBe(true);
+  });
+
+  it("should be able to delete an user", async () => {
+    const userToBeDeleted = await userRepository.findByName("John Doe2");
+
+    const deletedUser = await deleteUserUseCase.execute(userToBeDeleted?.id!);
+
+    expect(deletedUser).toHaveProperty("id");
+    expect(deletedUser.active).toBe(false);
+    expect(deletedUser.deletedAt).not.toBe(null);
+  });
+
+  it("should throw an error if user to be deleted not exists", async () => {
+    expect(async () => {
+      await deleteUserUseCase.execute("123");
+    }).rejects.toBeInstanceOf(Error);
   });
 });

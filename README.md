@@ -1,5 +1,7 @@
 # Regras de negócio
 
+## User
+
 ### Create a new user
 
 **RF**
@@ -29,7 +31,7 @@ Deve ser admin para listar usuários. // TODO
 Deve ser possível atualizar um usuário (name e/ou role) pelo seu id. x
 Deve ser possível o usuário alterar sua própria senha. x
 Deve ser possível resetar a senha do usuário pelo seu id. x
-Deve ser possível alterar o isAdmin do usuário pelo seu id.
+Deve ser possível alterar o isAdmin do usuário pelo seu id. x
 
 **RN**
 Caso o usuário não exista, deve ser retornado um erro. x
@@ -38,3 +40,12 @@ O usuário poderá alterar sua própria senha, mas não poderá alterar a senha 
 Deve ser admin para atualizar usuários. // TODO
 Deve ser admin para resetar a senha de outros usuários. // TODO
 Deve ser admin para alterar o isAdmin de outros usuários. // TODO
+
+### Delete user
+
+**RF**
+Deve ser possível deletar um usuário pelo seu id, porém ele não será deletado do banco de dados, apenas será marcado como "deleted". x
+
+**RN**
+Caso o usuário não exista, deve ser retornado um erro. x
+Deve ser admin para deletar usuários. // TODO

@@ -16,4 +16,6 @@ export interface IUsersRepository {
   updatePassword(id: string, password: string): Promise<User>;
   resetPassword(id: string): Promise<User>;
   turnAdmin(id: string): Promise<User>;
+
+  deleteUser(id: string): Promise<User>;
 }

@@ -101,4 +101,18 @@ export class UsersRepository implements IUsersRepository {
 
     return user;
   }
+
+  async deleteUser(id: string): Promise<User> {
+    const user = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        deletedAt: new Date(),
+        active: false,
+      },
+    });
+
+    return user;
+  }
 }

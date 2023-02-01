@@ -16,10 +16,12 @@ model User {
   username      String   @unique
   password      String
   role          String
+  active        Boolean  @default(true)
   isAdmin       Boolean  @default(false)
   resetPassword Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
 
   @@map("user")
 }

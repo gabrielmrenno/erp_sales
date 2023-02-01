@@ -83,4 +83,18 @@ export class userRepositoryInMemory implements IUsersRepository {
 
     return this.users[index];
   }
+
+  async deleteUser(id: string): Promise<User> {
+    const user = this.users.find((user) => user.id === id);
+    const index = this.users.findIndex((user) => user?.id === id);
+
+    const deletedUser = Object.assign(user!, {
+      deletedAt: new Date(),
+      active: false,
+    });
+
+    this.users[index] = deletedUser;
+
+    return this.users[index];
+  }
 }
