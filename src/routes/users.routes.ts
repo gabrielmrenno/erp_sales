@@ -3,6 +3,7 @@ import createUserController from "../useCases/create-user";
 import listAllUsersController from "../useCases/list-all-users";
 import listUserById from "../useCases/list-user-by-id";
 import updateUserController from "../useCases/update-user";
+import updatePasswordController from "../useCases/update-password";
 
 const userRoutes = Router();
 
@@ -20,6 +21,10 @@ userRoutes.get("/user/:id", (request, response) => {
 
 userRoutes.put("/user/:id", (request, response) => {
   return updateUserController().handle(request, response);
+});
+
+userRoutes.patch("/user/:id/update-password", (request, response) => {
+  return updatePasswordController().handle(request, response);
 });
 
 export { userRoutes };

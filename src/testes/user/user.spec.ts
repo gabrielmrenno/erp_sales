@@ -8,12 +8,14 @@ import { ListUserByIdUseCase } from "../../useCases/list-user-by-id/list-user-by
 import { ListAllUsersUseCase } from "../../useCases/list-all-users/list-all-users-usecase";
 import { User } from "../../entities/user";
 import { UpdateUserUseCase } from "../../useCases/update-user/update-user-usecase";
+import { UpdatePasswordUseCase } from "../../useCases/update-password/update-password-usecase";
 
 let userRepository: IUsersRepository;
 let createUserUseCase: CreateUserUseCase;
 let listAllUsersUseCase: ListAllUsersUseCase;
 let listUserByIdUseCase: ListUserByIdUseCase;
 let updateUserUseCase: UpdateUserUseCase;
+let updatePasswordUseCase: UpdatePasswordUseCase;
 
 let newUserData: ICreateUser;
 let newUserData2: ICreateUser;
@@ -24,10 +26,12 @@ let user2: User;
 describe("User", () => {
   beforeAll(async () => {
     userRepository = new userRepositoryInMemory();
+
     createUserUseCase = new CreateUserUseCase(userRepository);
     listAllUsersUseCase = new ListAllUsersUseCase(userRepository);
     listUserByIdUseCase = new ListUserByIdUseCase(userRepository);
     updateUserUseCase = new UpdateUserUseCase(userRepository);
+    updatePasswordUseCase = new UpdatePasswordUseCase(userRepository);
 
     newUserData = {
       name: "John Doe",
@@ -131,5 +135,17 @@ describe("User", () => {
         updateUserData
       );
     }).rejects.toBeInstanceOf(Error);
+  });
+
+  it("should be able to update an user's password", async () => {
+    const password = "1234";
+
+    const updatedPaswordUser = await updatePasswordUseCase.execute({
+      id: user?.id!,
+      password,
+    });
+
+    expect(updatedPaswordUser.resetPassword).toBe(false);
+    expect(await compare(password, updatedPaswordUser.password)).toBe(true);
   });
 });

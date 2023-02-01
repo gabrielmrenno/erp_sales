@@ -49,4 +49,17 @@ export class userRepositoryInMemory implements IUsersRepository {
 
     return this.users[index];
   }
+  async updatePassword(id: string, password: string): Promise<User> {
+    const user = this.users.find((user) => user.id === id);
+    const index = this.users.findIndex((user) => user?.id === id);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const updatedUser = Object.assign(user, { password, resetPassword: false });
+    this.users[index] = updatedUser;
+
+    return this.users[index];
+  }
 }
