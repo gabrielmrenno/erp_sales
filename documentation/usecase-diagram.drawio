@@ -60,7 +60,7 @@
                 <mxCell id="7" value="Manter clientes" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="430" y="310" width="140" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="94" style="edgeStyle=none;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;fontFamily=Helvetica;fontSize=12;fontColor=rgb(240, 240, 240);" parent="1" source="8" target="93" edge="1">
+                <mxCell id="94" style="edgeStyle=none;html=1;fontFamily=Helvetica;fontSize=12;fontColor=rgb(240, 240, 240);" parent="1" source="105" target="93" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="95" value="&amp;lt;&amp;lt;includes&amp;gt;&amp;gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Helvetica;fontColor=default;" parent="94" vertex="1" connectable="0">
@@ -68,7 +68,10 @@
                         <mxPoint x="14" y="-9" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="8" value="Manter produtos" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="106" style="edgeStyle=none;html=1;" edge="1" parent="1" source="8" target="105">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Manter produtos Unitários" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="430" y="520" width="140" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="16" value="" style="edgeStyle=none;html=1;" parent="1" source="9" target="15" edge="1">
@@ -92,6 +95,14 @@
                 </mxCell>
                 <mxCell id="75" value="&amp;lt;&amp;lt;includes&amp;gt;&amp;gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="74" vertex="1" connectable="0">
                     <mxGeometry x="-0.3139" y="2" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="103" style="edgeStyle=none;html=1;" edge="1" parent="1" source="9" target="102">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="104" value="&amp;lt;&amp;lt;includes&amp;gt;&amp;gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="103">
+                    <mxGeometry x="-0.3147" y="-2" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
@@ -273,7 +284,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="93" value="Listar produtos" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="570" y="420" width="140" height="70" as="geometry"/>
+                    <mxGeometry x="550.5" y="410" width="140" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="98" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="M2-9PNbFp-CF4zyXc2WS-96" target="70" edge="1">
                     <mxGeometry relative="1" as="geometry">
@@ -285,21 +296,24 @@
                 <mxCell id="M2-9PNbFp-CF4zyXc2WS-96" value="Mobile" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1260" y="605" width="30" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="99" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="101" source="13">
+                <mxCell id="99" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="13" target="101" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="685.5" y="1490" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="100" value="&amp;lt;&amp;lt;includes&amp;gt;&amp;gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="99">
+                <mxCell id="100" value="&amp;lt;&amp;lt;includes&amp;gt;&amp;gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="99" vertex="1" connectable="0">
                     <mxGeometry x="-0.4" relative="1" as="geometry">
                         <mxPoint x="20" y="21" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="101" value="Rastreamento de produtos" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="101" value="Rastreamento de produtos" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="687" y="1560" width="140" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="102" value="erp-sales" style="shape=umlFrame;whiteSpace=wrap;html=1;width=120;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" vertex="1" parent="1">
-                    <mxGeometry x="220" y="20" width="950" height="1640" as="geometry"/>
+                <mxCell id="102" value="Listar pedidos com pagamento atrasado" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="460" y="810" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="105" value="Manter produtos enfardado" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="615" y="520" width="140" height="70" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
