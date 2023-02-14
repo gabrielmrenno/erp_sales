@@ -13,7 +13,7 @@ O usuário deve ser criado com isAdmin como "false" por padrão. x
 O usuário deve ser criado com resetPassword "true" por padrão. x
 O usuário deve ser criado com password "mudar@123" por padrão. x
 A senha do usuário deve ser criada com hash. x
-Para se criar um usuário, deve-se ter um usuário com isAdmin como "true". // TODO
+Para se criar um usuário, deve-se ter um usuário com isAdmin como "true". x
 
 ### List users
 
@@ -23,7 +23,7 @@ Deve ser possível listar um usuário pelo seu id. x
 
 **RN**
 Caso o usuário não exista, deve ser retornado um erro. x
-Deve ser admin para listar usuários. // TODO
+Deve ser admin para listar usuários. x
 
 ### Update user
 

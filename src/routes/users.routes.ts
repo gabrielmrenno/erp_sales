@@ -18,7 +18,7 @@ userRoutes.post("/", isAdmin, (request, response) => {
   return createUserController().handle(request, response);
 });
 
-userRoutes.get("/", (request, response) => {
+userRoutes.get("/", isAdmin, (request, response) => {
   return listAllUsersController().handle(request, response);
 });
 
@@ -26,7 +26,7 @@ userRoutes.get("/user/:id", (request, response) => {
   return listUserById().handle(request, response);
 });
 
-userRoutes.put("/user/:id", (request, response) => {
+userRoutes.put("/user/:id", isAdmin, (request, response) => {
   return updateUserController().handle(request, response);
 });
 
@@ -34,15 +34,15 @@ userRoutes.patch("/user/:id/update-password", (request, response) => {
   return updatePasswordController().handle(request, response);
 });
 
-userRoutes.patch("/reset-password", (request, response) => {
+userRoutes.patch("/reset-password", isAdmin, (request, response) => {
   return resetPasswordController().handle(request, response);
 });
 
-userRoutes.patch("/user/:id/turn-admin", (request, response) => {
+userRoutes.patch("/user/:id/turn-admin", isAdmin, (request, response) => {
   return turnAdminController().handle(request, response);
 });
 
-userRoutes.delete("/user/:id", (request, response) => {
+userRoutes.delete("/user/:id", isAdmin, (request, response) => {
   return deleteUserController().handle(request, response);
 });
 
