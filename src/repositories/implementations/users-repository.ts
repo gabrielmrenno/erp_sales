@@ -17,7 +17,7 @@ export class UsersRepository implements IUsersRepository {
   }: IFindUserByUniqueValues): Promise<User | null> {
     const user = await prisma.user.findFirst({
       where: {
-        OR: [{ name }, { username }],
+        username,
       },
     });
 

@@ -1,6 +1,6 @@
 import { hash } from "bcrypt";
-import { User } from "../../entities/user";
-import { IUsersRepository } from "../../repositories/users-repository-interface";
+import { User } from "../../../entities/user";
+import { IUsersRepository } from "../../../repositories/users-repository-interface";
 
 interface IRequest {
   id: string;

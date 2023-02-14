@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { IUsersRepository } from "../../repositories/users-repository-interface";
+import { IUsersRepository } from "../../../repositories/users-repository-interface";
 
 export class ListAllUsersUseCase {
   constructor(private userRepository: IUsersRepository) {}

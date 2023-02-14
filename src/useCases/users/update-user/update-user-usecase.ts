@@ -1,6 +1,6 @@
-import { IUpdateUser } from "../../dtos/user-dtos";
-import { User } from "../../entities/user";
-import { IUsersRepository } from "../../repositories/users-repository-interface";
+import { IUpdateUser } from "../../../dtos/user-dtos";
+import { User } from "../../../entities/user";
+import { IUsersRepository } from "../../../repositories/users-repository-interface";
 
 export class UpdateUserUseCase {
   constructor(private readonly userRepository: IUsersRepository) {}

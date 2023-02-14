@@ -1,4 +1,4 @@
-import { UsersRepository } from "../../repositories/implementations/users-repository";
+import { UsersRepository } from "../../../repositories/implementations/users-repository";
 import { UpdatePasswordController } from "./update-password-controller";
 import { UpdatePasswordUseCase } from "./update-password-usecase";
 

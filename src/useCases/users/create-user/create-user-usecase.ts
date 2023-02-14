@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
-import { User } from "../../entities/user";
-import { IUsersRepository } from "../../repositories/users-repository-interface";
-import { ICreateUser } from "../../dtos/user-dtos";
+import { User } from "../../../entities/user";
+import { IUsersRepository } from "../../../repositories/users-repository-interface";
+import { ICreateUser } from "../../../dtos/user-dtos";
 import { hash } from "bcrypt";
 
 export class CreateUserUseCase {

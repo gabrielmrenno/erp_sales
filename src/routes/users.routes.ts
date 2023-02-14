@@ -1,12 +1,12 @@
 import { Router } from "express";
-import createUserController from "../useCases/create-user";
-import listAllUsersController from "../useCases/list-all-users";
-import listUserById from "../useCases/list-user-by-id";
-import updateUserController from "../useCases/update-user";
-import updatePasswordController from "../useCases/update-password";
-import resetPasswordController from "../useCases/reset-password";
-import turnAdminController from "../useCases/turn-admin";
-import deleteUserController from "../useCases/delete-user";
+import createUserController from "../useCases/users/create-user";
+import listAllUsersController from "../useCases/users/list-all-users";
+import listUserById from "../useCases/users/list-user-by-id";
+import updateUserController from "../useCases/users/update-user";
+import updatePasswordController from "../useCases/users/update-password";
+import resetPasswordController from "../useCases/users/reset-password";
+import turnAdminController from "../useCases/users/turn-admin";
+import deleteUserController from "../useCases/users/delete-user";
 
 const userRoutes = Router();
 
