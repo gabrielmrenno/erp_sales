@@ -5,8 +5,7 @@ export class ResetPasswordController {
   constructor(private resetPasswordUseCase: ResetPasswordUseCase) {}
 
   async handle(request: Request, response: Response): Promise<Response> {
-    // const { id } = request.user; // TODO with JWT
-    const { id } = request.body;
+    const { id } = request.params;
 
     const user = await this.resetPasswordUseCase.execute(id);
 

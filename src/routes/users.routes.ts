@@ -34,7 +34,7 @@ userRoutes.patch("/user/:id/update-password", (request, response) => {
   return updatePasswordController().handle(request, response);
 });
 
-userRoutes.patch("/reset-password", isAdmin, (request, response) => {
+userRoutes.patch("/user/:id/reset-password", isAdmin, (request, response) => {
   return resetPasswordController().handle(request, response);
 });
 
