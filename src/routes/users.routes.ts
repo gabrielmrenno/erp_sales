@@ -7,8 +7,11 @@ import updatePasswordController from "../useCases/users/update-password";
 import resetPasswordController from "../useCases/users/reset-password";
 import turnAdminController from "../useCases/users/turn-admin";
 import deleteUserController from "../useCases/users/delete-user";
+import { isAutheticated } from "../middleware/isAutheticated";
 
 const userRoutes = Router();
+
+userRoutes.use(isAutheticated);
 
 userRoutes.post("/", (request, response) => {
   return createUserController().handle(request, response);
