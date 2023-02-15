@@ -1,5 +1,6 @@
 import { IUpdateUser } from "../../../dtos/user-dtos";
 import { User } from "../../../entities/user";
+import { AppError } from "../../../errors/app-error";
 import { IUsersRepository } from "../../../repositories/users-repository-interface";
 
 export class UpdateUserUseCase {
@@ -9,7 +10,7 @@ export class UpdateUserUseCase {
     const user = await this.userRepository.findById(id);
 
     if (!user) {
-      throw new Error("User not found");
+      throw new AppError("User not found");
     }
 
     const nameAlreadyExists = await this.userRepository.findByName(
@@ -19,7 +20,7 @@ export class UpdateUserUseCase {
     const users = await this.userRepository.findAllActive();
 
     if (nameAlreadyExists && nameAlreadyExists.id !== id) {
-      throw new Error("Name already exists");
+      throw new AppError("Name already exists");
     }
 
     const updatedUser = await this.userRepository.update(id, data);

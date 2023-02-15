@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { AppError } from "../../../errors/app-error";
 import { UsersRepository } from "../../../repositories/implementations/users-repository";
 import { ListUserByIdUseCase } from "./list-user-by-id-usecase";
 
@@ -15,23 +16,15 @@ export class ListUserByIdController {
       try {
         const user = await usersRepository.findById(authenticateUser);
         if (!user?.isAdmin) {
-          return response.status(401).json({ error: "User is not authorized" });
+          throw new AppError("User isn't authenticate", 401);
         }
       } catch (error) {
-        return response.status(400).json({
-          message: error.message || "Unexpected error.",
-        });
+        throw new AppError("Error on find user.");
       }
     }
 
-    try {
-      const user = await this.listUserByIdUseCase.execute(id);
+    const user = await this.listUserByIdUseCase.execute(id);
 
-      return response.status(200).json(user);
-    } catch (error) {
-      return response.status(400).json({
-        message: error.message || "Unexpected error.",
-      });
-    }
+    return response.status(200).json(user);
   }
 }

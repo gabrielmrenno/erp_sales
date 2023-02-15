@@ -1,5 +1,6 @@
 import { hash } from "bcrypt";
 import { User } from "../../../entities/user";
+import { AppError } from "../../../errors/app-error";
 import { IUsersRepository } from "../../../repositories/users-repository-interface";
 
 interface IRequest {
@@ -14,7 +15,7 @@ export class UpdatePasswordUseCase {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
-      throw new Error("User not found");
+      throw new AppError("User not found");
     }
 
     const hashedPassword = await hash(password, 8);

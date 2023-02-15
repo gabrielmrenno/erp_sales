@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+import { AppError } from "../../../errors/app-error";
 import { IUsersRepository } from "../../../repositories/users-repository-interface";
 
 export class ListUserByIdUseCase {
@@ -8,7 +9,7 @@ export class ListUserByIdUseCase {
     const user = await this.userRepository.findById(id);
 
     if (!user) {
-      throw new Error("User not found");
+      throw new AppError("User not found");
     }
 
     return user;

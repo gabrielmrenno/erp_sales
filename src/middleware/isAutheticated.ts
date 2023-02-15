@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
+import { AppError } from "../errors/app-error";
 
 interface TokenPayload {
   iat: number;
@@ -11,7 +12,7 @@ async function isAutheticated(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({ error: "Token not provided" });
+    throw new AppError("Token not provided", 401);
   }
 
   const [, token] = authHeader.split(" ");
@@ -27,7 +28,7 @@ async function isAutheticated(req: Request, res: Response, next: NextFunction) {
 
     return next();
   } catch {
-    return res.status(401).json({ error: "Invalid JWT token" });
+    throw new AppError("User isn't authenticate", 401);
   }
 }
 

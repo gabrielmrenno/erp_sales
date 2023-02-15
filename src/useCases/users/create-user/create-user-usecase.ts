@@ -3,6 +3,7 @@ import { User } from "../../../entities/user";
 import { IUsersRepository } from "../../../repositories/users-repository-interface";
 import { ICreateUser } from "../../../dtos/user-dtos";
 import { hash } from "bcrypt";
+import { AppError } from "../../../errors/app-error";
 
 export class CreateUserUseCase {
   constructor(private userRepository: IUsersRepository) {}
@@ -16,7 +17,7 @@ export class CreateUserUseCase {
     });
 
     if (userAlreadyExists) {
-      throw new Error("User already exists");
+      throw new AppError("User already exists");
     }
 
     const user = new User({

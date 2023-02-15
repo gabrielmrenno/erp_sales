@@ -1,4 +1,5 @@
 import { User } from "../../../entities/user";
+import { AppError } from "../../../errors/app-error";
 import { IUsersRepository } from "../../../repositories/users-repository-interface";
 
 export class DeleteUserUseCase {
@@ -8,7 +9,7 @@ export class DeleteUserUseCase {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
-      throw new Error("User does not exist");
+      throw new AppError("User does not exist");
     }
 
     const deletedUser = await this.usersRepository.deleteUser(id);

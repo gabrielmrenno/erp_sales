@@ -1,5 +1,6 @@
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
+import { AppError, StatusCode } from "../../../errors/app-error";
 import { IUsersRepository } from "../../../repositories/users-repository-interface";
 
 interface IRequest {
@@ -21,17 +22,20 @@ export class AuthenticateUseCase {
     const user = await this.userRepository.findByUniqueValues({ username });
 
     if (!user) {
-      throw new Error("User not found");
+      throw new AppError("User not found");
     }
 
     const passwordMatch = await compare(password, user.password);
 
     if (!passwordMatch) {
-      throw new Error("Incorrect password");
+      throw new AppError("Incorrect password");
     }
 
     if (process.env.JWT_SECRET === undefined) {
-      throw new Error("JWT_SECRET is undefined");
+      throw new AppError(
+        "JWT_SECRET is undefined",
+        StatusCode.INTERNAL_SERVER_ERROR
+      );
     }
     const token = sign({}, process.env.JWT_SECRET!, {
       subject: user.id,

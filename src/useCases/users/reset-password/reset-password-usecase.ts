@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+import { AppError } from "../../../errors/app-error";
 import { IUsersRepository } from "../../../repositories/users-repository-interface";
 
 export class ResetPasswordUseCase {
@@ -8,7 +9,7 @@ export class ResetPasswordUseCase {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
-      throw new Error("User not found");
+      throw new AppError("User not found");
     }
 
     const resetPasswordUser = await this.usersRepository.resetPassword(user.id);
