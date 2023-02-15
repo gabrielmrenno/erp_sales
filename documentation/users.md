@@ -37,9 +37,9 @@ Deve ser possível alterar o isAdmin do usuário pelo seu id. x
 Caso o usuário não exista, deve ser retornado um erro. x
 Não deve ser possível alterar o nome do usuário para um nome já existente. x
 O usuário poderá alterar sua própria senha, mas não poderá alterar a senha de outros usuários. // TODO
-Deve ser admin para atualizar usuários. // TODO
-Deve ser admin para resetar a senha de outros usuários. // TODO
-Deve ser admin para alterar o isAdmin de outros usuários. // TODO
+Deve ser admin para atualizar usuários. x
+Deve ser admin para resetar a senha de outros usuários. x
+Deve ser admin para alterar o isAdmin de outros usuários. x
 
 ### Delete user
 
@@ -48,4 +48,4 @@ Deve ser possível deletar um usuário pelo seu id, porém ele não será deleta
 
 **RN**
 Caso o usuário não exista, deve ser retornado um erro. x
-Deve ser admin para deletar usuários. // TODO
+Deve ser admin para deletar usuários. x
