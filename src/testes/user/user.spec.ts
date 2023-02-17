@@ -12,6 +12,7 @@ import { UpdatePasswordUseCase } from "../../useCases/users/update-password/upda
 import { ResetPasswordUseCase } from "../../useCases/users/reset-password/reset-password-usecase";
 import { TurnAdminUseCase } from "../../useCases/users/turn-admin/turn-admin-usecase";
 import { DeleteUserUseCase } from "../../useCases/users/delete-user/delete-user-usecase";
+import { AppError } from "../../errors/app-error";
 
 let userRepository: IUsersRepository;
 let createUserUseCase: CreateUserUseCase;
@@ -71,7 +72,7 @@ describe("User", () => {
       };
 
       await createUserUseCase.execute(newUserData3);
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toEqual(new AppError("User already exists", 400));
   });
 
   it("should isAdmin be false when create a new user", async () => {
@@ -116,7 +117,7 @@ describe("User", () => {
   it("should throw an error if user doing not exists, finding by id", async () => {
     expect(async () => {
       await listUserByIdUseCase.execute("123");
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toEqual(new AppError("User not found", 404));
   });
 
   it("should be able to update an user", async () => {
@@ -152,7 +153,7 @@ describe("User", () => {
         user?.id!,
         updateUserData
       );
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toEqual(new AppError("Name already exists", 400));
   });
 
   it("should be able to update an user's password", async () => {
@@ -200,6 +201,6 @@ describe("User", () => {
   it("should throw an error if user to be deleted not exists", async () => {
     expect(async () => {
       await deleteUserUseCase.execute("123");
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toEqual(new AppError("User not found", 404));
   });
 });

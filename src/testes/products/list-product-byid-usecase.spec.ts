@@ -22,7 +22,7 @@ describe("List Product By ID UseCase", () => {
 
   it("should throw an error if product not found", async () => {
     expect(listProductByIdUseCase.execute("invalid_id")).rejects.toEqual(
-      new AppError("Product not found")
+      new AppError("Product not found", 404)
     );
   });
 });
