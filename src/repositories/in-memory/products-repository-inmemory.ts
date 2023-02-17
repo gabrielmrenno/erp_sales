@@ -2,7 +2,7 @@ import { Product } from "../../entities/product";
 import { IProductsRepository } from "../product-repository-interface";
 
 export class ProductsRepositoryInMemory implements IProductsRepository {
-  private products: Product[] = [];
+  products: Product[] = [];
 
   async create(data: ICreateProduct): Promise<Product> {
     const product = new Product(data);
@@ -24,7 +24,11 @@ export class ProductsRepositoryInMemory implements IProductsRepository {
     return product;
   }
 
-  //   async list(): Promise<Product[]> {
-  //     return this.products;
-  //   }
+  async listAvailable(): Promise<Product[]> {
+    const users = await this.products.filter(
+      (product) => product.active === true
+    );
+
+    return users;
+  }
 }
