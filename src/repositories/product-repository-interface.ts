@@ -7,4 +7,6 @@ export interface IProductsRepository {
   findById(id: string): Promise<Product | null>;
 
   listAvailable(): Promise<Product[]>;
+
+  update(id: string, data: IUpdateProductDTO): Promise<Product>;
 }
