@@ -9,4 +9,5 @@ export interface IProductsRepository {
   listAvailable(): Promise<Product[]>;
 
   update(id: string, data: IUpdateProductDTO): Promise<Product>;
+  updateUnitPrice(id: string, unitPrice: number): Promise<Product>;
 }

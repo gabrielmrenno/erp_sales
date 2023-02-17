@@ -50,4 +50,17 @@ export class ProductsRepositoryInMemory implements IProductsRepository {
 
     return product!;
   }
+
+  async updateUnitPrice(id: string, unitPrice: number): Promise<Product> {
+    const updatedProduct = await this.findById(id);
+    const index = this.products.findIndex((product) => product.id === id);
+
+    Object.assign(updatedProduct!, {
+      unitPrice,
+    });
+
+    this.products[index] = updatedProduct!;
+
+    return updatedProduct!;
+  }
 }
