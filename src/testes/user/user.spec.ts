@@ -4,14 +4,14 @@ import { IUsersRepository } from "../../repositories/users-repository-interface"
 import { userRepositoryInMemory } from "../../repositories/in-memory/users-repository-inmemory";
 import { ICreateUser, IUpdateUser } from "../../dtos/user-dtos";
 import { compare } from "bcrypt";
-import { ListUserByIdUseCase } from "../../useCases/list-user-by-id/list-user-by-id-usecase";
-import { ListAllUsersUseCase } from "../../useCases/list-all-users/list-all-users-usecase";
+import { ListUserByIdUseCase } from "../../useCases/users/list-user-by-id/list-user-by-id-usecase";
+import { ListAllUsersUseCase } from "../../useCases/users/list-all-users/list-all-users-usecase";
 import { User } from "../../entities/user";
-import { UpdateUserUseCase } from "../../useCases/update-user/update-user-usecase";
-import { UpdatePasswordUseCase } from "../../useCases/update-password/update-password-usecase";
-import { ResetPasswordUseCase } from "../../useCases/reset-password/reset-password-usecase";
-import { TurnAdminUseCase } from "../../useCases/turn-admin/turn-admin-usecase";
-import { DeleteUserUseCase } from "../../useCases/delete-user/delete-user-usecase";
+import { UpdateUserUseCase } from "../../useCases/users/update-user/update-user-usecase";
+import { UpdatePasswordUseCase } from "../../useCases/users/update-password/update-password-usecase";
+import { ResetPasswordUseCase } from "../../useCases/users/reset-password/reset-password-usecase";
+import { TurnAdminUseCase } from "../../useCases/users/turn-admin/turn-admin-usecase";
+import { DeleteUserUseCase } from "../../useCases/users/delete-user/delete-user-usecase";
 
 let userRepository: IUsersRepository;
 let createUserUseCase: CreateUserUseCase;

@@ -6,7 +6,7 @@ export class PackageProduct {
   batch: string;
   idProduct: string;
   idProductionLaunch: string;
-  unit: ["FD", "SC"];
+  unit: "FD" | "SC";
   price: number;
   weight: number;
   active: boolean;
