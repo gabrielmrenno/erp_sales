@@ -10,4 +10,6 @@ export interface IProductsRepository {
 
   update(id: string, data: IUpdateProductDTO): Promise<Product>;
   updateUnitPrice(id: string, unitPrice: number): Promise<Product>;
+
+  delete(id: string): Promise<void>;
 }
