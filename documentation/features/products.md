@@ -24,8 +24,8 @@ Deve ser admin para listar usuários. TODO
 ### Update product
 
 **RF**
-Deve ser possível atualizar um produto name, group, unitPrice pelo seu id.
-Deve ser possível atualizar o unitPrice do produto pelo seu id. x
+Deve ser possível atualizar um produto name, group, unitPrice pelo seu id. x
+Deve ser possível atualizar o unitPrice do produto pelo seu id.
 Permissões: TODO
 
 **RN**
