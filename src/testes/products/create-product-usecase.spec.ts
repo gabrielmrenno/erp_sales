@@ -12,7 +12,7 @@ describe("Create PackageProduct UseCase", () => {
     productsRepository = new ProductsRepositoryInMemory();
     createProductUseCase = new CreateProductUseCase(productsRepository);
   });
-  it("should create a packageProduct", async () => {
+  it("should be able create a packageProduct", async () => {
     const productData: ICreateProduct = {
       name: "Product 1",
       group: "Group 1",
