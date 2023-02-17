@@ -17,4 +17,16 @@ export class PackageProductsRepositoryInMemory
 
     return packageProduct;
   }
+
+  async findByDescription(description: string): Promise<PackageProduct | null> {
+    const packageProduct = this.packageProducts.find(
+      (packageProduct) => packageProduct.description === description
+    );
+
+    if (!packageProduct) {
+      return null;
+    }
+
+    return packageProduct;
+  }
 }

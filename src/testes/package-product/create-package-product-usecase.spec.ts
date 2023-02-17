@@ -36,4 +36,20 @@ describe("Create PackageProduct UseCase", () => {
     expect(packageProduct).toHaveProperty("updatedAt");
     expect(packageProduct).toHaveProperty("deletedAt");
   });
+
+  //   it("should not create a packageProduct with same description", async () => {
+  //     const packageProductData: ICreatePackageProduct = {
+  //       description: "PackageProduct 1",
+  //       batch: "Batch 1",
+  //       idProduct: "Product 1",
+  //       idProductionLaunch: "ProductionLaunch 1",
+  //       unit: "FD",
+  //       price: 10,
+  //       weight: 10,
+  //     };
+
+  //     await expect(
+  //       createPackageProductUseCase.execute(packageProductData)
+  //     ).rejects.toThrowError("PackageProduct already exists");
+  //   });
 });
