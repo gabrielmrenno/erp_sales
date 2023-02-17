@@ -25,10 +25,18 @@ export class ProductsRepositoryInMemory implements IProductsRepository {
   }
 
   async listAvailable(): Promise<Product[]> {
-    const users = await this.products.filter(
+    const products = await this.products.filter(
       (product) => product.active === true
     );
 
-    return users;
+    return products;
+  }
+
+  async findById(id: string): Promise<Product | null> {
+    const product = this.products.find((product) => product.id === id);
+    if (!product) {
+      return null;
+    }
+    return product;
   }
 }

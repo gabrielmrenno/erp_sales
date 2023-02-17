@@ -1,12 +1,12 @@
 import { Product } from "../../entities/product";
 import { IProductsRepository } from "../../repositories/product-repository-interface";
 
-export class ListAvailableProductsUseCase {
+export class ListProductByIdUseCase {
   constructor(private productsRepository: IProductsRepository) {}
 
-  async execute(): Promise<Product[]> {
-    const products = await this.productsRepository.listAvailable();
+  async execute(id: string): Promise<Product | null> {
+    const product = this.productsRepository.findById(id);
 
-    return products;
+    return product;
   }
 }

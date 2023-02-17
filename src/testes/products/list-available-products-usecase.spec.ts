@@ -1,6 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { Product } from "../../entities/product";
-import { User } from "../../entities/user";
 import { ProductsRepositoryInMemory } from "../../repositories/in-memory/products-repository-inmemory";
 import { ListAvailableProductsUseCase } from "../../useCases/products/list-available-products-usecase";
 
@@ -15,25 +14,25 @@ describe("List Available Products UseCase", () => {
     );
   });
   it("should list all available products", async () => {
-    const user1 = new Product({
+    const product1 = new Product({
       name: "Product 1",
       group: "Group 1",
       unitPrice: 10,
     });
 
-    productsRepository.products.push(user1);
+    productsRepository.products.push(product1);
 
-    const user2 = new Product({
+    const product2 = new Product({
       name: "Product 2",
       group: "Group 2",
       unitPrice: 20,
     });
 
-    productsRepository.products.push(user2);
+    productsRepository.products.push(product2);
 
-    const users = await listAvailableProductsUseCase.execute();
+    const products = await listAvailableProductsUseCase.execute();
 
-    expect(users).toBeInstanceOf(Array<Product>);
-    expect(users.length).toBe(2);
+    expect(products).toBeInstanceOf(Array<Product>);
+    expect(products.length).toBe(2);
   });
 });
