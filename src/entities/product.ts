@@ -8,7 +8,7 @@ export class Product {
   active: boolean;
   createdAt: Date;
   updatedAt: Date;
-  deletedAt: Date;
+  deletedAt: Date | null;
 
   constructor(data: ICreateProduct) {
     this.id = randomUUID();
@@ -18,6 +18,6 @@ export class Product {
     this.active = true;
     this.createdAt = new Date();
     this.updatedAt = new Date();
-    this.deletedAt = new Date();
+    this.deletedAt = null;
   }
 }
