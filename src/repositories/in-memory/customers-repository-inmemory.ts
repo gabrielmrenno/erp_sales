@@ -1,4 +1,4 @@
-import { ICreateCustomerDTO } from "../../dtos/customer";
+import { ICreateCustomerDTO, IUpdateCustomerDTO } from "../../dtos/customer";
 import { Customer } from "../../entities/customer";
 import { ICustomersRepository } from "../customers-repository-interface";
 
@@ -49,5 +49,18 @@ export class CustomersRepositoryInMemory implements ICustomersRepository {
 
   async listAvailable(): Promise<Customer[]> {
     return this.customers;
+  }
+
+  async update(newCustomerData: IUpdateCustomerDTO): Promise<Customer> {
+    const updatedCustomer = await this.findById(newCustomerData.id);
+    const index = this.customers.findIndex(
+      (customer) => customer.id === newCustomerData.id
+    );
+
+    Object.assign(updatedCustomer!, newCustomerData);
+
+    this.customers[index] = updatedCustomer!;
+
+    return updatedCustomer!;
   }
 }

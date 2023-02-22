@@ -11,4 +11,6 @@ export interface ICustomersRepository {
   findByCode(code: number): Promise<Customer | null>;
 
   listAvailable(): Promise<Customer[]>;
+
+  update(newCustomerData: ICreateCustomerDTO): Promise<Customer>;
 }
