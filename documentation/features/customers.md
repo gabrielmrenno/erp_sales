@@ -8,7 +8,7 @@
 Deve ser possível criar um novo cliente.
 
 **RN**
-O cliente não pode ser criado com o name, fantasyName e doc já existente. x
+O cliente não pode ser criado com o name, fantasyName, doc e code já existente. x
 Permissões: TODO
 
 ### List customers
