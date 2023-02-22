@@ -40,4 +40,8 @@ export class CustomersRepositoryInMemory implements ICustomersRepository {
 
     return user || null;
   }
+
+  async listAvailable(): Promise<Customer[]> {
+    return this.customers;
+  }
 }

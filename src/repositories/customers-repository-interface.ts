@@ -8,4 +8,6 @@ export interface ICustomersRepository {
   findByFantasyName(fantasyName: string): Promise<Customer | null>;
   findByDoc(doc: string): Promise<Customer | null>;
   findByCode(code: number): Promise<Customer | null>;
+
+  listAvailable(): Promise<Customer[]>;
 }
