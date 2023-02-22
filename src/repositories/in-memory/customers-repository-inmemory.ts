@@ -11,6 +11,12 @@ export class CustomersRepositoryInMemory implements ICustomersRepository {
     return newCustomer;
   }
 
+  async findById(id: string): Promise<Customer | null> {
+    const user = await this.customers.find((customer) => customer.id === id);
+
+    return user || null;
+  }
+
   async findByName(name: string): Promise<Customer | null> {
     const user = await this.customers.find(
       (customer) => customer.name === name
