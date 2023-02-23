@@ -2,13 +2,14 @@ import { Request, Response } from "express";
 import { AppError } from "../../../errors/app-error";
 import { UsersRepository } from "../../../repositories/implementations/users-repository";
 import { ListUserByIdUseCase } from "./list-user-by-id-usecase";
+import { container } from "tsyringe";
 
 const usersRepository = new UsersRepository();
 
 export class ListUserByIdController {
-  constructor(private listUserByIdUseCase: ListUserByIdUseCase) {}
-
   async handle(request: Request, response: Response): Promise<Response> {
+    const listUserByIdUseCase = container.resolve(ListUserByIdUseCase);
+
     const { id } = request.params;
     const { id: authenticateUser } = request.user!;
 
@@ -23,7 +24,7 @@ export class ListUserByIdController {
       }
     }
 
-    const user = await this.listUserByIdUseCase.execute(id);
+    const user = await listUserByIdUseCase.execute(id);
 
     return response.status(200).json(user);
   }

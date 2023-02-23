@@ -1,49 +1,46 @@
 import { Router } from "express";
-import createUserController from "../useCases/users/create-user";
-import listAllUsersController from "../useCases/users/list-all-users";
-import listUserById from "../useCases/users/list-user-by-id";
-import updateUserController from "../useCases/users/update-user";
-import updatePasswordController from "../useCases/users/update-password";
-import resetPasswordController from "../useCases/users/reset-password";
-import turnAdminController from "../useCases/users/turn-admin";
-import deleteUserController from "../useCases/users/delete-user";
 import { isAutheticated } from "../middleware/isAutheticated";
 import { isAdmin } from "../middleware/isAdmin";
+import { CreateUserController } from "../useCases/users/create-user/create-user-controller";
+import { ListAllUserController } from "../useCases/users/list-all-users/list-all-users-controller";
+import { ListUserByIdController } from "../useCases/users/list-user-by-id/list-user-by-id-controller";
+import { UpdateUserController } from "../useCases/users/update-user/update-user-controller";
+import { UpdatePasswordController } from "../useCases/users/update-password/update-password-controller";
+import { ResetPasswordController } from "../useCases/users/reset-password/reset-password-controller";
+import { TurnAdminController } from "../useCases/users/turn-admin/turn-admin-controller";
+import { DeleteUserController } from "../useCases/users/delete-user/delete-user-controller";
+
+const createUserController = new CreateUserController();
+const listAllUsersController = new ListAllUserController();
+const listUserById = new ListUserByIdController();
+const updateUserController = new UpdateUserController();
+const updatePasswordController = new UpdatePasswordController();
+const resetPasswordController = new ResetPasswordController();
+const turnAdminController = new TurnAdminController();
+const deleteUserController = new DeleteUserController();
 
 const userRoutes = Router();
 
 userRoutes.use(isAutheticated);
 
-userRoutes.post("/", isAdmin, (request, response) => {
-  return createUserController().handle(request, response);
-});
+userRoutes.post("/", isAdmin, createUserController.handle);
 
-userRoutes.get("/", isAdmin, (request, response) => {
-  return listAllUsersController().handle(request, response);
-});
+userRoutes.get("/", isAdmin, listAllUsersController.handle);
 
-userRoutes.get("/user/:id", (request, response) => {
-  return listUserById().handle(request, response);
-});
+userRoutes.get("/user/:id", listUserById.handle);
 
-userRoutes.put("/user/:id", isAdmin, (request, response) => {
-  return updateUserController().handle(request, response);
-});
+userRoutes.put("/user/:id", isAdmin, updateUserController.handle);
 
-userRoutes.patch("/user/:id/update-password", (request, response) => {
-  return updatePasswordController().handle(request, response);
-});
+userRoutes.patch("/user/:id/update-password", updatePasswordController.handle);
 
-userRoutes.patch("/user/:id/reset-password", isAdmin, (request, response) => {
-  return resetPasswordController().handle(request, response);
-});
+userRoutes.patch(
+  "/user/:id/reset-password",
+  isAdmin,
+  resetPasswordController.handle
+);
 
-userRoutes.patch("/user/:id/turn-admin", isAdmin, (request, response) => {
-  return turnAdminController().handle(request, response);
-});
+userRoutes.patch("/user/:id/turn-admin", isAdmin, turnAdminController.handle);
 
-userRoutes.delete("/user/:id", isAdmin, (request, response) => {
-  return deleteUserController().handle(request, response);
-});
+userRoutes.delete("/user/:id", isAdmin, deleteUserController.handle);
 
 export { userRoutes };

@@ -2,9 +2,14 @@ import { IUpdateUser } from "../../../dtos/user-dtos";
 import { User } from "../../../entities/user";
 import { AppError } from "../../../errors/app-error";
 import { IUsersRepository } from "../../../repositories/users-repository-interface";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class UpdateUserUseCase {
-  constructor(private readonly userRepository: IUsersRepository) {}
+  constructor(
+    @inject("UsersRepository")
+    private readonly userRepository: IUsersRepository
+  ) {}
 
   async execute(id: string, data: IUpdateUser): Promise<User> {
     const user = await this.userRepository.findById(id);

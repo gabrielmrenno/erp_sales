@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
+import { container } from "tsyringe";
 import { TurnAdminUseCase } from "./turn-admin-usecase";
 
 export class TurnAdminController {
-  constructor(private turnAdminUseCase: TurnAdminUseCase) {}
-
   async handle(request: Request, response: Response): Promise<Response> {
+    const turnAdminUseCase = container.resolve(TurnAdminUseCase);
     try {
       const { id } = request.params;
       // const { user } = request.user; // TODO: get user from request
 
-      const user = await this.turnAdminUseCase.execute(id);
+      const user = await turnAdminUseCase.execute(id);
 
       return response.status(200).json(user);
     } catch (err) {
