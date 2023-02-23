@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { AppError } from "../../../errors/app-error";
 import { AuthenticateUseCase } from "./authenticate-usecase";
+import { container } from "tsyringe";
 
 export class AuthenticateController {
-  constructor(private authenticateUseCase: AuthenticateUseCase) {}
-
   async handle(request: Request, response: Response): Promise<Response> {
+    const authenticateUseCase = container.resolve(AuthenticateUseCase);
     const { authorization } = request.headers;
 
     if (!authorization) {
@@ -17,7 +17,7 @@ export class AuthenticateController {
     const decode = Buffer.from(encoded, "base64").toString("utf-8");
     const [username, password] = decode.split(":");
 
-    const data = await this.authenticateUseCase.execute({
+    const data = await authenticateUseCase.execute({
       username,
       password,
     });
