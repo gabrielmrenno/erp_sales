@@ -4,9 +4,14 @@ import { IUsersRepository } from "../../../repositories/users-repository-interfa
 import { ICreateUser } from "../../../dtos/user-dtos";
 import { hash } from "bcrypt";
 import { AppError } from "../../../errors/app-error";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class CreateUserUseCase {
-  constructor(private userRepository: IUsersRepository) {}
+  constructor(
+    @inject("UsersRepository")
+    private userRepository: IUsersRepository
+  ) {}
 
   async execute(newUser: ICreateUser): Promise<User> {
     const { name, username } = newUser;
