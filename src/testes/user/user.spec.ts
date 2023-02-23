@@ -1,3 +1,5 @@
+import "reflect-metadata";
+
 import { beforeAll, describe, expect, it } from "vitest";
 import { CreateUserUseCase } from "../../useCases/users/create-user/create-user-usecase";
 import { IUsersRepository } from "../../repositories/users-repository-interface";
