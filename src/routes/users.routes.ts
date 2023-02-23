@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { isAutheticated } from "../middleware/isAutheticated";
+import { isAuthenticated } from "../middleware/isAuthenticated";
 import { isAdmin } from "../middleware/isAdmin";
 import { CreateUserController } from "../useCases/users/create-user/create-user-controller";
 import { ListAllUserController } from "../useCases/users/list-all-users/list-all-users-controller";
@@ -21,7 +21,7 @@ const deleteUserController = new DeleteUserController();
 
 const userRoutes = Router();
 
-userRoutes.use(isAutheticated);
+userRoutes.use(isAuthenticated);
 
 userRoutes.post("/", isAdmin, createUserController.handle);
 

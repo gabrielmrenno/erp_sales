@@ -8,7 +8,11 @@ interface TokenPayload {
   sub: string;
 }
 
-async function isAutheticated(req: Request, res: Response, next: NextFunction) {
+async function isAuthenticated(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -32,4 +36,4 @@ async function isAutheticated(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export { isAutheticated };
+export { isAuthenticated };
