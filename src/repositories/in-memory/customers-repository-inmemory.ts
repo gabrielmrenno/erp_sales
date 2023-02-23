@@ -63,4 +63,12 @@ export class CustomersRepositoryInMemory implements ICustomersRepository {
 
     return updatedCustomer!;
   }
+
+  async delete(id: string): Promise<void> {
+    const customerToBeDeletedIndex = this.customers.findIndex(
+      (customer) => customer.id === id
+    );
+
+    this.customers.splice(customerToBeDeletedIndex, 1);
+  }
 }

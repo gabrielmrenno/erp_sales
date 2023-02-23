@@ -13,4 +13,6 @@ export interface ICustomersRepository {
   listAvailable(): Promise<Customer[]>;
 
   update(newCustomerData: ICreateCustomerDTO): Promise<Customer>;
+
+  delete(id: string): Promise<void>;
 }
