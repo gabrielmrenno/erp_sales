@@ -3,7 +3,7 @@ import { IFindUserByUniqueValues, IUpdateUser } from "../../dtos/user-dtos";
 import { User } from "../../entities/user";
 import { IUsersRepository } from "../users-repository-interface";
 
-export class userRepositoryInMemory implements IUsersRepository {
+export class UsersRepositoryInMemory implements IUsersRepository {
   private users: User[] = [];
 
   public async save(user: User): Promise<void> {

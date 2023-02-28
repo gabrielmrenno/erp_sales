@@ -6,11 +6,11 @@ import { inject, injectable } from "tsyringe";
 export class ListAllUsersUseCase {
   constructor(
     @inject("UsersRepository")
-    private userRepository: IUsersRepository
+    private usersRepository: IUsersRepository
   ) {}
 
   async execute(): Promise<User[]> {
-    const users = await this.userRepository.findAllActive();
+    const users = await this.usersRepository.findAllActive();
 
     return users;
   }

@@ -10,13 +10,13 @@ import { inject, injectable } from "tsyringe";
 export class CreateUserUseCase {
   constructor(
     @inject("UsersRepository")
-    private userRepository: IUsersRepository
+    private usersRepository: IUsersRepository
   ) {}
 
   async execute(newUser: ICreateUser): Promise<User> {
     const { name, username } = newUser;
     // Check if user already exists, username is already in use
-    const userAlreadyExists = await this.userRepository.findByUniqueValues({
+    const userAlreadyExists = await this.usersRepository.findByUniqueValues({
       username,
       name,
     });
@@ -30,7 +30,7 @@ export class CreateUserUseCase {
       password: await hash("mudar@123", 8),
     });
 
-    await this.userRepository.save(user);
+    await this.usersRepository.save(user);
 
     return user;
   }

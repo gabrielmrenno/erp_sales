@@ -8,27 +8,27 @@ import { inject, injectable } from "tsyringe";
 export class UpdateUserUseCase {
   constructor(
     @inject("UsersRepository")
-    private readonly userRepository: IUsersRepository
+    private readonly usersRepository: IUsersRepository
   ) {}
 
   async execute(id: string, data: IUpdateUser): Promise<User> {
-    const user = await this.userRepository.findById(id);
+    const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new AppError("User not found", 404);
     }
 
-    const nameAlreadyExists = await this.userRepository.findByName(
+    const nameAlreadyExists = await this.usersRepository.findByName(
       data.name || ""
     );
 
-    const users = await this.userRepository.findAllActive();
+    const users = await this.usersRepository.findAllActive();
 
     if (nameAlreadyExists && nameAlreadyExists.id !== id) {
       throw new AppError("Name already exists");
     }
 
-    const updatedUser = await this.userRepository.update(id, data);
+    const updatedUser = await this.usersRepository.update(id, data);
 
     return updatedUser;
   }

@@ -7,11 +7,11 @@ import { inject, injectable } from "tsyringe";
 export class ListUserByIdUseCase {
   constructor(
     @inject("UsersRepository")
-    private userRepository: IUsersRepository
+    private usersRepository: IUsersRepository
   ) {}
 
   async execute(id: string): Promise<User> {
-    const user = await this.userRepository.findById(id);
+    const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new AppError("User not found", 404);

@@ -20,11 +20,11 @@ interface IResponse {
 export class AuthenticateUseCase {
   constructor(
     @inject("UsersRepository")
-    private userRepository: IUsersRepository
+    private usersRepository: IUsersRepository
   ) {}
 
   async execute({ username, password }: IRequest): Promise<IResponse> {
-    const user = await this.userRepository.findByUniqueValues({ username });
+    const user = await this.usersRepository.findByUniqueValues({ username });
 
     if (!user) {
       throw new AppError("User not found");

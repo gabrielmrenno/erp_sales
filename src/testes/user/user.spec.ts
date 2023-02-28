@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { beforeAll, describe, expect, it } from "vitest";
 import { CreateUserUseCase } from "../../useCases/users/create-user/create-user-usecase";
 import { IUsersRepository } from "../../repositories/users-repository-interface";
-import { userRepositoryInMemory } from "../../repositories/in-memory/users-repository-inmemory";
+import { UsersRepositoryInMemory } from "../../repositories/in-memory/users-repository-inmemory";
 import { ICreateUser, IUpdateUser } from "../../dtos/user-dtos";
 import { compare } from "bcrypt";
 import { ListUserByIdUseCase } from "../../useCases/users/list-user-by-id/list-user-by-id-usecase";
@@ -16,7 +16,7 @@ import { TurnAdminUseCase } from "../../useCases/users/turn-admin/turn-admin-use
 import { DeleteUserUseCase } from "../../useCases/users/delete-user/delete-user-usecase";
 import { AppError } from "../../errors/app-error";
 
-let userRepository: IUsersRepository;
+let usersRepository: IUsersRepository;
 let createUserUseCase: CreateUserUseCase;
 let listAllUsersUseCase: ListAllUsersUseCase;
 let listUserByIdUseCase: ListUserByIdUseCase;
@@ -34,16 +34,16 @@ let user2: User;
 
 describe("User", () => {
   beforeAll(async () => {
-    userRepository = new userRepositoryInMemory();
+    usersRepository = new UsersRepositoryInMemory();
 
-    createUserUseCase = new CreateUserUseCase(userRepository);
-    listAllUsersUseCase = new ListAllUsersUseCase(userRepository);
-    listUserByIdUseCase = new ListUserByIdUseCase(userRepository);
-    updateUserUseCase = new UpdateUserUseCase(userRepository);
-    updatePasswordUseCase = new UpdatePasswordUseCase(userRepository);
-    resetPasswordUseCase = new ResetPasswordUseCase(userRepository);
-    turnAdminUseCase = new TurnAdminUseCase(userRepository);
-    deleteUserUseCase = new DeleteUserUseCase(userRepository);
+    createUserUseCase = new CreateUserUseCase(usersRepository);
+    listAllUsersUseCase = new ListAllUsersUseCase(usersRepository);
+    listUserByIdUseCase = new ListUserByIdUseCase(usersRepository);
+    updateUserUseCase = new UpdateUserUseCase(usersRepository);
+    updatePasswordUseCase = new UpdatePasswordUseCase(usersRepository);
+    resetPasswordUseCase = new ResetPasswordUseCase(usersRepository);
+    turnAdminUseCase = new TurnAdminUseCase(usersRepository);
+    deleteUserUseCase = new DeleteUserUseCase(usersRepository);
 
     newUserData = {
       name: "John Doe",
@@ -102,8 +102,8 @@ describe("User", () => {
       role: "admin",
     });
 
-    await userRepository.save(user3);
-    await userRepository.deleteUser(user3.id!);
+    await usersRepository.save(user3);
+    await usersRepository.deleteUser(user3.id!);
 
     const users = await listAllUsersUseCase.execute();
 
@@ -191,7 +191,7 @@ describe("User", () => {
   });
 
   it("should be able to delete an user", async () => {
-    const userToBeDeleted = await userRepository.findByName("John Doe2");
+    const userToBeDeleted = await usersRepository.findByName("John Doe2");
 
     const deletedUser = await deleteUserUseCase.execute(userToBeDeleted?.id!);
 
