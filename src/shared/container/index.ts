@@ -5,5 +5,5 @@ import { IUsersRepository } from "../../repositories/users-repository-interface"
 
 container.registerSingleton<IUsersRepository>(
   "UsersRepository",
-  process.env.NODE_ENV !== "test" ? UsersRepositoryInMemory : UsersRepository
+  process.env.NODE_ENV !== "test" ? UsersRepository : UsersRepositoryInMemory
 );

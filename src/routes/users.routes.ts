@@ -21,7 +21,7 @@ const deleteUserController = new DeleteUserController();
 
 const userRoutes = Router();
 
-userRoutes.use(isAuthenticated);
+// userRoutes.use(isAuthenticated);
 
 userRoutes.post("/", isAdmin, createUserController.handle);
 
