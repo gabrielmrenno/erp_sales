@@ -12,6 +12,9 @@
     "test:watch": "vitest watch",
     "build": "tsup src --out-dir dist"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

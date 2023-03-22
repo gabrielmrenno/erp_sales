@@ -8,13 +8,13 @@ async function isAdmin(
   response: Response,
   next: NextFunction
 ) {
-  // const { id } = request.user!;
+  const { id } = request.user!;
 
-  // const user = await usersRepository.findById(id);
+  const user = await usersRepository.findById(id);
 
-  // if (!user?.isAdmin) {
-  //   return response.status(401).json({ error: "User is not authorized" });
-  // }
+  if (!user?.isAdmin) {
+    return response.status(401).json({ error: "User is not authorized" });
+  }
 
   return next();
 }
