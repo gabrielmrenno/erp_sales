@@ -10,6 +10,8 @@ async function main() {
       password: await hash("admin", 8),
       username: "admin",
       role: "ADMIN",
+      isAdmin: true,
+      resetPassword: false,
     },
   });
 }
