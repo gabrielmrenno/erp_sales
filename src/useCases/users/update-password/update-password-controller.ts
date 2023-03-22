@@ -10,22 +10,23 @@ export class UpdatePasswordController {
     const updatePasswordUseCase = container.resolve(UpdatePasswordUseCase);
 
     const { id } = request.params;
-    const { id: authenticateUser } = request.user!;
+    // const { id: authenticateUser } = request.user!;
 
-    if (authenticateUser !== id) {
-      const user = await usersRepository.findById(authenticateUser);
-      if (!user?.isAdmin) {
-        return response.status(401).json({ error: "User is not authorized" });
-      }
-    }
+    // if (authenticateUser !== id) {
+    //   const user = await usersRepository.findById(authenticateUser);
+    //   if (!user?.isAdmin) {
+    //     return response.status(401).json({ error: "User is not authorized" });
+    //   }
+    // }
 
-    const { password } = request.body;
+    // const { password } = request.body;
 
-    const updatedUser = await updatePasswordUseCase.execute({
-      id,
-      password,
-    });
+    // const updatedUser = await updatePasswordUseCase.execute({
+    //   id,
+    //   password,
+    // });
 
-    return response.status(200).json(updatedUser);
+    // return response.status(200).json(updatedUser);
+    return response.status(200).json();
   }
 }
