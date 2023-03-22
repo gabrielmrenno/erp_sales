@@ -7,7 +7,7 @@
     "dev": "ts-node-dev --inspect --transpile-only --respawn --poll --ignore-watch node_modules src/server.ts",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "build": "tsup src"
+    "build": "tsup src --out-dir dist"
   },
   "keywords": [],
   "author": "",
