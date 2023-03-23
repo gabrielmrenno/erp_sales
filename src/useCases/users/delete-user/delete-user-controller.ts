@@ -8,14 +8,13 @@ export class DeleteUserController {
 
     const deleteUserUseCase = container.resolve(DeleteUserUseCase);
 
-    try {
-      const user = await deleteUserUseCase.execute(id);
+    const user = await deleteUserUseCase.execute(id);
 
-      return response.status(200).json(user);
-    } catch (error) {
-      return response.status(400).json({
-        message: error || "Unexpected error.",
-      });
-    }
+    return response.status(200).json({
+      message: "User deleted successfully",
+      data: {
+        id: user.id,
+      },
+    });
   }
 }

@@ -5,15 +5,16 @@ import { TurnAdminUseCase } from "./turn-admin-usecase";
 export class TurnAdminController {
   async handle(request: Request, response: Response): Promise<Response> {
     const turnAdminUseCase = container.resolve(TurnAdminUseCase);
-    try {
-      const { id } = request.params;
-      // const { user } = request.user; // TODO: get user from request
 
-      const user = await turnAdminUseCase.execute(id);
+    const { id } = request.params;
 
-      return response.status(200).json(user);
-    } catch (err) {
-      return response.status(400).json(err);
-    }
+    const user = await turnAdminUseCase.execute(id);
+
+    return response.status(200).json({
+      message: "User turned admin successfully",
+      data: {
+        id: user.id,
+      },
+    });
   }
 }

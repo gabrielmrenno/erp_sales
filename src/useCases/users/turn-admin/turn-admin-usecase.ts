@@ -14,7 +14,7 @@ export class TurnAdminUseCase {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
-      throw new AppError("User does not exist");
+      throw new AppError("User does not exist", 404);
     }
 
     const adminUser = await this.usersRepository.turnAdmin(user.id);
