@@ -8,8 +8,18 @@ export class CreateUserController {
     const createUserUseCase = container.resolve(CreateUserUseCase);
     const { name, username, password, role }: ICreateUser = request.body;
 
-    await createUserUseCase.execute({ name, username, password, role });
+    const newUser = await createUserUseCase.execute({
+      name,
+      username,
+      password,
+      role,
+    });
 
-    return response.status(201).send();
+    return response.status(201).json({
+      message: "User created successfully",
+      data: {
+        id: newUser.id,
+      },
+    });
   }
 }

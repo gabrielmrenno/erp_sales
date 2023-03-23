@@ -14,13 +14,11 @@ export class ListUserByIdController {
     const { id: authenticateUser } = request.user!;
 
     if (authenticateUser !== id) {
-      try {
-        const user = await usersRepository.findById(authenticateUser);
-        if (!user?.isAdmin) {
-          throw new AppError("User isn't authenticate", 401);
-        }
-      } catch (error) {
-        throw new AppError("Error on find user.");
+      const user = await usersRepository.findById(authenticateUser);
+      if (!user?.isAdmin) {
+        return response.status(401).json({
+          message: "User isn't authenticate",
+        });
       }
     }
 

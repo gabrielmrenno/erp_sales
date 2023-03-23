@@ -14,6 +14,11 @@ export class UpdateUserController {
       role,
     });
 
-    return response.status(200).json(updatedUser);
+    return response.status(200).json({
+      message: "User updated successfully",
+      data: {
+        id: updatedUser.id,
+      },
+    });
   }
 }

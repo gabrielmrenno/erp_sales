@@ -26,7 +26,11 @@ export class UpdatePasswordController {
       password,
     });
 
-    return response.status(200).json(updatedUser);
-    return response.status(200).json();
+    return response.status(200).json({
+      message: "Password updated successfully",
+      data: {
+        id: updatedUser.id,
+      },
+    });
   }
 }

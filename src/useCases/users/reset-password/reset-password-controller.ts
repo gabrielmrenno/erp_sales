@@ -9,6 +9,11 @@ export class ResetPasswordController {
 
     const user = await resetPasswordUseCase.execute(id);
 
-    return response.json(user);
+    return response.json({
+      message: "Password reset successfully",
+      data: {
+        id: user.id,
+      },
+    });
   }
 }
