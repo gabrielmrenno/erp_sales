@@ -41,7 +41,7 @@ userRoutes.patch(
   resetPasswordController.handle
 );
 
-userRoutes.patch("/user/:id/turn-admin", isAdmin, turnAdminController.handle);
+userRoutes.patch("/user/:id/turn-admin", turnAdminController.handle);
 
 userRoutes.delete("/user/:id", isAdmin, deleteUserController.handle);
 
