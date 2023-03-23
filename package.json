@@ -13,7 +13,7 @@
     "build": "tsup src --out-dir dist"
   },
   "prisma": {
-    "seed": "node dist/database/seed.js"
+    "seed": "ts-node src/database/seed.ts"
   },
   "keywords": [],
   "author": "",
