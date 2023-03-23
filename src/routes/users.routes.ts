@@ -21,11 +21,9 @@ const deleteUserController = new DeleteUserController();
 
 const userRoutes = Router();
 
-// userRoutes.use(isAuthenticated);
+userRoutes.use(isAuthenticated);
 
-// userRoutes.post("/", isAdmin, createUserController.handle);
-
-userRoutes.post("/", createUserController.handle);
+userRoutes.post("/", isAdmin, createUserController.handle);
 
 userRoutes.get("/", isAdmin, listAllUsersController.handle);
 
@@ -41,7 +39,7 @@ userRoutes.patch(
   resetPasswordController.handle
 );
 
-userRoutes.patch("/user/:id/turn-admin", turnAdminController.handle);
+userRoutes.patch("/user/:id/turn-admin", isAdmin, turnAdminController.handle);
 
 userRoutes.delete("/user/:id", isAdmin, deleteUserController.handle);
 
