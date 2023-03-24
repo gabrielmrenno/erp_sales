@@ -7,6 +7,7 @@ import {
   createUserSchema,
   deleteUserSchema,
   getUserSchema,
+  getUsersSchema,
   resetPasswordSchema,
   turnAdminSchema,
   updateUserPasswordSchema,
@@ -43,7 +44,13 @@ userRoutes.post(
   createUserController.handle
 );
 
-userRoutes.get("/", isAdmin, listAllUsersController.handle);
+userRoutes.get(
+  "/",
+  isAdmin,
+  getUsersSchema,
+  validRequest,
+  listAllUsersController.handle
+);
 
 userRoutes.get("/user/:id", getUserSchema, validRequest, listUserById.handle);
 

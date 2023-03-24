@@ -9,7 +9,7 @@ export interface IUsersRepository {
     username,
   }: IFindUserByUniqueValues): Promise<User | null>;
   findByName(name: string): Promise<User | null>;
-  findAllActive(): Promise<User[]>;
+  findAll(active?: boolean): Promise<User[]>;
   findById(id: string): Promise<User | null>;
 
   update(id: string, data: IUpdateUser): Promise<User>;

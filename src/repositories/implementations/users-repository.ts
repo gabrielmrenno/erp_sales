@@ -24,10 +24,10 @@ export class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  async findAllActive(): Promise<User[]> {
+  async findAll(active?: boolean): Promise<User[]> {
     const users = await prisma.user.findMany({
       where: {
-        active: true,
+        active: active || true,
       },
     });
 

@@ -9,8 +9,8 @@ export class ListAllUsersUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute(): Promise<User[]> {
-    const users = await this.usersRepository.findAllActive();
+  async execute(active?: boolean): Promise<User[]> {
+    const users = await this.usersRepository.findAll(active);
 
     return users;
   }

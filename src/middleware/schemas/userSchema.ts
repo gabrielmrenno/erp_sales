@@ -66,6 +66,18 @@ export const getUserSchema = checkSchema({
   },
 });
 
+export const getUsersSchema = checkSchema({
+  active: {
+    in: ["query"],
+    isString: true,
+    matches: {
+      options: [/\b(?:true|false)\b/],
+      errorMessage: "Active must be true or false",
+    },
+    optional: true,
+  },
+});
+
 export const resetPasswordSchema = checkSchema({
   id: {
     in: ["params"],

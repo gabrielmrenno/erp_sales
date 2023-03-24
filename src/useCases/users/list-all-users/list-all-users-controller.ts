@@ -5,8 +5,12 @@ import { container } from "tsyringe";
 
 export class ListAllUserController {
   async handle(request: Request, response: Response): Promise<Response> {
+    const { active } = request.query;
+
+    const booleanActive = active === "true" ? true : false;
+
     const listAllUsersUseCase = container.resolve(ListAllUsersUseCase);
-    const users = await listAllUsersUseCase.execute();
+    const users = await listAllUsersUseCase.execute(booleanActive);
 
     return response.json(users);
   }
