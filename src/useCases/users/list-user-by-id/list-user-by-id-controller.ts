@@ -16,9 +16,7 @@ export class ListUserByIdController {
     if (authenticateUser !== id) {
       const user = await usersRepository.findById(authenticateUser);
       if (!user?.isAdmin) {
-        return response.status(401).json({
-          message: "User isn't authenticate",
-        });
+        throw new AppError("User is not authorized", 401);
       }
     }
 

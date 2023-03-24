@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { UsersRepository } from "../../../repositories/implementations/users-repository";
 import { UpdatePasswordUseCase } from "./update-password-usecase";
 import { container } from "tsyringe";
+import { AppError } from "../../../errors/app-error";
 
 const usersRepository = new UsersRepository();
 
@@ -12,11 +13,9 @@ export class UpdatePasswordController {
     const { id } = request.params;
     const { id: authenticateUser } = request.user!;
 
+    // user is not authorized to update another user's password
     if (authenticateUser !== id) {
-      const user = await usersRepository.findById(authenticateUser);
-      if (!user?.isAdmin) {
-        return response.status(401).json({ error: "User is not authorized" });
-      }
+      throw new AppError("User is not authorized", 401);
     }
 
     const { password } = request.body;
