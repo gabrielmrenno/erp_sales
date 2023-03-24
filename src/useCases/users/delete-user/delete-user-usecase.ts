@@ -6,7 +6,7 @@ import { inject, injectable } from "tsyringe";
 @injectable()
 export class DeleteUserUseCase {
   constructor(
-    @inject("USersRepository")
+    @inject("UsersRepository")
     private usersRepository: IUsersRepository
   ) {}
 
