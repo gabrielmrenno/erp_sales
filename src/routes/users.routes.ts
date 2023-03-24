@@ -3,7 +3,15 @@ import { Router } from "express";
 import { isAuthenticated } from "../middleware/isAuthenticated";
 import { isAdmin } from "../middleware/isAdmin";
 import { validRequest } from "../middleware";
-import { createUserSchema } from "../middleware/schemas/userSchema";
+import {
+  createUserSchema,
+  deleteUserSchema,
+  getUserSchema,
+  resetPasswordSchema,
+  turnAdminSchema,
+  updateUserPasswordSchema,
+  updateUserSchema,
+} from "../middleware/schemas/userSchema";
 
 import { CreateUserController } from "../useCases/users/create-user/create-user-controller";
 import { ListAllUserController } from "../useCases/users/list-all-users/list-all-users-controller";
@@ -37,20 +45,46 @@ userRoutes.post(
 
 userRoutes.get("/", isAdmin, listAllUsersController.handle);
 
-userRoutes.get("/user/:id", listUserById.handle);
+userRoutes.get("/user/:id", getUserSchema, validRequest, listUserById.handle);
 
-userRoutes.put("/user/:id", isAdmin, updateUserController.handle);
+userRoutes.put(
+  "/user/:id",
+  isAdmin,
+  updateUserSchema,
+  validRequest,
+  updateUserController.handle
+);
 
-userRoutes.patch("/user/:id/update-password", updatePasswordController.handle);
+userRoutes.patch(
+  "/user/:id/update-password",
+  isAdmin,
+  updateUserPasswordSchema,
+  validRequest,
+  updatePasswordController.handle
+);
 
 userRoutes.patch(
   "/user/:id/reset-password",
   isAdmin,
+  resetPasswordSchema,
+  validRequest,
   resetPasswordController.handle
 );
 
-userRoutes.patch("/user/:id/turn-admin", isAdmin, turnAdminController.handle);
+userRoutes.patch(
+  "/user/:id/turn-admin",
+  turnAdminSchema,
+  validRequest,
+  isAdmin,
+  turnAdminController.handle
+);
 
-userRoutes.delete("/user/:id", isAdmin, deleteUserController.handle);
+userRoutes.delete(
+  "/user/:id",
+  deleteUserSchema,
+  validRequest,
+  isAdmin,
+  deleteUserController.handle
+);
 
 export { userRoutes };

@@ -14,4 +14,5 @@ export interface IFindUserByUniqueValues {
 export interface IUpdateUser {
   name?: string;
   role?: string;
+  isAdmin?: boolean;
 }
