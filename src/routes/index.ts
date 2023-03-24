@@ -10,6 +10,11 @@ const authenticateController = new AuthenticateController();
 
 router.use("/users", userRoutes);
 
-router.get("/auth/login", loginSchema, authenticateController.handle);
+router.get(
+  "/auth/login",
+  loginSchema,
+  validRequest,
+  authenticateController.handle
+);
 
 export { router };

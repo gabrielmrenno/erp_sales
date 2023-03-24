@@ -3,6 +3,7 @@ export interface ICreateUser {
   username: string;
   role: string;
   password?: string;
+  isAdmin?: boolean;
 }
 
 export interface IFindUserByUniqueValues {

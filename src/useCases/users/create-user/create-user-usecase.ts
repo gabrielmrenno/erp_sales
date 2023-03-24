@@ -27,6 +27,7 @@ export class CreateUserUseCase {
 
     const user = new User({
       ...newUser,
+      isAdmin: newUser.role === "ADMIN" ? true : false,
       password: await hash("mudar@123", 8),
     });
 

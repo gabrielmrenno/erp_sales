@@ -21,7 +21,7 @@ export class User {
     this.password = props.password || "";
     this.role = props.role;
     this.active = true;
-    this.isAdmin = false;
+    this.isAdmin = props.isAdmin || false;
     this.resetPassword = true;
     this.createdAt = new Date();
     this.updatedAt = new Date();

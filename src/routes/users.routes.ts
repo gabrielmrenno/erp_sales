@@ -1,6 +1,10 @@
 import { Router } from "express";
+
 import { isAuthenticated } from "../middleware/isAuthenticated";
 import { isAdmin } from "../middleware/isAdmin";
+import { validRequest } from "../middleware";
+import { createUserSchema } from "../middleware/schemas/userSchema";
+
 import { CreateUserController } from "../useCases/users/create-user/create-user-controller";
 import { ListAllUserController } from "../useCases/users/list-all-users/list-all-users-controller";
 import { ListUserByIdController } from "../useCases/users/list-user-by-id/list-user-by-id-controller";
@@ -23,7 +27,13 @@ const userRoutes = Router();
 
 userRoutes.use(isAuthenticated);
 
-userRoutes.post("/", isAdmin, createUserController.handle);
+userRoutes.post(
+  "/",
+  createUserSchema,
+  validRequest,
+  isAdmin,
+  createUserController.handle
+);
 
 userRoutes.get("/", isAdmin, listAllUsersController.handle);
 
