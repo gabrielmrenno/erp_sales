@@ -6,10 +6,7 @@ import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class UpdateUserUseCase {
-  constructor(
-    @inject("UsersRepository")
-    private readonly usersRepository: IUsersRepository
-  ) {}
+  constructor(private readonly usersRepository: IUsersRepository) {}
 
   async execute(id: string, data: IUpdateUser): Promise<User> {
     const user = await this.usersRepository.findById(id);

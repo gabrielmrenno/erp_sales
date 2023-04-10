@@ -25,7 +25,6 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async findAll(active?: boolean): Promise<User[]> {
-    console.log(active);
     const users = await prisma.user.findMany({
       where: {
         active: active ?? true,

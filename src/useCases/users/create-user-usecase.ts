@@ -8,10 +8,7 @@ import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class CreateUserUseCase {
-  constructor(
-    @inject("UsersRepository")
-    private usersRepository: IUsersRepository
-  ) {}
+  constructor(private usersRepository: IUsersRepository) {}
 
   async execute(newUser: ICreateUser): Promise<User> {
     const { name, username } = newUser;

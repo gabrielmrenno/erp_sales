@@ -6,22 +6,24 @@ import { container } from "tsyringe";
 
 const usersRepository = new UsersRepository();
 
-export class ListUserByIdController {
-  async handle(request: Request, response: Response): Promise<Response> {
-    const listUserByIdUseCase = container.resolve(ListUserByIdUseCase);
+export async function listUserById(
+  request: Request,
+  response: Response
+): Promise<Response> {
+  const usersRepository = new UsersRepository();
+  const listUserByIdUseCase = new ListUserByIdUseCase(usersRepository);
 
-    const { id } = request.params;
-    const { id: authenticateUser } = request.user!;
+  const { id } = request.params;
+  const { id: authenticateUser } = request.user!;
 
-    if (authenticateUser !== id) {
-      const user = await usersRepository.findById(authenticateUser);
-      if (!user?.isAdmin) {
-        throw new AppError("User is not authorized", 401);
-      }
+  if (authenticateUser !== id) {
+    const user = await usersRepository.findById(authenticateUser);
+    if (!user?.isAdmin) {
+      throw new AppError("User is not authorized", 401);
     }
-
-    const user = await listUserByIdUseCase.execute(id);
-
-    return response.status(200).json(user);
   }
+
+  const user = await listUserByIdUseCase.execute(id);
+
+  return response.status(200).json(user);
 }

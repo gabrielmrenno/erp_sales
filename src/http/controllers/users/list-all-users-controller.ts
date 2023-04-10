@@ -1,17 +1,20 @@
 import { User } from "@prisma/client";
 import { ListAllUsersUseCase } from "../../../useCases/users/list-all-users-usecase";
 import { Request, Response } from "express";
-import { container } from "tsyringe";
+import { UsersRepository } from "../../../repositories/implementations/users-repository";
 
-export class ListAllUserController {
-  async handle(request: Request, response: Response): Promise<Response> {
-    const { active } = request.query;
+export async function listAllUsers(
+  request: Request,
+  response: Response
+): Promise<Response> {
+  const usersRepository = new UsersRepository();
+  const listAllUsersUseCase = new ListAllUsersUseCase(usersRepository);
 
-    const booleanActive = active === "true" ? true : false;
+  const { active } = request.query;
 
-    const listAllUsersUseCase = container.resolve(ListAllUsersUseCase);
-    const users = await listAllUsersUseCase.execute(booleanActive);
+  const booleanActive = active === "true" ? true : false;
 
-    return response.json(users);
-  }
+  const users = await listAllUsersUseCase.execute(booleanActive);
+
+  return response.json(users);
 }

@@ -4,10 +4,7 @@ import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class ListAllUsersUseCase {
-  constructor(
-    @inject("UsersRepository")
-    private usersRepository: IUsersRepository
-  ) {}
+  constructor(private usersRepository: IUsersRepository) {}
 
   async execute(active?: boolean): Promise<User[]> {
     const users = await this.usersRepository.findAll(active);

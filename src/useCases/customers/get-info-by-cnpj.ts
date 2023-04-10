@@ -19,8 +19,6 @@ export class GetInfoByCnpj {
     try {
       const response = await axios.get(getInfoByCnpjURL);
 
-      console.log(response);
-
       const responseData = response.data;
       const address = `${responseData.estabelecimento.logradouro}, ${responseData.estabelecimento.numero}, ${responseData.estabelecimento.bairro}`;
       const customerInfos: GetInfoByCnpjResponse = {
@@ -37,7 +35,6 @@ export class GetInfoByCnpj {
       return customerInfos;
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error);
         if (error.response?.status === 429) {
           throw new AppError("So many request", 429);
         }

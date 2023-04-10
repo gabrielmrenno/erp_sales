@@ -14,52 +14,31 @@ import {
   updateUserSchema,
 } from "../../middleware/schemas/userSchema";
 
-import { CreateUserController } from "../controllers/users/create-user-controller";
-import { ListAllUserController } from "../controllers/users/list-all-users-controller";
-import { ListUserByIdController } from "../controllers/users/list-user-by-id-controller";
-import { UpdateUserController } from "../controllers/users/update-user-controller";
-import { UpdatePasswordController } from "../controllers/users/update-password-controller";
-import { ResetPasswordController } from "../controllers/users/reset-password-controller";
-import { TurnAdminController } from "../controllers/users/turn-admin-controller";
-import { DeleteUserController } from "../controllers/users/delete-user-controller";
-
-const createUserController = new CreateUserController();
-const listAllUsersController = new ListAllUserController();
-const listUserById = new ListUserByIdController();
-const updateUserController = new UpdateUserController();
-const updatePasswordController = new UpdatePasswordController();
-const resetPasswordController = new ResetPasswordController();
-const turnAdminController = new TurnAdminController();
-const deleteUserController = new DeleteUserController();
+import { createUser } from "../controllers/users/create-user-controller";
+import { listAllUsers } from "../controllers/users/list-all-users-controller";
+import { listUserById } from "../controllers/users/list-user-by-id-controller";
+import { updateUser } from "../controllers/users/update-user-controller";
+import { updatePassword } from "../controllers/users/update-password-controller";
+import { resetPassword } from "../controllers/users/reset-password-controller";
+import { turnAdmin } from "../controllers/users/turn-admin-controller";
+import { deleteUser } from "../controllers/users/delete-user-controller";
 
 const userRoutes = Router();
 
 userRoutes.use(isAuthenticated);
 
-userRoutes.post(
-  "/",
-  createUserSchema,
-  validRequest,
-  isAdmin,
-  createUserController.handle
-);
+userRoutes.post("/", createUserSchema, validRequest, isAdmin, createUser);
 
-userRoutes.get(
-  "/",
-  isAdmin,
-  getUsersSchema,
-  validRequest,
-  listAllUsersController.handle
-);
+userRoutes.get("/", isAdmin, getUsersSchema, validRequest, listAllUsers);
 
-userRoutes.get("/user/:id", getUserSchema, validRequest, listUserById.handle);
+userRoutes.get("/user/:id", getUserSchema, validRequest, listUserById);
 
 userRoutes.put(
   "/user/:id",
   isAdmin,
   updateUserSchema,
   validRequest,
-  updateUserController.handle
+  updateUser
 );
 
 userRoutes.patch(
@@ -67,7 +46,7 @@ userRoutes.patch(
   isAdmin,
   updateUserPasswordSchema,
   validRequest,
-  updatePasswordController.handle
+  updatePassword
 );
 
 userRoutes.patch(
@@ -75,7 +54,7 @@ userRoutes.patch(
   isAdmin,
   resetPasswordSchema,
   validRequest,
-  resetPasswordController.handle
+  resetPassword
 );
 
 userRoutes.patch(
@@ -83,7 +62,7 @@ userRoutes.patch(
   turnAdminSchema,
   validRequest,
   isAdmin,
-  turnAdminController.handle
+  turnAdmin
 );
 
 userRoutes.delete(
@@ -91,7 +70,7 @@ userRoutes.delete(
   deleteUserSchema,
   validRequest,
   isAdmin,
-  deleteUserController.handle
+  deleteUser
 );
 
 export { userRoutes };

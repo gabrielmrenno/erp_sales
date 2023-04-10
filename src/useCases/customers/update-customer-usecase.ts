@@ -28,8 +28,6 @@ export class UpdateCustomerUseCase {
         newCustomerData.fantasyName
       );
 
-    console.log(fantasyNameAlreadyExists);
-
     if (
       fantasyNameAlreadyExists &&
       fantasyNameAlreadyExists.id !== newCustomerData.id

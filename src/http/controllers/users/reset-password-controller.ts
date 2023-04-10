@@ -1,19 +1,23 @@
 import { Request, Response } from "express";
 import { ResetPasswordUseCase } from "../../../useCases/users/reset-password-usecase";
 import { container } from "tsyringe";
+import { UsersRepository } from "../../../repositories/implementations/users-repository";
 
-export class ResetPasswordController {
-  async handle(request: Request, response: Response): Promise<Response> {
-    const resetPasswordUseCase = container.resolve(ResetPasswordUseCase);
-    const { id } = request.params;
+export async function resetPassword(
+  request: Request,
+  response: Response
+): Promise<Response> {
+  const usersRepository = new UsersRepository();
+  const resetPasswordUseCase = new ResetPasswordUseCase(usersRepository);
 
-    const user = await resetPasswordUseCase.execute(id);
+  const { id } = request.params;
 
-    return response.json({
-      message: "Password reset successfully",
-      data: {
-        id: user.id,
-      },
-    });
-  }
+  const user = await resetPasswordUseCase.execute(id);
+
+  return response.json({
+    message: "Password reset successfully",
+    data: {
+      id: user.id,
+    },
+  });
 }
