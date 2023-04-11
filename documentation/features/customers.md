@@ -6,7 +6,7 @@
 
 **RF**
 
-- [ ] Deve ser possível criar um novo cliente.
+- [x] Deve ser possível criar um novo cliente.
 
 **RN**
 
@@ -32,7 +32,7 @@
 
 **RF**
 
-- [x] Deve ser possível atualizar um cliente "name", "fantasyName", "doc", "address", "city", "zipCode", "phone", "email", "contactName", "discount", "paymentTerm" pelo seu id.
+- [x] Deve ser possível atualizar um cliente "name", "fantasyName", "doc", "address", "city", "zipCode", "phone", "email", "contactName", "discount", "paymentTerm" pelo seu "code".
 
 **RN**
 
@@ -44,7 +44,7 @@
 
 **RF**
 
-- [x] Deve ser possível deletar um cliente pelo seu id, porém ele não será deletado do banco de dados, apenas será marcado como "active" = false.
+- [x] Deve ser possível deletar um cliente pelo seu "code", porém ele não será deletado do banco de dados, apenas será marcado como "active" = false.
 
 **RN**
 

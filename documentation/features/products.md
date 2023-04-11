@@ -1,11 +1,13 @@
 # Regras de negócio
 
-## Product
+## Product Info
 
 ### Create a new product
 
 **RF**
-Deve ser possível criar um novo produto.
+
+- [ ] Deve ser possível criar um novo produto.
+  - code, name, description, group, unit, price, weight
 
 **RN**
 
@@ -22,7 +24,6 @@ Deve ser possível criar um novo produto.
 **RN**
 
 - [x] Caso o produto não exista, deve ser retornado um erro.
-- [ ]
 
 ### Update product
 

@@ -1,43 +1,45 @@
-import { Product } from "../../entities/product";
+import { ProductInfo } from "../../entities/product-info";
 import { IProductsRepository } from "../product-repository-interface";
 
 export class ProductsRepositoryInMemory implements IProductsRepository {
-  products: Product[] = [];
+  items: ProductInfo[] = [];
 
-  async create(data: ICreateProduct): Promise<Product> {
-    const product = new Product(data);
+  async create(data: ICreateProductInfo): Promise<ProductInfo> {
+    const productInfo = new ProductInfo(data);
 
-    Object.assign(product, {
+    Object.assign(productInfo, {
       createdAt: new Date(),
     });
 
-    this.products.push(product);
+    this.items.push(productInfo);
 
-    return product;
+    return productInfo;
   }
 
-  async findByName(name: string): Promise<Product | null> {
-    const product = this.products.find((product) => product.name === name);
-    if (!product) {
+  async findByName(name: string): Promise<ProductInfo | null> {
+    const productInfo = this.items.find(
+      (productInfo) => productInfo.name === name
+    );
+    if (!productInfo) {
       return null;
     }
-    return product;
+    return productInfo;
   }
 
-  async listAvailable(): Promise<Product[]> {
-    const products = await this.products.filter(
-      (product) => product.active === true
+  async findByCode(code: number): Promise<ProductInfo | null> {
+    const productInfo = this.items.find(
+      (productInfo) => productInfo.code === code
     );
+    if (!productInfo) {
+      return null;
+    }
+    return productInfo;
+  }
+
+  async listAvailable(): Promise<ProductInfo[]> {
+    const products = await this.items.filter((item) => item.active === true);
 
     return products;
-  }
-
-  async findById(id: string): Promise<Product | null> {
-    const product = this.products.find((product) => product.id === id);
-    if (!product) {
-      return null;
-    }
-    return product;
   }
 
   async update(id: string, data: IUpdateProductDTO): Promise<Product> {

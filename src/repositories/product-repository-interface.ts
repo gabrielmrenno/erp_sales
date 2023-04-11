@@ -1,15 +1,15 @@
-import { Product } from "../entities/product";
+import { ProductInfo } from "../entities/product-info";
 
 export interface IProductsRepository {
-  create(data: ICreateProduct): Promise<Product>;
+  create(data: ICreateProductInfo): Promise<ProductInfo>;
 
-  findByName(name: string): Promise<Product | null>;
-  findById(id: string): Promise<Product | null>;
+  findByName(name: string): Promise<ProductInfo | null>;
+  findByCode(code: number): Promise<ProductInfo | null>;
 
-  listAvailable(): Promise<Product[]>;
+  listAvailable(): Promise<ProductInfo[]>;
 
-  update(id: string, data: IUpdateProductDTO): Promise<Product>;
-  updateUnitPrice(id: string, unitPrice: number): Promise<Product>;
+  update(id: string, data: IUpdateProductInfoDTO): Promise<ProductInfo>;
+  updateUnitPrice(id: string, unitPrice: number): Promise<ProductInfo>;
 
   delete(id: string): Promise<void>;
 }
