@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import { AppError } from "../../../errors/app-error";
-import { AuthenticateUseCase } from "./authenticate-usecase";
-import { container } from "tsyringe";
+import { AuthenticateUseCase } from "../../../useCases/account/authenticate-usecase";
+import { UsersRepository } from "../../../repositories/implementations/users-repository";
 
 export class AuthenticateController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const authenticateUseCase = container.resolve(AuthenticateUseCase);
+    const usersRepository = new UsersRepository();
+    const authenticateUseCase = new AuthenticateUseCase(usersRepository);
+
     const { authorization } = request.headers;
 
     if (!authorization) {

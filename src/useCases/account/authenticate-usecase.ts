@@ -1,7 +1,7 @@
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
-import { AppError, StatusCode } from "../../../errors/app-error";
-import { IUsersRepository } from "../../../repositories/users-repository-interface";
+import { AppError, StatusCode } from "../../errors/app-error";
+import { IUsersRepository } from "../../repositories/users-repository-interface";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
@@ -16,12 +16,8 @@ interface IResponse {
   token: string;
 }
 
-@injectable()
 export class AuthenticateUseCase {
-  constructor(
-    @inject("UsersRepository")
-    private usersRepository: IUsersRepository
-  ) {}
+  constructor(private usersRepository: IUsersRepository) {}
 
   async execute({ username, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByUniqueValues({ username });
