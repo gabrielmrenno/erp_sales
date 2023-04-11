@@ -13,7 +13,7 @@ describe("Get info by CNPJ using external API", () => {
 
     const data = await getInfoByCnpj.execute(validCnpj);
 
-    console.log(data);
+    expect(data).toEqual(expect.objectContaining({ doc: validCnpj }));
   });
 
   it("throw an error of invalid cnpj", async () => {

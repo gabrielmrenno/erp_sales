@@ -2,11 +2,11 @@ import { Customer } from "../../entities/customer";
 import { AppError } from "../../errors/app-error";
 import { ICustomersRepository } from "../../repositories/customers-repository-interface";
 
-export class ListCustomerByIdUseCase {
-  constructor(private customerRepository: ICustomersRepository) {}
+export class ListCustomerByCodeUseCase {
+  constructor(private customersRepository: ICustomersRepository) {}
 
-  async execute(id: string): Promise<Customer> {
-    const user = await this.customerRepository.findById(id);
+  async execute(code: number): Promise<Customer> {
+    const user = await this.customersRepository.findByCode(code);
 
     if (!user) {
       throw new AppError("Customer not found", 404);

@@ -5,37 +5,48 @@
 ### Create a new customer
 
 **RF**
-Deve ser possível criar um novo cliente.
+
+- [ ] Deve ser possível criar um novo cliente.
 
 **RN**
-O cliente não pode ser criado com o name, fantasyName, doc e code já existente. x
-Permissões: TODO
+
+- [x] O cliente não pode ser criado com o "name", "fantasyName", "doc" e "code" já existente.
+- [ ] Permissões: ADMIN e SELLER
 
 ### List customers
 
 **RF**
-Deve ser possível listar todos os clientes ativos. x
-Deve ser possível listar um cliente pelo seu id. x
+
+- [x] Deve ser possível listar todos os clientes.
+- [x] Deve ser possível listar um cliente pelo seu id.
 
 **RN**
-Caso o cliente não exista, deve ser retornado um erro. x
-Permissões: TODO
+
+- [x] Deve ser possível listar todos os clientes ativos ou desativados.
+- [x] Para listagem dos usuários, deve possuir uma paginação de 20 itens por página.
+- [x] Deve ser possível filtrar a lista por "fantasyName", "code" ou "cpnj".
+- [x] Caso o cliente não exista, deve ser retornado um erro.
+- [ ] Permissões: ADMIN e SELLER
 
 ### Update customer
 
 **RF**
-Deve ser possível atualizar um cliente name, fantasyName, doc, address, city, zipCode, phone, email, contactName, discount, paymentTerm pelo seu id. x
+
+- [x] Deve ser possível atualizar um cliente "name", "fantasyName", "doc", "address", "city", "zipCode", "phone", "email", "contactName", "discount", "paymentTerm" pelo seu id.
 
 **RN**
-Caso o cliente não exista, deve ser retornado um erro. x
-Não deve ser possível alterar o name do cliente para um name já existente. x
-Permissões: TODO
+
+- [x] Caso o cliente não exista, deve ser retornado um erro.
+- [x] Não deve ser possível alterar o "name" e "fantasyName" do cliente para um já existente.
+- [ ] Permissões: ADMIN e SELLER
 
 ### Delete customer
 
 **RF**
-Deve ser possível deletar um cliente pelo seu id, porém ele não será deletado do banco de dados, apenas será marcado como "active" = false. x
+
+- [x] Deve ser possível deletar um cliente pelo seu id, porém ele não será deletado do banco de dados, apenas será marcado como "active" = false.
 
 **RN**
-Caso o cliente não exista, deve ser retornado um erro. x
-Permissões: TODO
+
+- [x] Caso o cliente não exista, deve ser retornado um erro.
+- [ ] Permissões: ADMIN

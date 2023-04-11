@@ -34,14 +34,14 @@ describe("Delete Customer Use Case", () => {
     customer = await customersRepositoryInMemory.create(customerData);
   });
   it("should be able to delete a customer", async () => {
-    await deleteCustomerUseCase.execute(customer.id);
+    await deleteCustomerUseCase.execute(customer.code!);
 
     expect(customersRepositoryInMemory.customers).toHaveLength(0);
   });
 
   it("should not be able to delete a inexistent customer", () => {
     expect(async () => {
-      await deleteCustomerUseCase.execute("invalid_id");
+      await deleteCustomerUseCase.execute(0);
     }).rejects.toEqual(new AppError("Customer not exists", 404));
   });
 });

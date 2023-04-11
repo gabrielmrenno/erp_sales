@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { ICreateCustomerDTO, IUpdateCustomerDTO } from "../../dtos/customer";
 import { Customer } from "../../entities/customer";
 import { AppError } from "../../errors/app-error";
@@ -11,7 +11,7 @@ let customer: Customer;
 let customer2: Customer;
 
 describe("Update Customer Use Case", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     customersRepositoryInMemory = new CustomersRepositoryInMemory();
     updateCustomerUseCase = new UpdateCustomerUseCase(
       customersRepositoryInMemory
@@ -21,7 +21,7 @@ describe("Update Customer Use Case", () => {
       name: "Customer Name",
       fantasyName: "Customer Fantasy Name",
       doc: "12345678900",
-      code: 123456,
+      code: 1,
       address: "Customer Address",
       phone: "12345678900",
       email: "",
@@ -36,7 +36,7 @@ describe("Update Customer Use Case", () => {
       name: "Customer Name2",
       fantasyName: "Customer Fantasy Name2",
       doc: "212345678900",
-      code: 123456,
+      code: 2,
       address: "Customer Address",
       phone: "12345678900",
       email: "",
@@ -52,7 +52,6 @@ describe("Update Customer Use Case", () => {
   });
   it("should be able to update a customer", async () => {
     const dataCustomerUpdated: IUpdateCustomerDTO = {
-      id: customer.id,
       name: "Customer Name Updated",
       fantasyName: "Customer Fantasy Name Updated",
       doc: "12345678900",
@@ -64,6 +63,7 @@ describe("Update Customer Use Case", () => {
       contactName: "Customer Contact Name Updated",
       discount: 0,
       paymentTerm: 0,
+      code: 1,
     };
 
     const updatedCustomer = await updateCustomerUseCase.execute(
@@ -79,7 +79,6 @@ describe("Update Customer Use Case", () => {
 
   it("should not be able to update an customer that does not exist", async () => {
     const dataCustomerUpdated: IUpdateCustomerDTO = {
-      id: "non existent customer id",
       name: "Non existent Customer Name",
       fantasyName: "Non existent Customer Fantasy Name",
       doc: "Non existent 12345678900",
@@ -91,6 +90,7 @@ describe("Update Customer Use Case", () => {
       contactName: "Non existent Customer Contact Name",
       discount: 0,
       paymentTerm: 0,
+      code: 0,
     };
 
     expect(async () => {
@@ -100,7 +100,6 @@ describe("Update Customer Use Case", () => {
 
   it("should not be able to update an customer with an existing name", async () => {
     const dataCustomerUpdated: IUpdateCustomerDTO = {
-      id: customer.id,
       name: "Customer Name2",
       fantasyName: "Customer Fantasy Name Updated",
       doc: "12345678900",
@@ -112,6 +111,7 @@ describe("Update Customer Use Case", () => {
       contactName: "Customer Contact Name Updated",
       discount: 0,
       paymentTerm: 0,
+      code: 1,
     };
 
     expect(async () => {
@@ -121,7 +121,6 @@ describe("Update Customer Use Case", () => {
 
   it("should not be able to update an customer with an existing fantasy name", async () => {
     const dataCustomerUpdated: IUpdateCustomerDTO = {
-      id: customer.id,
       name: "Customer Name",
       fantasyName: "Customer Fantasy Name2",
       doc: "12345678900",
@@ -133,6 +132,7 @@ describe("Update Customer Use Case", () => {
       contactName: "Customer Contact Name Updated",
       discount: 0,
       paymentTerm: 0,
+      code: 1,
     };
 
     expect(async () => {
@@ -144,7 +144,6 @@ describe("Update Customer Use Case", () => {
 
   it("should not be able to update an customer with an existing doc", async () => {
     const dataCustomerUpdated: IUpdateCustomerDTO = {
-      id: customer.id,
       name: "Customer Name",
       fantasyName: "Customer Fantasy Name",
       doc: "212345678900",
@@ -156,6 +155,7 @@ describe("Update Customer Use Case", () => {
       contactName: "Customer Contact Name Updated",
       discount: 0,
       paymentTerm: 0,
+      code: 1,
     };
 
     expect(async () => {
