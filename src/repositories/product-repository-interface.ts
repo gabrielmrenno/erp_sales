@@ -1,6 +1,6 @@
 import { ProductInfo } from "../entities/product-info";
 
-export interface IProductsRepository {
+export interface IProductsInfoRepository {
   create(data: ICreateProductInfo): Promise<ProductInfo>;
 
   findByName(name: string): Promise<ProductInfo | null>;

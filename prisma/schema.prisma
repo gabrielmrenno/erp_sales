@@ -46,7 +46,7 @@ model Customer {
   code        Int       @id @default(autoincrement())
   name        String    @unique
   fantasyName String    @unique
-  doc         String
+  doc         String    @unique
   email       String
   phone       String
   contactName String

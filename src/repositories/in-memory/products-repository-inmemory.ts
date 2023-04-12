@@ -1,7 +1,7 @@
 import { ProductInfo } from "../../entities/product-info";
-import { IProductsRepository } from "../product-repository-interface";
+import { IProductsInfoRepository } from "../product-repository-interface";
 
-export class ProductsRepositoryInMemory implements IProductsRepository {
+export class ProductsRepositoryInMemory implements IProductsInfoRepository {
   items: ProductInfo[] = [];
 
   async create(data: ICreateProductInfo): Promise<ProductInfo> {
