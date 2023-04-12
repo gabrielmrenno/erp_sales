@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { ResetPasswordUseCase } from "../../../useCases/users/reset-password-usecase";
-import { container } from "tsyringe";
 import { UsersRepository } from "../../../repositories/implementations/users-repository";
 
 export async function resetPassword(

@@ -4,9 +4,7 @@ import { IUsersRepository } from "../../repositories/users-repository-interface"
 import { ICreateUser } from "../../dtos/user-dtos";
 import { hash } from "bcrypt";
 import { AppError } from "../../errors/app-error";
-import { inject, injectable } from "tsyringe";
 
-@injectable()
 export class CreateUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 

@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { container } from "tsyringe";
 import { ICreateUser } from "../../../dtos/user-dtos";
 import { CreateUserUseCase } from "../../../useCases/users/create-user-usecase";
 import { UsersRepository } from "../../../repositories/implementations/users-repository";

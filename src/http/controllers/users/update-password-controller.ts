@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { UsersRepository } from "../../../repositories/implementations/users-repository";
 import { UpdatePasswordUseCase } from "../../../useCases/users/update-password-usecase";
-import { container } from "tsyringe";
 import { AppError } from "../../../errors/app-error";
 
 export async function updatePassword(

@@ -2,7 +2,6 @@ import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { AppError, StatusCode } from "../../errors/app-error";
 import { IUsersRepository } from "../../repositories/users-repository-interface";
-import { inject, injectable } from "tsyringe";
 
 interface IRequest {
   username: string;

@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { container } from "tsyringe";
 import { TurnAdminUseCase } from "../../../useCases/users/turn-admin-usecase";
 import { UsersRepository } from "../../../repositories/implementations/users-repository";
 

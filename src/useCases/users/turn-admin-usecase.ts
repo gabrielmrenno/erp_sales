@@ -1,9 +1,7 @@
 import { User } from "../../entities/user";
 import { AppError } from "../../errors/app-error";
 import { IUsersRepository } from "../../repositories/users-repository-interface";
-import { inject, injectable } from "tsyringe";
 
-@injectable()
 export class TurnAdminUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 

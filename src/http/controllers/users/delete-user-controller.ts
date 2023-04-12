@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { DeleteUserUseCase } from "../../../useCases/users/delete-user-usecase";
-import { container } from "tsyringe";
 import { UsersRepository } from "../../../repositories/implementations/users-repository";
 
 export async function deleteUser(

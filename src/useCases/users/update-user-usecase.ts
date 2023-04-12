@@ -2,9 +2,7 @@ import { IUpdateUser } from "../../dtos/user-dtos";
 import { User } from "../../entities/user";
 import { AppError } from "../../errors/app-error";
 import { IUsersRepository } from "../../repositories/users-repository-interface";
-import { inject, injectable } from "tsyringe";
 
-@injectable()
 export class UpdateUserUseCase {
   constructor(private readonly usersRepository: IUsersRepository) {}
 

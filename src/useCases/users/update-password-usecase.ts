@@ -2,14 +2,12 @@ import { hash } from "bcrypt";
 import { User } from "../../entities/user";
 import { AppError } from "../../errors/app-error";
 import { IUsersRepository } from "../../repositories/users-repository-interface";
-import { inject, injectable } from "tsyringe";
 
 interface IRequest {
   id: string;
   password: string;
 }
 
-@injectable()
 export class UpdatePasswordUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 

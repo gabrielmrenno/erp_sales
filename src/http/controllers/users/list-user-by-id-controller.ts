@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { AppError } from "../../../errors/app-error";
 import { UsersRepository } from "../../../repositories/implementations/users-repository";
 import { ListUserByIdUseCase } from "../../../useCases/users/list-user-by-id-usecase";
-import { container } from "tsyringe";
 
 const usersRepository = new UsersRepository();
 
