@@ -9,7 +9,7 @@ export interface IProductsInfoRepository {
   listAvailable(): Promise<ProductInfo[]>;
 
   update(code: number, data: IUpdateProductInfoDTO): Promise<ProductInfo>;
-  updateUnitPrice(code: number, unitPrice: number): Promise<ProductInfo>;
+  updateprice(code: number, price: number): Promise<ProductInfo>;
 
   delete(code: number): Promise<void>;
 }

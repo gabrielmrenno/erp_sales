@@ -18,7 +18,7 @@ describe("", () => {
       group: "Group 1",
       unit: "FD",
       weight: 10,
-      unitPrice: 10,
+      price: 10,
       code: 1,
     };
 
@@ -27,14 +27,14 @@ describe("", () => {
     const productUpdated = await updateProductUseCase.execute(product.code!, {
       name: "Product updated",
       group: "Group updated",
-      unitPrice: 20,
+      price: 20,
     });
 
     expect(productUpdated).toEqual(
       expect.objectContaining({
         name: "Product updated",
         group: "Group updated",
-        unitPrice: 20,
+        price: 20,
       })
     );
   });
@@ -44,7 +44,7 @@ describe("", () => {
       updateProductUseCase.execute(123, {
         name: "Product updated",
         group: "Group updated",
-        unitPrice: 20,
+        price: 20,
       })
     ).rejects.toEqual(new AppError("Product not found", 404));
   });

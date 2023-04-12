@@ -18,7 +18,7 @@ describe("DeleteProductUseCase", () => {
       group: "Group 1",
       unit: "FD",
       weight: 10,
-      unitPrice: 10,
+      price: 10,
       code: 1,
     });
 

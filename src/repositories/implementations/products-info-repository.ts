@@ -1,9 +1,13 @@
+import { prisma } from "../../database/prisma-client";
 import { ProductInfo } from "../../entities/product-info";
 import { IProductsInfoRepository } from "../product-repository-interface";
 
 export class ProductsInfoRepository implements IProductsInfoRepository {
-  create(data: ICreateProductInfo): Promise<ProductInfo> {
-    throw new Error("Method not implemented.");
+  async create(data: ICreateProductInfo): Promise<ProductInfo> {
+    const newProductInfo = new ProductInfo(data);
+    await prisma.productInfo.create({
+      data: newProductInfo,
+    });
   }
   findByName(name: string): Promise<ProductInfo | null> {
     throw new Error("Method not implemented.");
@@ -17,7 +21,7 @@ export class ProductsInfoRepository implements IProductsInfoRepository {
   update(code: number, data: IUpdateProductInfoDTO): Promise<ProductInfo> {
     throw new Error("Method not implemented.");
   }
-  updateUnitPrice(code: number, unitPrice: number): Promise<ProductInfo> {
+  updateprice(code: number, price: number): Promise<ProductInfo> {
     throw new Error("Method not implemented.");
   }
   delete(code: number): Promise<void> {
