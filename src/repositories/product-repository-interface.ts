@@ -8,8 +8,8 @@ export interface IProductsRepository {
 
   listAvailable(): Promise<ProductInfo[]>;
 
-  update(id: string, data: IUpdateProductInfoDTO): Promise<ProductInfo>;
-  updateUnitPrice(id: string, unitPrice: number): Promise<ProductInfo>;
+  update(code: number, data: IUpdateProductInfoDTO): Promise<ProductInfo>;
+  updateUnitPrice(code: number, unitPrice: number): Promise<ProductInfo>;
 
-  delete(id: string): Promise<void>;
+  delete(code: number): Promise<void>;
 }

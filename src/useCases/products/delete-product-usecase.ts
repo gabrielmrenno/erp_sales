@@ -4,13 +4,13 @@ import { IProductsRepository } from "../../repositories/product-repository-inter
 export class DeleteProductUseCase {
   constructor(private productsRepository: IProductsRepository) {}
 
-  async execute(id: string): Promise<void> {
-    const productExists = await this.productsRepository.findById(id);
+  async execute(code: number): Promise<void> {
+    const productExists = await this.productsRepository.findByCode(code);
 
     if (!productExists) {
       throw new AppError("Product not found", 404);
     }
 
-    await this.productsRepository.delete(id);
+    await this.productsRepository.delete(code);
   }
 }

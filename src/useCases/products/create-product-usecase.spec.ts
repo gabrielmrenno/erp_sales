@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { Product } from "../../entities/product";
+import { ProductInfo } from "../../entities/product-info";
 import { AppError } from "../../errors/app-error";
 import { ProductsRepositoryInMemory } from "../../repositories/in-memory/products-repository-inmemory";
 import { CreateProductUseCase } from "./create-product-usecase";
@@ -13,26 +13,41 @@ describe("Create PackageProduct UseCase", () => {
     createProductUseCase = new CreateProductUseCase(productsRepository);
   });
   it("should be able create a packageProduct", async () => {
-    const productData: ICreateProduct = {
+    const productData: ICreateProductInfo = {
       name: "Product 1",
+      description: "Description 1",
       group: "Group 1",
+      unit: "FD",
+      weight: 10,
       unitPrice: 10,
+      code: 1,
     };
 
     const product = await createProductUseCase.execute(productData);
 
-    expect(product).toBeInstanceOf(Product);
-    expect(product.name).toBe(productData.name);
-    expect(product.group).toBe(productData.group);
-    expect(product.unitPrice).toBe(productData.unitPrice);
-    expect(product.active).toBe(true);
+    expect(product).toBeInstanceOf(ProductInfo);
+    expect(product).toEqual(
+      expect.objectContaining({
+        name: "Product 1",
+        description: "Description 1",
+        group: "Group 1",
+        unit: "FD",
+        weight: 10,
+        unitPrice: 10,
+        code: 1,
+      })
+    );
   });
 
   it("should not create a product with the same name", async () => {
-    const productData: ICreateProduct = {
+    const productData: ICreateProductInfo = {
       name: "Product 1",
+      description: "Description 1",
       group: "Group 1",
+      unit: "FD",
+      weight: 10,
       unitPrice: 10,
+      code: 1,
     };
 
     await expect(

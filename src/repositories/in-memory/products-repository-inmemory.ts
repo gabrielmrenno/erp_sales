@@ -42,33 +42,38 @@ export class ProductsRepositoryInMemory implements IProductsRepository {
     return products;
   }
 
-  async update(id: string, data: IUpdateProductDTO): Promise<Product> {
-    const product = await this.findById(id);
-    const index = this.products.findIndex((product) => product.id === id);
+  async update(
+    code: number,
+    data: IUpdateProductInfoDTO
+  ): Promise<ProductInfo> {
+    const product = await this.findByCode(code);
+    const index = this.items.findIndex((product) => product.code === code);
 
     Object.assign(product!, data);
 
-    this.products[index] = product!;
+    this.items[index] = product!;
 
     return product!;
   }
 
-  async updateUnitPrice(id: string, unitPrice: number): Promise<Product> {
-    const updatedProduct = await this.findById(id);
-    const index = this.products.findIndex((product) => product.id === id);
+  async updateUnitPrice(code: number, unitPrice: number): Promise<ProductInfo> {
+    const updatedProduct = await this.findByCode(code);
+    const index = this.items.findIndex((product) => product.code === code);
 
     Object.assign(updatedProduct!, {
       unitPrice,
     });
 
-    this.products[index] = updatedProduct!;
+    this.items[index] = updatedProduct!;
 
     return updatedProduct!;
   }
 
-  async delete(id: string): Promise<void> {
-    const index = await this.products.findIndex((product) => product.id === id);
+  async delete(code: number): Promise<void> {
+    const index = await this.items.findIndex(
+      (product) => product.code === code
+    );
 
-    this.products.splice(index, 1);
+    this.items.splice(index, 1);
   }
 }

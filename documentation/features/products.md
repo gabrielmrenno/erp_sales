@@ -6,7 +6,7 @@
 
 **RF**
 
-- [ ] Deve ser possível criar um novo produto.
+- [x] Deve ser possível criar um novo produto.
   - code, name, description, group, unit, price, weight
 
 **RN**

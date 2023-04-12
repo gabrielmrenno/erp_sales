@@ -16,12 +16,16 @@ describe("", () => {
   it("should be able to update an product", async () => {
     const product = await productsRepository.create({
       name: "Product 1",
-      unitPrice: 10,
+      description: "Description 1",
       group: "Group 1",
+      unit: "FD",
+      weight: 10,
+      unitPrice: 10,
+      code: 1,
     });
 
     const updatedProduct = await updateUnitPriceProductUseCase.execute(
-      product.id,
+      product.code!,
       20
     );
 
@@ -29,8 +33,8 @@ describe("", () => {
   });
 
   it("should not be able to update an product that does not exist", async () => {
-    await expect(
-      updateUnitPriceProductUseCase.execute("non-existing-id", 20)
-    ).rejects.toEqual(new AppError("Product not found", 404));
+    await expect(updateUnitPriceProductUseCase.execute(0, 20)).rejects.toEqual(
+      new AppError("Product not found", 404)
+    );
   });
 });
