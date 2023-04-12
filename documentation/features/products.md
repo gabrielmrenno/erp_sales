@@ -1,43 +1,51 @@
 # Regras de negócio
 
-## Product
+## Product Info
 
 ### Create a new product
 
 **RF**
-Deve ser possível criar um novo produto.
+
+- [x] Deve ser possível criar um novo produto.
+  - code, name, description, group, unit, price, weight
 
 **RN**
-O produto não pode ser criado com o name já existente. x
-Para se criar um produto, deve-se ter um produto com isAdmin como "true". TODO
+
+- [x] O produto não pode ser criado com o "name" já existente.
+- [ ] Para se criar um produto, deve-se ter um produto com isAdmin como "true". TODO
 
 ### List products
 
 **RF**
-Deve ser possível listar todos os produtos ativos. x
-Deve ser possível listar um produto pelo seu id. x
+
+- [x] Deve ser possível listar todos os produtos ativos.
+- [x] Deve ser possível listar um produto pelo seu id.
 
 **RN**
-Caso o produto não exista, deve ser retornado um erro. x
-Deve ser admin para listar usuários. TODO
+
+- [x] Caso o produto não exista, deve ser retornado um erro.
 
 ### Update product
 
 **RF**
-Deve ser possível atualizar um produto name, group, unitPrice pelo seu id. x
-Deve ser possível atualizar o unitPrice do produto pelo seu id.
-Permissões: TODO
+
+- [x] Deve ser possível atualizar um produto name, group, unitPrice pelo seu id.
+- [ ] Deve ser possível atualizar o unitPrice do produto pelo seu id.
+- [ ] Permissões: TODO
 
 **RN**
-Caso o produto não exista, deve ser retornado um erro. x
-Não deve ser possível alterar o name do produto para um name já existente. x
-Permissões: TODO
+
+- [x] Caso o produto não exista, deve ser retornado um erro.
+- [x] Não deve ser possível alterar o name do produto para um name já existente.
+- [ ] Permissões: TODO
 
 ### Delete product
 
 **RF**
-Deve ser possível deletar um produto pelo seu id, porém ele não será deletado do banco de dados, apenas será marcado como "deleted". x
+
+- [x] Deve ser possível deletar um produto pelo seu id, porém ele não será deletado do banco de dados, apenas será marcado como "deleted".
 
 **RN**
-Caso o produto não exista, deve ser retornado um erro. x
-Permissões: TODO
+
+- [x] Caso o produto não exista, deve ser retornado um erro.
+- [ ] Permissões: TODO

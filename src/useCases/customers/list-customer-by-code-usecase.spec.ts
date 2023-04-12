@@ -3,16 +3,16 @@ import { ICreateCustomerDTO } from "../../dtos/customer";
 import { Customer } from "../../entities/customer";
 import { AppError } from "../../errors/app-error";
 import { CustomersRepositoryInMemory } from "../../repositories/in-memory/customers-repository-inmemory";
-import { ListCustomerByIdUseCase } from "./list-customer-byid-usecase";
+import { ListCustomerByCodeUseCase } from "./list-customer-by-code-usecase";
 
 let customersRepositoryInMemory: CustomersRepositoryInMemory;
-let listCustomerByIdUseCase: ListCustomerByIdUseCase;
+let listCustomerCodeIdUseCase: ListCustomerByCodeUseCase;
 let customerCreated: Customer;
 
-describe("List customer by id", () => {
+describe("List customer by code", () => {
   beforeAll(async () => {
     customersRepositoryInMemory = new CustomersRepositoryInMemory();
-    listCustomerByIdUseCase = new ListCustomerByIdUseCase(
+    listCustomerCodeIdUseCase = new ListCustomerByCodeUseCase(
       customersRepositoryInMemory
     );
 
@@ -34,14 +34,14 @@ describe("List customer by id", () => {
     customerCreated = await customersRepositoryInMemory.create(customerData);
   });
   it("should be able to list customer by id", async () => {
-    const user = await listCustomerByIdUseCase.execute(customerCreated.id);
+    const user = await listCustomerCodeIdUseCase.execute(customerCreated.code!);
 
     expect(user).toBeInstanceOf(Customer);
   });
 
   it("should not be able to list customer by id if id doesn't exist", async () => {
     expect(async () => {
-      await listCustomerByIdUseCase.execute("inexistent_id");
+      await listCustomerCodeIdUseCase.execute(0);
     }).rejects.toEqual(new AppError("Customer not found", 404));
   });
 });

@@ -1,4 +1,4 @@
-import { Product } from "../../entities/product";
+import { Product } from "../../entities/product-info";
 import { AppError } from "../../errors/app-error";
 import { IProductsRepository } from "../../repositories/product-repository-interface";
 
