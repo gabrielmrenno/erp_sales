@@ -1,3 +1,4 @@
+import { Decimal } from "@prisma/client/runtime";
 import { prisma } from "../../database/prisma-client";
 import { ProductInfo } from "../../entities/product-info";
 import { IProductsInfoRepository } from "../product-repository-interface";
@@ -5,26 +6,108 @@ import { IProductsInfoRepository } from "../product-repository-interface";
 export class ProductsInfoRepository implements IProductsInfoRepository {
   async create(data: ICreateProductInfo): Promise<ProductInfo> {
     const newProductInfo = new ProductInfo(data);
-    await prisma.productInfo.create({
+    const product = await prisma.productInfo.create({
       data: newProductInfo,
     });
+
+    return {
+      ...product,
+      price: product.price.toNumber(),
+      weight: product.weight.toNumber(),
+    };
   }
-  findByName(name: string): Promise<ProductInfo | null> {
-    throw new Error("Method not implemented.");
+
+  async findByName(name: string): Promise<ProductInfo | null> {
+    const product = await prisma.productInfo.findUnique({
+      where: {
+        name,
+      },
+    });
+
+    if (!product) {
+      return null;
+    }
+
+    return {
+      ...product,
+      price: product.price.toNumber(),
+      weight: product.weight.toNumber(),
+    };
   }
-  findByCode(code: number): Promise<ProductInfo | null> {
-    throw new Error("Method not implemented.");
+  async findByCode(code: number): Promise<ProductInfo | null> {
+    const product = await prisma.productInfo.findUnique({
+      where: {
+        code,
+      },
+    });
+
+    if (!product) {
+      return null;
+    }
+
+    return {
+      ...product,
+      price: product.price.toNumber(),
+      weight: product.weight.toNumber(),
+    };
   }
-  listAvailable(): Promise<ProductInfo[]> {
-    throw new Error("Method not implemented.");
+  async listAvailable(): Promise<ProductInfo[]> {
+    const products = await prisma.productInfo.findMany({
+      where: {
+        active: true,
+      },
+    });
+
+    const productsFormatted = products.map((item) => ({
+      ...item,
+      price: item.price.toNumber(),
+      weight: item.weight.toNumber(),
+    }));
+
+    return productsFormatted;
   }
-  update(code: number, data: IUpdateProductInfoDTO): Promise<ProductInfo> {
-    throw new Error("Method not implemented.");
+  async update(
+    code: number,
+    data: IUpdateProductInfoDTO
+  ): Promise<ProductInfo> {
+    const product = await prisma.productInfo.update({
+      where: {
+        code,
+      },
+      data,
+    });
+
+    return {
+      ...product,
+      price: product.price.toNumber(),
+      weight: product.weight.toNumber(),
+    };
   }
-  updateprice(code: number, price: number): Promise<ProductInfo> {
-    throw new Error("Method not implemented.");
+  async updatePrice(code: number, price: number): Promise<ProductInfo> {
+    const product = await prisma.productInfo.update({
+      where: {
+        code,
+      },
+      data: {
+        price,
+      },
+    });
+
+    return {
+      ...product,
+      price: product.price.toNumber(),
+      weight: product.weight.toNumber(),
+    };
   }
-  delete(code: number): Promise<void> {
-    throw new Error("Method not implemented.");
+  async delete(code: number): Promise<void> {
+    await prisma.productInfo.update({
+      where: {
+        code,
+      },
+      data: {
+        deletedAt: new Date(),
+        active: false,
+      },
+    });
   }
 }

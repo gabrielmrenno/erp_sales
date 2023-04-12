@@ -56,7 +56,7 @@ export class ProductsRepositoryInMemory implements IProductsInfoRepository {
     return product!;
   }
 
-  async updateprice(code: number, price: number): Promise<ProductInfo> {
+  async updatePrice(code: number, price: number): Promise<ProductInfo> {
     const updatedProduct = await this.findByCode(code);
     const index = this.items.findIndex((product) => product.code === code);
 
