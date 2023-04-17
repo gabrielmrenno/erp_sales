@@ -22,6 +22,7 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   deletedAt     DateTime?
+  Order         Order[]
 
   @@map("user")
 }
@@ -38,6 +39,8 @@ model ProductInfo {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   deletedAt   DateTime?
+
+  OrderedProducts OrderedProducts[]
 
   @@map("productInfo")
 }
@@ -59,6 +62,7 @@ model Customer {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   deletedAt   DateTime?
+  Order       Order[]
 
   @@map("customer")
 }
@@ -66,4 +70,32 @@ model Customer {
 enum unit {
   FD
   SC
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+
+  OrderedProducts OrderedProducts[]
+
+  deliveryDate  DateTime
+  customer      Customer @relation(fields: [customerCode], references: [code])
+  customerCode  Int
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  paymentStatus String
+  paymentDate   DateTime
+
+  active    Boolean
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model OrderedProducts {
+  order           Order       @relation(fields: [orderId], references: [id])
+  orderId         Int
+  productInfo     ProductInfo @relation(fields: [productInfoCode], references: [code])
+  productInfoCode Int
+
+  @@id([orderId, productInfoCode])
 }

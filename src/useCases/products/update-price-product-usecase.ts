@@ -12,7 +12,7 @@ export class UpdatePriceProductUseCase {
       throw new AppError("Product not found", 404);
     }
 
-    const updatedProduct = this.productsRepository.updateprice(code, price);
+    const updatedProduct = this.productsRepository.updatePrice(code, price);
 
     return updatedProduct;
   }
