@@ -5,9 +5,10 @@ export class Order {
   totalValue: number;
   totalWeight: number;
 
-  deliveryDate: Date;
+  deliveryDate?: Date;
   customerId: string;
   userId: string;
+  dueDate?: Date;
   paymentStatus: string;
   paymentDate: string;
 
@@ -26,6 +27,7 @@ export class Order {
     this.deliveryDate = data.deliveryDate;
     this.customerId = data.customerId;
     this.userId = data.userId;
+    this.dueDate = data.dueDate;
     this.paymentStatus = data.paymentStatus;
     this.paymentDate = data.paymentDate;
 

@@ -77,13 +77,13 @@ model Order {
 
   OrderedProducts OrderedProducts[]
 
-  deliveryDate  DateTime
-  customer      Customer @relation(fields: [customerCode], references: [code])
+  deliveryDate  DateTime?
+  customer      Customer  @relation(fields: [customerCode], references: [code])
   customerCode  Int
-  user          User     @relation(fields: [userId], references: [id])
+  user          User      @relation(fields: [userId], references: [id])
   userId        String
   paymentStatus String
-  paymentDate   DateTime
+  paymentDate   DateTime?
 
   active    Boolean
   createdAt DateTime  @default(now())
@@ -96,6 +96,8 @@ model OrderedProducts {
   orderId         Int
   productInfo     ProductInfo @relation(fields: [productInfoCode], references: [code])
   productInfoCode Int
+
+  amount Int
 
   @@id([orderId, productInfoCode])
 }

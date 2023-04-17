@@ -2,7 +2,7 @@ import { IFindUserByUniqueValues, IUpdateUser } from "../dtos/user-dtos";
 import { User } from "../entities/user";
 
 export interface IUsersRepository {
-  save(user: User): Promise<void>;
+  save(user: User): Promise<User>;
 
   findByUniqueValues({
     name,

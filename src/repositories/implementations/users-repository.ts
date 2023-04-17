@@ -5,10 +5,12 @@ import { User } from "../../entities/user";
 import { IUsersRepository } from "../users-repository-interface";
 
 export class UsersRepository implements IUsersRepository {
-  async save(user: User): Promise<void> {
-    await prisma.user.create({
+  async save(user: User) {
+    const newUser = await prisma.user.create({
       data: user,
     });
+
+    return newUser;
   }
 
   async findByUniqueValues({

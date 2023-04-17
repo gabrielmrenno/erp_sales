@@ -11,5 +11,16 @@
 
 **RN**
 
-- [ ] O cliente não pode ser criado com o "name", "fantasyName", "doc" e "code" já existente.
+- [ ] Permissões: ADMIN e SELLER
+
+### List orders and a order
+
+**RF**
+
+- [ ] Deve ser possível listar todos os pedidos ou um específico a partir do código.
+
+**RN**
+
+- [ ] O dueDate deve ser igual ao dia deliveryDate + customer.paymentTerms;
+- [ ] Deve-se calcular o valor e o peso total dos itens do pedido;
 - [ ] Permissões: ADMIN e SELLER

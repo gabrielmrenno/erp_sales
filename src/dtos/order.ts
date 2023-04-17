@@ -1,9 +1,10 @@
 interface ICreateOrder {
-  id: number;
+  id?: number;
 
   items: string[];
   totalValue: number;
   totalWeight: number;
+  dueDate: Date;
 
   deliveryDate: Date;
   customerId: string;
