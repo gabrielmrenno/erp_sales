@@ -12,5 +12,7 @@ interface IUpdateProductInfoDTO {
   name?: string;
   group?: string;
   price?: number;
-  // TODO: description, weight, unit
+  weight?: number;
+  description?: string;
+  unit?: "FD" | "SC";
 }

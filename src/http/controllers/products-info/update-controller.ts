@@ -10,7 +10,14 @@ export async function updateProductInfo(request: Request, response: Response) {
   );
 
   const { code } = request.params;
-  const { name, group, price }: IUpdateProductInfoDTO = request.body;
+  const {
+    name,
+    group,
+    price,
+    description,
+    unit,
+    weight,
+  }: IUpdateProductInfoDTO = request.body;
 
   const codeFormatted = Number(code);
 
@@ -22,6 +29,9 @@ export async function updateProductInfo(request: Request, response: Response) {
     name,
     group,
     price,
+    description,
+    unit,
+    weight,
   });
 
   return response.status(200).json({

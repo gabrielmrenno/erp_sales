@@ -30,6 +30,9 @@ describe("", () => {
         name: "Product updated",
         group: "Group updated",
         price: 20,
+        description: "Description updated",
+        unit: "SC",
+        weight: 20,
       }
     );
 
@@ -38,6 +41,9 @@ describe("", () => {
         name: "Product updated",
         group: "Group updated",
         price: 20,
+        description: "Description updated",
+        unit: "SC",
+        weight: 20,
       })
     );
   });
@@ -48,6 +54,9 @@ describe("", () => {
         name: "Product updated",
         group: "Group updated",
         price: 20,
+        description: "Description updated",
+        unit: "SC",
+        weight: 20,
       })
     ).rejects.toEqual(new AppError("Product not found", 404));
   });
