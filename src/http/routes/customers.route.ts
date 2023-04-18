@@ -1,3 +1,9 @@
 import { Router } from "express";
+import { isAuthenticated } from "../../middleware/isAuthenticated";
+import { createCustomer } from "../controllers/customers/create-controller";
 
-const customerRoutes = Router();
+export const customerRoutes = Router();
+
+customerRoutes.use(isAuthenticated);
+
+customerRoutes.post("/", createCustomer);
