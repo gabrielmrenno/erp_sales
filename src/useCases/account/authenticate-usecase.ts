@@ -22,13 +22,13 @@ export class AuthenticateUseCase {
     const user = await this.usersRepository.findByUniqueValues({ username });
 
     if (!user) {
-      throw new AppError("User not found");
+      throw new AppError("Invalid Credentials");
     }
 
     const passwordMatch = await compare(password, user.password);
 
     if (!passwordMatch) {
-      throw new AppError("Incorrect password");
+      throw new AppError("Invalid Credentials");
     }
 
     if (process.env.JWT_SECRET === undefined) {

@@ -89,6 +89,8 @@ model Order {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+
+  @@map("order")
 }
 
 model OrderedProducts {
@@ -100,4 +102,5 @@ model OrderedProducts {
   amount Int
 
   @@id([orderId, productInfoCode])
+  @@map("ordered_products")
 }
