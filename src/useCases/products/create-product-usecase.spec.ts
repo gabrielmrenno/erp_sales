@@ -2,15 +2,15 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { ProductInfo } from "../../entities/product-info";
 import { AppError } from "../../errors/app-error";
 import { ProductsRepositoryInMemory } from "../../repositories/in-memory/products-repository-inmemory";
-import { CreateProductUseCase } from "./create-product-usecase";
+import { CreateProductInfoUseCase } from "./create-product-usecase";
 
 let productsRepository: ProductsRepositoryInMemory;
-let createProductUseCase: CreateProductUseCase;
+let createProductInfoUseCase: CreateProductInfoUseCase;
 
 describe("Create PackageProduct UseCase", () => {
   beforeAll(() => {
     productsRepository = new ProductsRepositoryInMemory();
-    createProductUseCase = new CreateProductUseCase(productsRepository);
+    createProductInfoUseCase = new CreateProductInfoUseCase(productsRepository);
   });
   it("should be able create a packageProduct", async () => {
     const productData: ICreateProductInfo = {
@@ -23,7 +23,7 @@ describe("Create PackageProduct UseCase", () => {
       code: 1,
     };
 
-    const product = await createProductUseCase.execute(productData);
+    const product = await createProductInfoUseCase.execute(productData);
 
     expect(product).toBeInstanceOf(ProductInfo);
     expect(product).toEqual(
@@ -51,7 +51,7 @@ describe("Create PackageProduct UseCase", () => {
     };
 
     await expect(
-      createProductUseCase.execute(productData)
+      createProductInfoUseCase.execute(productData)
     ).rejects.toBeInstanceOf(AppError);
   });
 });
