@@ -21,8 +21,8 @@ productsInfoRoutes.get("/all", listProductsInfo);
 productsInfoRoutes.get("/:code", getProductsInfoByCode);
 
 // Update
-productsInfoRoutes.put("/:code", updateProductInfo);
-productsInfoRoutes.patch("/:code", updateProductInfoPrice);
+productsInfoRoutes.put("/:code", isAdmin, updateProductInfo);
+productsInfoRoutes.patch("/:code", isAdmin, updateProductInfoPrice);
 
 // Delete
-productsInfoRoutes.delete("/:code", deleteProductInfo);
+productsInfoRoutes.delete("/:code", isAdmin, deleteProductInfo);
