@@ -2,7 +2,7 @@ import { ProductInfo } from "../../entities/product-info";
 import { AppError } from "../../errors/app-error";
 import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
 
-export class UpdatePriceProductUseCase {
+export class UpdatePriceProductInfoUseCase {
   constructor(private productsRepository: IProductsInfoRepository) {}
 
   async execute(code: number, price: number): Promise<ProductInfo> {

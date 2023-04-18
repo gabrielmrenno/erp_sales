@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
 import { ProductsInfoRepository } from "../../../repositories/implementations/products-info-repository";
 import { AppError } from "../../../errors/app-error";
-import { UpdateProductUseCase } from "../../../useCases/products/update-product-usecase";
-import { UpdatePriceProductUseCase } from "../../../useCases/products/update-price-product-usecase";
+import { UpdateProductInfoUseCase } from "../../../useCases/products/update-product-usecase";
+import { UpdatePriceProductInfoUseCase } from "../../../useCases/products/update-price-product-usecase";
 
 export async function updateProductInfoPrice(
   request: Request,
   response: Response
 ) {
   const productsInfoRepository = new ProductsInfoRepository();
-  const updateProductUseCase = new UpdatePriceProductUseCase(
+  const updateProductInfoUseCase = new UpdatePriceProductInfoUseCase(
     productsInfoRepository
   );
 
@@ -22,7 +22,10 @@ export async function updateProductInfoPrice(
     throw new AppError("Invalid code");
   }
 
-  const productInfo = await updateProductUseCase.execute(codeFormatted, price);
+  const productInfo = await updateProductInfoUseCase.execute(
+    codeFormatted,
+    price
+  );
 
   return response.status(200).json({
     message: "Product info updated successfully",

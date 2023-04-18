@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import { ProductsInfoRepository } from "../../../repositories/implementations/products-info-repository";
 import { AppError } from "../../../errors/app-error";
-import { DeleteProductUseCase } from "../../../useCases/products/delete-product-usecase";
+import { DeleteProductInfoUseCase } from "../../../useCases/products/delete-product-usecase";
 
 export async function deleteProductInfo(request: Request, response: Response) {
   const productsInfoRepository = new ProductsInfoRepository();
-  const deleteProductUseCase = new DeleteProductUseCase(productsInfoRepository);
+  const deleteProductInfoUseCase = new DeleteProductInfoUseCase(
+    productsInfoRepository
+  );
 
   const { code } = request.params;
 
@@ -15,7 +17,7 @@ export async function deleteProductInfo(request: Request, response: Response) {
     throw new AppError("Invalid code");
   }
 
-  await deleteProductUseCase.execute(codeFormatted);
+  await deleteProductInfoUseCase.execute(codeFormatted);
 
   return response.status(200).json({
     message: "Product info deleted successfully",

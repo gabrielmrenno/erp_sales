@@ -1,7 +1,7 @@
 import { AppError } from "../../errors/app-error";
 import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
 
-export class DeleteProductUseCase {
+export class DeleteProductInfoUseCase {
   constructor(private productsRepository: IProductsInfoRepository) {}
 
   async execute(code: number): Promise<void> {

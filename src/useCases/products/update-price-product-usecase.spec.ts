@@ -1,15 +1,15 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { AppError } from "../../errors/app-error";
 import { ProductsRepositoryInMemory } from "../../repositories/in-memory/products-repository-inmemory";
-import { UpdatePriceProductUseCase } from "./update-price-product-usecase";
+import { UpdatePriceProductInfoUseCase } from "./update-price-product-usecase";
 
 let productsRepository: ProductsRepositoryInMemory;
-let updatePriceProductUseCase: UpdatePriceProductUseCase;
+let updatePriceProductInfoUseCase: UpdatePriceProductInfoUseCase;
 
 describe("", () => {
   beforeAll(() => {
     productsRepository = new ProductsRepositoryInMemory();
-    updatePriceProductUseCase = new UpdatePriceProductUseCase(
+    updatePriceProductInfoUseCase = new UpdatePriceProductInfoUseCase(
       productsRepository
     );
   });
@@ -24,7 +24,7 @@ describe("", () => {
       code: 1,
     });
 
-    const updatedProduct = await updatePriceProductUseCase.execute(
+    const updatedProduct = await updatePriceProductInfoUseCase.execute(
       product.code!,
       20
     );
@@ -33,7 +33,7 @@ describe("", () => {
   });
 
   it("should not be able to update an product that does not exist", async () => {
-    await expect(updatePriceProductUseCase.execute(0, 20)).rejects.toEqual(
+    await expect(updatePriceProductInfoUseCase.execute(0, 20)).rejects.toEqual(
       new AppError("Product not found", 404)
     );
   });

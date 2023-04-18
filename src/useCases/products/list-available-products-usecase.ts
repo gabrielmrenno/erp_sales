@@ -1,7 +1,7 @@
 import { ProductInfo } from "../../entities/product-info";
 import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
 
-export class ListAvailableProductsUseCase {
+export class ListAvailableProductsInfoUseCase {
   constructor(private productsRepository: IProductsInfoRepository) {}
 
   async execute(): Promise<ProductInfo[]> {

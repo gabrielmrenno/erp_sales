@@ -1,15 +1,15 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { AppError } from "../../errors/app-error";
 import { ProductsRepositoryInMemory } from "../../repositories/in-memory/products-repository-inmemory";
-import { UpdateProductUseCase } from "./update-product-usecase";
+import { UpdateProductInfoUseCase } from "./update-product-usecase";
 
 let productsRepository: ProductsRepositoryInMemory;
-let updateProductUseCase: UpdateProductUseCase;
+let updateProductInfoUseCase: UpdateProductInfoUseCase;
 
 describe("", () => {
   beforeAll(() => {
     productsRepository = new ProductsRepositoryInMemory();
-    updateProductUseCase = new UpdateProductUseCase(productsRepository);
+    updateProductInfoUseCase = new UpdateProductInfoUseCase(productsRepository);
   });
   it("should be able to update an product", async () => {
     const productData: ICreateProductInfo = {
@@ -24,11 +24,14 @@ describe("", () => {
 
     const product = await productsRepository.create(productData);
 
-    const productUpdated = await updateProductUseCase.execute(product.code!, {
-      name: "Product updated",
-      group: "Group updated",
-      price: 20,
-    });
+    const productUpdated = await updateProductInfoUseCase.execute(
+      product.code!,
+      {
+        name: "Product updated",
+        group: "Group updated",
+        price: 20,
+      }
+    );
 
     expect(productUpdated).toEqual(
       expect.objectContaining({
@@ -41,7 +44,7 @@ describe("", () => {
 
   it("should not be able to update an product that does not exist", async () => {
     await expect(
-      updateProductUseCase.execute(123, {
+      updateProductInfoUseCase.execute(123, {
         name: "Product updated",
         group: "Group updated",
         price: 20,
