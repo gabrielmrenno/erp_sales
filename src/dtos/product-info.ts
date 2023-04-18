@@ -12,4 +12,5 @@ interface IUpdateProductInfoDTO {
   name?: string;
   group?: string;
   price?: number;
+  // TODO: description, weight, unit
 }

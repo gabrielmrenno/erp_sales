@@ -12,6 +12,7 @@ export class UpdatePriceProductUseCase {
       throw new AppError("Product not found", 404);
     }
 
+    // TODO: make an updateMany on price
     const updatedProduct = this.productsRepository.updatePrice(code, price);
 
     return updatedProduct;
