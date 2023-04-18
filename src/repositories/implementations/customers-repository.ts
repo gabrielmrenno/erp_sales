@@ -58,16 +58,20 @@ export class CustomersRepository implements ICustomersRepository {
   }: ListCustomersParams): Promise<Customer[]> {
     const customers = await prisma.customer.findMany({
       where: {
-        active,
-        fantasyName: {
-          contains: stringQuery,
-        },
-        doc: {
-          contains: stringQuery,
-        },
-        code: {
-          equals: numberQuery,
-        },
+        active: active !== undefined ? active : undefined,
+        fantasyName:
+          stringQuery !== "undefined"
+            ? {
+                contains: stringQuery,
+                mode: "insensitive",
+              }
+            : undefined,
+        code:
+          numberQuery !== undefined && !isNaN(numberQuery)
+            ? {
+                equals: numberQuery,
+              }
+            : undefined,
       },
       take: 20,
       skip: (page - 1) * 20,
