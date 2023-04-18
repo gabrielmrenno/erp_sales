@@ -4,6 +4,7 @@ import { createCustomer } from "../controllers/customers/create-controller";
 import { listCustomers } from "../controllers/customers/list-controller";
 import { listCustomersByCode } from "../controllers/customers/list-by-code-controller";
 import { updateCustomer } from "../controllers/customers/update-controller";
+import { deleteCustomer } from "../controllers/customers/delete-controller";
 
 export const customerRoutes = Router();
 
@@ -18,3 +19,6 @@ customerRoutes.get("/:code", listCustomersByCode);
 
 // Update
 customerRoutes.put("/:code", updateCustomer);
+
+// Delete
+customerRoutes.delete("/:code", deleteCustomer);
