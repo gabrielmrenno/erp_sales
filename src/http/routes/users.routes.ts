@@ -42,8 +42,7 @@ userRoutes.put(
 );
 
 userRoutes.patch(
-  "/user/:id/update-password",
-  isAdmin,
+  "/user/update-password",
   updateUserPasswordSchema,
   validRequest,
   updatePassword

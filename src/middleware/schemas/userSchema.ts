@@ -88,12 +88,6 @@ export const resetPasswordSchema = checkSchema({
 });
 
 export const updateUserPasswordSchema = checkSchema({
-  id: {
-    in: ["params"],
-    isString: true,
-    errorMessage: "Id is required",
-    notEmpty: true,
-  },
   password: {
     in: ["body"],
     isString: true,

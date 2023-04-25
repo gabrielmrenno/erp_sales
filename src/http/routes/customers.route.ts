@@ -16,7 +16,7 @@ customerRoutes.post("/", createCustomer);
 
 // Read
 customerRoutes.get("/all", listCustomers);
-customerRoutes.get("/user/:code", listCustomersByCode);
+customerRoutes.get("/customer/:code", listCustomersByCode);
 
 // Update
 customerRoutes.put("/:code", updateCustomer);
@@ -25,4 +25,4 @@ customerRoutes.put("/:code", updateCustomer);
 customerRoutes.delete("/:code", deleteCustomer);
 
 // Others
-customerRoutes.get("/getInfo", getInfoByCNPJCustomer);
+customerRoutes.get("/getInfo/:doc", getInfoByCNPJCustomer);

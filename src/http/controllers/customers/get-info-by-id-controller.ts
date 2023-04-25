@@ -7,7 +7,7 @@ export async function getInfoByCNPJCustomer(
 ) {
   const getInfoByCnpjUseCase = new GetInfoByCnpj();
 
-  const { doc } = request.body;
+  const { doc } = request.params;
 
   const data = await getInfoByCnpjUseCase.execute(doc);
 

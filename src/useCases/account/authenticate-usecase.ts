@@ -11,7 +11,7 @@ interface IRequest {
 interface IResponse {
   idUser: string;
   role: string;
-  isAdmin: boolean;
+  resetPassword: boolean;
   token: string;
 }
 
@@ -42,10 +42,10 @@ export class AuthenticateUseCase {
       expiresIn: "1d",
     });
 
-    const data = {
+    const data: IResponse = {
       idUser: user.id,
       role: user.role,
-      isAdmin: user.isAdmin,
+      resetPassword: user.resetPassword,
       token,
     };
 

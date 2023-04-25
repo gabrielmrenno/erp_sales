@@ -12,7 +12,7 @@ async function isAdmin(
 
   const user = await usersRepository.findById(id);
 
-  if (!user?.isAdmin) {
+  if (user?.role !== "ADMIN") {
     return response.status(401).json({ error: "User is not authorized" });
   }
 

@@ -7,7 +7,12 @@ import { IUsersRepository } from "../users-repository-interface";
 export class UsersRepository implements IUsersRepository {
   async save(user: User) {
     const newUser = await prisma.user.create({
-      data: user,
+      data: {
+        name: user.name,
+        password: user.password,
+        role: user.role,
+        username: user.username,
+      },
     });
 
     return newUser;
@@ -26,10 +31,11 @@ export class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  async findAll(active?: boolean): Promise<User[]> {
+  async findAll(active: boolean): Promise<User[]> {
+    console.log(active);
     const users = await prisma.user.findMany({
       where: {
-        active: active ?? true,
+        active: active,
       },
     });
 
