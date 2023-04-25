@@ -45,6 +45,16 @@ describe("Create order use case", () => {
       weight: 10,
     });
 
+    const product2 = await productInfoRepository.create({
+      code: 2,
+      name: "Produto teste2",
+      description: "Descição teste2",
+      group: "Grupo teste2",
+      price: 10,
+      unit: "FD",
+      weight: 10,
+    });
+
     const customer = await customersRepository.create({
       name: "Customer 1",
       email: "test@email.com",
@@ -77,12 +87,20 @@ describe("Create order use case", () => {
           productInfoCode: product.code!,
           totalValue: new Prisma.Decimal(500),
         },
+        {
+          amount: 10,
+          productInfoCode: product2.code!,
+          totalValue: new Prisma.Decimal(1000),
+        },
       ],
       customerCode: customer.code!,
       userId: user.id,
     });
 
+    console.log(order);
+
     expect(order.id).toEqual(expect.any(Number));
-    expect(order.userId).toEqual(expect.any(String));
+    expect(order.userId).toEqual(newUser.id);
+    expect(order.orderedProducts).toHaveLength(2);
   });
 });
