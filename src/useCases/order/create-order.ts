@@ -4,24 +4,26 @@ import { IOrdersRepository } from "../../repositories/orders-repository-interfac
 import { AppError } from "../../errors/app-error";
 import { IUsersRepository } from "../../repositories/users-repository-interface";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
+import { InOrder } from "../../dtos/order";
 
-type CreateOrderOrderedProducts = Omit<OrderedProducts, "orderId">;
+type CreateOrderedProducts = Omit<OrderedProducts, "orderId">;
 
 interface CreateOrderUseCaseRequest {
-  items: CreateOrderOrderedProducts[];
+  items: CreateOrderedProducts[];
   customerCode: number;
   userId: string;
 }
 
 interface CreateOrderUseCaseResponse {
-  order: Order;
+  order: InOrder;
 }
 
 export class CreateOrderUseCase {
   constructor(
     private ordersRepository: IOrdersRepository,
     private customersRepository: ICustomersRepository,
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+    private orderedProductsRepository: IOrderedProductsRepository
   ) {}
 
   async execute({
@@ -42,13 +44,26 @@ export class CreateOrderUseCase {
     }
 
     const order = await this.ordersRepository.create({
-      items,
       customerCode: customerCode,
       userId: user.id,
       paymentStatus: "pendent",
       active: true,
     });
 
-    return { order };
+    const newOrderedProducts: OrderedProducts[] = items.map((item) => ({
+      ...item,
+      orderId: order.id,
+    }));
+
+    const orderedProducts = await this.orderedProductsRepository.create(
+      newOrderedProducts
+    );
+
+    const formattedOrder: InOrder = {
+      ...order,
+      orderedProducts,
+    };
+
+    return { order: formattedOrder };
   }
 }

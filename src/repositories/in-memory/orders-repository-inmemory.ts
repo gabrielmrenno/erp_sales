@@ -15,6 +15,21 @@ export class OrdersRepositoryInMemory implements IOrdersRepository {
   items: Order[] = [];
 
   async create(newOrderData: ICreateOrderParams): Promise<Order> {
-    throw new Error("Method not implemented.");
+    const order: Order = {
+      id: Math.random(),
+      userId: newOrderData.userId,
+      active: true,
+      customerCode: newOrderData.customerCode,
+      deliveryDate: new Date(),
+      paymentStatus: newOrderData.paymentStatus,
+      paymentDate: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: null,
+    };
+
+    this.items.push(order);
+
+    return order;
   }
 }

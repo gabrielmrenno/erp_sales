@@ -1,9 +1,6 @@
-import { Order, OrderedProducts, Prisma } from "@prisma/client";
-
-type CreateOrderOrderedProducts = Omit<OrderedProducts, "orderId">;
+import { Order, Prisma } from "@prisma/client";
 
 interface ICreateOrderParams {
-  items: CreateOrderOrderedProducts[];
   customerCode: number;
   userId: string;
   paymentStatus: string;

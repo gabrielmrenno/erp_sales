@@ -9,24 +9,30 @@ import { UsersRepositoryInMemory } from "../../repositories/in-memory/users-repo
 import { ProductsRepositoryInMemory } from "../../repositories/in-memory/products-repository-inmemory";
 import { User } from "../../entities/user";
 import { hash } from "bcrypt";
+import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
+import { OrderedProductsRepositoryInMemory } from "../../repositories/in-memory/ordered-products-repository-inmemory";
+import { Prisma } from "@prisma/client";
 
 let ordersRepository: IOrdersRepository;
 let customersRepository: ICustomersRepository;
 let usersRepository: IUsersRepository;
+let orderedProductsRepository: IOrderedProductsRepository;
 let sut: CreateOrderUseCase;
 
-describe.skip("Create order use case", () => {
+describe("Create order use case", () => {
   beforeEach(() => {
     ordersRepository = new OrdersRepositoryInMemory();
     customersRepository = new CustomersRepositoryInMemory();
     usersRepository = new UsersRepositoryInMemory();
+    orderedProductsRepository = new OrderedProductsRepositoryInMemory();
     sut = new CreateOrderUseCase(
       ordersRepository,
       customersRepository,
-      usersRepository
+      usersRepository,
+      orderedProductsRepository
     );
   });
-  it.skip("should be able to create an order", async () => {
+  it("should be able to create an order", async () => {
     let productInfoRepository = new ProductsRepositoryInMemory();
 
     const product = await productInfoRepository.create({
@@ -69,6 +75,7 @@ describe.skip("Create order use case", () => {
         {
           amount: 5,
           productInfoCode: product.code!,
+          totalValue: new Prisma.Decimal(500),
         },
       ],
       customerCode: customer.code!,

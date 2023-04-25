@@ -1,4 +1,6 @@
-interface ICreateOrder {
+import { Order, OrderedProducts } from "@prisma/client";
+
+export interface ICreateOrder {
   id?: number;
 
   items: string[];
@@ -11,4 +13,8 @@ interface ICreateOrder {
   userId: string;
   paymentStatus: string;
   paymentDate: string;
+}
+
+export interface InOrder extends Order {
+  orderedProducts: OrderedProducts[];
 }
