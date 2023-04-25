@@ -1,11 +1,11 @@
-import { Product } from "../../entities/product-info";
+import { ProductInfo } from "../../entities/product-info";
 import { AppError } from "../../errors/app-error";
-import { IProductsRepository } from "../../repositories/product-repository-interface";
+import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
 
-export class CreateProductUseCase {
-  constructor(private productsRepository: IProductsRepository) {}
+export class CreateProductInfoUseCase {
+  constructor(private productsRepository: IProductsInfoRepository) {}
 
-  async execute(data: ICreateProduct): Promise<Product> {
+  async execute(data: ICreateProductInfo): Promise<ProductInfo> {
     const productAlreadyExists = await this.productsRepository.findByName(
       data.name
     );

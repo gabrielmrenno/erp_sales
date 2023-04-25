@@ -1,15 +1,15 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { AppError } from "../../errors/app-error";
 import { ProductsRepositoryInMemory } from "../../repositories/in-memory/products-repository-inmemory";
-import { UpdateUnitPriceProductUseCase } from "./update-unitPrice-product-usecase";
+import { UpdatePriceProductInfoUseCase } from "./update-price-product-usecase";
 
 let productsRepository: ProductsRepositoryInMemory;
-let updateUnitPriceProductUseCase: UpdateUnitPriceProductUseCase;
+let updatePriceProductInfoUseCase: UpdatePriceProductInfoUseCase;
 
 describe("", () => {
   beforeAll(() => {
     productsRepository = new ProductsRepositoryInMemory();
-    updateUnitPriceProductUseCase = new UpdateUnitPriceProductUseCase(
+    updatePriceProductInfoUseCase = new UpdatePriceProductInfoUseCase(
       productsRepository
     );
   });
@@ -20,20 +20,20 @@ describe("", () => {
       group: "Group 1",
       unit: "FD",
       weight: 10,
-      unitPrice: 10,
+      price: 10,
       code: 1,
     });
 
-    const updatedProduct = await updateUnitPriceProductUseCase.execute(
+    const updatedProduct = await updatePriceProductInfoUseCase.execute(
       product.code!,
       20
     );
 
-    expect(updatedProduct.unitPrice).toBe(20);
+    expect(updatedProduct.price).toBe(20);
   });
 
   it("should not be able to update an product that does not exist", async () => {
-    await expect(updateUnitPriceProductUseCase.execute(0, 20)).rejects.toEqual(
+    await expect(updatePriceProductInfoUseCase.execute(0, 20)).rejects.toEqual(
       new AppError("Product not found", 404)
     );
   });

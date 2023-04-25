@@ -4,12 +4,15 @@ interface ICreateProductInfo {
   description: string;
   group: string;
   unit: "FD" | "SC";
-  unitPrice: number;
+  price: number;
   weight: number;
 }
 
 interface IUpdateProductInfoDTO {
   name?: string;
   group?: string;
-  unitPrice?: number;
+  price?: number;
+  weight?: number;
+  description?: string;
+  unit?: "FD" | "SC";
 }

@@ -11,17 +11,96 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  name          String   @unique
-  username      String   @unique
+  id            String    @id @default(uuid())
+  name          String    @unique
+  username      String    @unique
   password      String
   role          String
-  active        Boolean  @default(true)
-  isAdmin       Boolean  @default(false)
-  resetPassword Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  active        Boolean   @default(true)
+  isAdmin       Boolean   @default(false)
+  resetPassword Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   deletedAt     DateTime?
+  Order         Order[]
 
   @@map("user")
+}
+
+model ProductInfo {
+  code        Int       @id @default(autoincrement())
+  name        String    @unique
+  description String    @unique
+  group       String
+  unit        unit
+  price       Decimal
+  weight      Decimal
+  active      Boolean
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  OrderedProducts OrderedProducts[]
+
+  @@map("productInfo")
+}
+
+model Customer {
+  code        Int       @id @default(autoincrement())
+  name        String    @unique
+  fantasyName String    @unique
+  doc         String    @unique
+  email       String
+  phone       String
+  contactName String
+  address     String
+  city        String
+  zipCode     String
+  discount    Int
+  paymentTerm Int
+  active      Boolean
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+  Order       Order[]
+
+  @@map("customer")
+}
+
+enum unit {
+  FD
+  SC
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+
+  OrderedProducts OrderedProducts[]
+
+  deliveryDate  DateTime?
+  customer      Customer  @relation(fields: [customerCode], references: [code])
+  customerCode  Int
+  user          User      @relation(fields: [userId], references: [id])
+  userId        String
+  paymentStatus String
+  paymentDate   DateTime?
+
+  active    Boolean
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@map("order")
+}
+
+model OrderedProducts {
+  order           Order       @relation(fields: [orderId], references: [id])
+  orderId         Int
+  productInfo     ProductInfo @relation(fields: [productInfoCode], references: [code])
+  productInfoCode Int
+
+  amount Int
+
+  @@id([orderId, productInfoCode])
+  @@map("ordered_products")
 }

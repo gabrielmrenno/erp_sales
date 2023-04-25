@@ -1,7 +1,7 @@
 import { ProductInfo } from "../../entities/product-info";
-import { IProductsRepository } from "../product-repository-interface";
+import { IProductsInfoRepository } from "../product-repository-interface";
 
-export class ProductsRepositoryInMemory implements IProductsRepository {
+export class ProductsRepositoryInMemory implements IProductsInfoRepository {
   items: ProductInfo[] = [];
 
   async create(data: ICreateProductInfo): Promise<ProductInfo> {
@@ -56,12 +56,12 @@ export class ProductsRepositoryInMemory implements IProductsRepository {
     return product!;
   }
 
-  async updateUnitPrice(code: number, unitPrice: number): Promise<ProductInfo> {
+  async updatePrice(code: number, price: number): Promise<ProductInfo> {
     const updatedProduct = await this.findByCode(code);
     const index = this.items.findIndex((product) => product.code === code);
 
     Object.assign(updatedProduct!, {
-      unitPrice,
+      price,
     });
 
     this.items[index] = updatedProduct!;

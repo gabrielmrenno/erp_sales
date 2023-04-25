@@ -29,8 +29,8 @@
 
 **RF**
 
-- [x] Deve ser possível atualizar um produto name, group, unitPrice pelo seu id.
-- [ ] Deve ser possível atualizar o unitPrice do produto pelo seu id.
+- [x] Deve ser possível atualizar um produto name, group, price pelo seu id.
+- [ ] Deve ser possível atualizar o price do produto pelo seu id.
 - [ ] Permissões: TODO
 
 **RN**

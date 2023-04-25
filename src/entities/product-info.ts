@@ -4,7 +4,7 @@ export class ProductInfo {
   description: string;
   group: string;
   unit: "FD" | "SC";
-  unitPrice: number;
+  price: number;
   weight: number;
   active: boolean;
   createdAt: Date;
@@ -17,7 +17,7 @@ export class ProductInfo {
     this.description = data.description;
     this.group = data.group;
     this.unit = data.unit;
-    this.unitPrice = data.unitPrice;
+    this.price = data.price;
     this.weight = data.weight;
     this.active = true;
     this.createdAt = new Date();

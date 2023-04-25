@@ -1,8 +1,8 @@
 import { AppError } from "../../errors/app-error";
-import { IProductsRepository } from "../../repositories/product-repository-interface";
+import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
 
-export class DeleteProductUseCase {
-  constructor(private productsRepository: IProductsRepository) {}
+export class DeleteProductInfoUseCase {
+  constructor(private productsRepository: IProductsInfoRepository) {}
 
   async execute(code: number): Promise<void> {
     const productExists = await this.productsRepository.findByCode(code);

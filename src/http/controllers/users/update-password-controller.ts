@@ -10,13 +10,7 @@ export async function updatePassword(
   const usersRepository = new UsersRepository();
   const updatePasswordUseCase = new UpdatePasswordUseCase(usersRepository);
 
-  const { id } = request.params;
-  const { id: authenticateUser } = request.user!;
-
-  // user is not authorized to update another user's password
-  if (authenticateUser !== id) {
-    throw new AppError("User is not authorized", 401);
-  }
+  const { id } = request.user!;
 
   const { password } = request.body;
 

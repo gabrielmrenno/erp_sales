@@ -12,7 +12,7 @@ export async function listAllUsers(
 
   const { active } = request.query;
 
-  const booleanActive = active === "true" ? true : false;
+  const booleanActive = active === "false" ? false : true;
 
   const users = await listAllUsersUseCase.execute(booleanActive);
 

@@ -11,7 +11,7 @@ interface IRequest {
 interface IResponse {
   idUser: string;
   role: string;
-  isAdmin: boolean;
+  resetPassword: boolean;
   token: string;
 }
 
@@ -22,13 +22,13 @@ export class AuthenticateUseCase {
     const user = await this.usersRepository.findByUniqueValues({ username });
 
     if (!user) {
-      throw new AppError("User not found");
+      throw new AppError("Invalid Credentials");
     }
 
     const passwordMatch = await compare(password, user.password);
 
     if (!passwordMatch) {
-      throw new AppError("Incorrect password");
+      throw new AppError("Invalid Credentials");
     }
 
     if (process.env.JWT_SECRET === undefined) {
@@ -42,10 +42,10 @@ export class AuthenticateUseCase {
       expiresIn: "1d",
     });
 
-    const data = {
+    const data: IResponse = {
       idUser: user.id,
       role: user.role,
-      isAdmin: user.isAdmin,
+      resetPassword: user.resetPassword,
       token,
     };
 

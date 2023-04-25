@@ -1,9 +1,9 @@
 import { ProductInfo } from "../../entities/product-info";
 import { AppError } from "../../errors/app-error";
-import { IProductsRepository } from "../../repositories/product-repository-interface";
+import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
 
-export class ListProductByCodeUseCase {
-  constructor(private productsRepository: IProductsRepository) {}
+export class ListProductInfoByCodeUseCase {
+  constructor(private productsRepository: IProductsInfoRepository) {}
 
   async execute(code: number): Promise<ProductInfo | null> {
     const product = await this.productsRepository.findByCode(code);
