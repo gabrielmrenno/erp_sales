@@ -55,13 +55,11 @@ export class CreateOrderUseCase {
       orderId: order.id,
     }));
 
-    const orderedProducts = await this.orderedProductsRepository.create(
-      newOrderedProducts
-    );
+    await this.orderedProductsRepository.create(newOrderedProducts);
 
     const formattedOrder: InOrder = {
       ...order,
-      orderedProducts,
+      orderedProducts: newOrderedProducts,
     };
 
     return { order: formattedOrder };

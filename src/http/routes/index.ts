@@ -5,6 +5,7 @@ import { AuthenticateController } from "../controllers/account/authenticate-cont
 import { userRoutes } from "./users.routes";
 import { customerRoutes } from "./customers.route";
 import { productsInfoRoutes } from "./product-info.route";
+import { orderRoutes } from "./orders.route";
 
 const router = Router();
 
@@ -13,6 +14,7 @@ const authenticateController = new AuthenticateController();
 router.use("/users", userRoutes);
 router.use("/customers", customerRoutes);
 router.use("/products-info", productsInfoRoutes);
+router.use("/orders", orderRoutes);
 
 router.get(
   "/auth/login",

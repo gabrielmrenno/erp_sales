@@ -10,8 +10,8 @@ import { ProductsRepositoryInMemory } from "../../repositories/in-memory/product
 import { User } from "../../entities/user";
 import { hash } from "bcrypt";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
-import { OrderedProductsRepositoryInMemory } from "../../repositories/in-memory/ordered-products-repository-inmemory";
 import { Prisma } from "@prisma/client";
+import { OrderedProductsRepositoryInMemory } from "../../repositories/in-memory/ordered-products-repository-inmemory";
 
 let ordersRepository: IOrdersRepository;
 let customersRepository: ICustomersRepository;
@@ -96,8 +96,6 @@ describe("Create order use case", () => {
       customerCode: customer.code!,
       userId: user.id,
     });
-
-    console.log(order);
 
     expect(order.id).toEqual(expect.any(Number));
     expect(order.userId).toEqual(newUser.id);

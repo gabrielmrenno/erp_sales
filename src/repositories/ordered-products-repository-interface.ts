@@ -1,7 +1,5 @@
 import { OrderedProducts, Prisma } from "@prisma/client";
 
 export interface IOrderedProductsRepository {
-  create(
-    data: Prisma.OrderedProductsUncheckedCreateInput[]
-  ): Promise<OrderedProducts[]>;
+  create(data: Prisma.OrderedProductsUncheckedCreateInput[]): Promise<void>;
 }
