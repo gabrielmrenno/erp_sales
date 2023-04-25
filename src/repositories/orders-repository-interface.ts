@@ -7,6 +7,15 @@ interface ICreateOrderParams {
   active: boolean;
 }
 
+interface IFetchAllOrderParams {
+  page?: number;
+  initialInterval?: Date;
+  finalInterval?: Date;
+  code?: number;
+}
+
 export interface IOrdersRepository {
   create(newOrderData: ICreateOrderParams): Promise<Order>;
+
+  fetchAll(data: IFetchAllOrderParams): Promise<Order[]>;
 }

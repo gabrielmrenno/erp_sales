@@ -11,12 +11,19 @@ interface ICreateOrderParams {
   active: boolean;
 }
 
+interface IFetchAllOrderParams {
+  page?: number;
+  initialInterval?: Date;
+  finalInterval?: Date;
+  code?: number;
+}
+
 export class OrdersRepositoryInMemory implements IOrdersRepository {
   items: Order[] = [];
 
   async create(newOrderData: ICreateOrderParams): Promise<Order> {
     const order: Order = {
-      id: Math.random(),
+      id: Math.trunc(Math.random() * 100),
       userId: newOrderData.userId,
       active: true,
       customerCode: newOrderData.customerCode,
@@ -31,5 +38,29 @@ export class OrdersRepositoryInMemory implements IOrdersRepository {
     this.items.push(order);
 
     return order;
+  }
+
+  async fetchAll({
+    page = 1,
+    initialInterval,
+    finalInterval = new Date(),
+    code,
+  }: IFetchAllOrderParams): Promise<Order[]> {
+    let filteredItems = this.items.slice((page - 1) * 20, page * 20);
+
+    if (initialInterval) {
+      filteredItems = this.items.filter(
+        (item) =>
+          item.createdAt >= initialInterval && item.createdAt <= finalInterval
+      );
+    }
+
+    if (code) {
+      filteredItems = this.items.filter((item) =>
+        item.id.toString().includes(code.toString())
+      );
+    }
+
+    return filteredItems;
   }
 }
