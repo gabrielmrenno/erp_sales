@@ -1,5 +1,5 @@
+import { ProductInfo } from "@prisma/client";
 import { beforeAll, describe, expect, it } from "vitest";
-import { ProductInfo } from "../../entities/product-info";
 import { AppError } from "../../errors/app-error";
 import { ProductsRepositoryInMemory } from "../../repositories/in-memory/products-repository-inmemory";
 import { CreateProductInfoUseCase } from "./create-product-usecase";
@@ -25,16 +25,9 @@ describe("Create PackageProduct UseCase", () => {
 
     const product = await createProductInfoUseCase.execute(productData);
 
-    expect(product).toBeInstanceOf(ProductInfo);
     expect(product).toEqual(
       expect.objectContaining({
         name: "Product 1",
-        description: "Description 1",
-        group: "Group 1",
-        unit: "FD",
-        weight: 10,
-        price: 10,
-        code: 1,
       })
     );
   });

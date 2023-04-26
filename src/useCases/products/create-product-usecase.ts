@@ -1,4 +1,4 @@
-import { ProductInfo } from "../../entities/product-info";
+import { ProductInfo } from "@prisma/client";
 import { AppError } from "../../errors/app-error";
 import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
 

@@ -1,15 +1,20 @@
-import { ProductInfo } from "../../entities/product-info";
+import { Prisma, ProductInfo } from "@prisma/client";
 import { IProductsInfoRepository } from "../product-repository-interface";
 
 export class ProductsRepositoryInMemory implements IProductsInfoRepository {
   items: ProductInfo[] = [];
 
   async create(data: ICreateProductInfo): Promise<ProductInfo> {
-    const productInfo = new ProductInfo(data);
-
-    Object.assign(productInfo, {
+    const productInfo: ProductInfo = {
+      ...data,
+      active: true,
       createdAt: new Date(),
-    });
+      updatedAt: new Date(),
+      deletedAt: null,
+      code: data.code ?? Math.random(),
+      price: new Prisma.Decimal(data.price),
+      weight: new Prisma.Decimal(data.weight),
+    };
 
     this.items.push(productInfo);
 

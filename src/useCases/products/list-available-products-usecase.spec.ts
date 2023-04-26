@@ -14,29 +14,25 @@ describe("List Available Products UseCase", () => {
     );
   });
   it("should list all available products", async () => {
-    const product1 = new ProductInfo({
-      name: "Product 1",
-      description: "Description 1",
-      group: "Group 1",
+    await productsRepository.create({
+      code: 1,
+      name: `Produto teste 1`,
+      description: `Descição teste 1`,
+      group: `Grupo teste 1`,
+      price: 10,
       unit: "FD",
       weight: 10,
-      price: 10,
-      code: 1,
     });
 
-    productsRepository.items.push(product1);
-
-    const product2 = new ProductInfo({
-      name: "Product 2",
-      description: "Description 2",
-      group: "Group 2",
+    await productsRepository.create({
+      code: 2,
+      name: `Produto teste 2`,
+      description: `Descição teste 2`,
+      group: `Grupo teste 2`,
+      price: 20,
       unit: "FD",
       weight: 20,
-      price: 20,
-      code: 2,
     });
-
-    productsRepository.items.push(product2);
 
     const products = await listAvailableProductsInfoUseCase.execute();
 

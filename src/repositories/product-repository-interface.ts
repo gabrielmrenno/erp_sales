@@ -1,4 +1,4 @@
-import { ProductInfo } from "../entities/product-info";
+import { ProductInfo } from "@prisma/client";
 
 export interface IProductsInfoRepository {
   create(data: ICreateProductInfo): Promise<ProductInfo>;

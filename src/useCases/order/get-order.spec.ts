@@ -6,23 +6,48 @@ import { createProducts, createUsers } from "../utils/test-utils";
 import { CustomersRepositoryInMemory } from "../../repositories/in-memory/customers-repository-inmemory";
 import { Prisma } from "@prisma/client";
 import { OrderedProductsRepositoryInMemory } from "../../repositories/in-memory/ordered-products-repository-inmemory";
-import { CreateOrderUseCase } from "./create-order";
+import { IOrdersRepository } from "../../repositories/orders-repository-interface";
+import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
+import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
+import { ProductsRepositoryInMemory } from "../../repositories/in-memory/products-repository-inmemory";
 
-let ordersRepositoryInMemory: OrdersRepositoryInMemory;
-let orderedProductsRepositoryInMemory: OrderedProductsRepositoryInMemory;
+let ordersRepositoryInMemory: IOrdersRepository;
+let orderedProductsRepositoryInMemory: IOrderedProductsRepository;
+let productsInfoRepositoryInMemory: IProductsInfoRepository;
+
 let sut: GetOrderUseCase;
 
 describe("List customer by code", () => {
   beforeAll(async () => {
     ordersRepositoryInMemory = new OrdersRepositoryInMemory();
     orderedProductsRepositoryInMemory = new OrderedProductsRepositoryInMemory();
+    productsInfoRepositoryInMemory = new ProductsRepositoryInMemory();
     sut = new GetOrderUseCase(
       ordersRepositoryInMemory,
-      orderedProductsRepositoryInMemory
+      orderedProductsRepositoryInMemory,
+      productsInfoRepositoryInMemory
     );
   });
   it("should be able to list order by id", async () => {
-    const products = await createProducts(2);
+    const product1 = await productsInfoRepositoryInMemory.create({
+      code: 1,
+      name: `Produto teste 1`,
+      description: `Descição teste 1`,
+      group: `Grupo teste 1`,
+      price: 10,
+      unit: "FD",
+      weight: 10,
+    });
+
+    const product2 = await productsInfoRepositoryInMemory.create({
+      code: 2,
+      name: `Produto teste 2`,
+      description: `Descição teste 2`,
+      group: `Grupo teste 2`,
+      price: 20,
+      unit: "FD",
+      weight: 20,
+    });
 
     const customersRepository = new CustomersRepositoryInMemory();
 
@@ -48,18 +73,6 @@ describe("List customer by code", () => {
       customerCode: customer.code!,
       paymentStatus: "pendent",
       userId: newUser[0].id,
-      items: [
-        {
-          amount: 5,
-          productInfoCode: products[0].code!,
-          totalValue: new Prisma.Decimal(500),
-        },
-        {
-          amount: 10,
-          productInfoCode: products[1].code!,
-          totalValue: new Prisma.Decimal(1000),
-        },
-      ],
     });
 
     await ordersRepositoryInMemory.create({
@@ -67,39 +80,30 @@ describe("List customer by code", () => {
       customerCode: customer.code!,
       paymentStatus: "pendent",
       userId: newUser[0].id,
-      items: [
-        {
-          amount: 5,
-          productInfoCode: products[0].code,
-          totalValue: new Prisma.Decimal(500),
-        },
-        {
-          amount: 10,
-          productInfoCode: products[1].code,
-          totalValue: new Prisma.Decimal(1000),
-        },
-      ],
     });
 
     await orderedProductsRepositoryInMemory.create([
       {
         amount: 5,
-        productInfoCode: products[0].code,
+        productInfoCode: product1.code,
         totalValue: new Prisma.Decimal(500),
         orderId: newOrder.id,
       },
       {
         amount: 10,
-        productInfoCode: products[1].code,
+        productInfoCode: product2.code,
         totalValue: new Prisma.Decimal(1000),
         orderId: newOrder.id,
       },
     ]);
 
-    const { orderWithProducts } = await sut.execute({ code: newOrder.id });
+    const { orderWithProducts, totalValue, totalWeight } = await sut.execute({
+      code: newOrder.id,
+    });
 
     expect(orderWithProducts.id).toEqual(newOrder.id);
     expect(orderWithProducts.items).toHaveLength(2);
+    expect(totalValue).toEqual(250);
   });
 
   it("should not be able to list order by id if id doesn't exist", async () => {

@@ -1,4 +1,4 @@
-import { Order, Prisma } from "@prisma/client";
+import { Order } from "@prisma/client";
 
 interface ICreateOrderParams {
   customerCode: number;
