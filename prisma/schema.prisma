@@ -99,8 +99,9 @@ model OrderedProducts {
   productInfo     ProductInfo @relation(fields: [productInfoCode], references: [code])
   productInfoCode Int
 
-  amount     Int
-  totalValue Decimal
+  amount        Int
+  productPrice  Decimal
+  productWeight Decimal
 
   @@id([orderId, productInfoCode])
   @@map("ordered_products")

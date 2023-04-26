@@ -6,15 +6,14 @@ export class OrderedProductsRepositoryInMemory
 {
   items: OrderedProducts[] = [];
 
-  async create(
-    data: Prisma.OrderedProductsUncheckedCreateInput[]
-  ): Promise<void> {
+  async create(data: OrderedProducts[]): Promise<void> {
     await data.forEach((item) => {
       this.items.push({
         amount: item.amount,
         orderId: item.orderId,
         productInfoCode: item.productInfoCode,
-        totalValue: new Prisma.Decimal(item.totalValue.toString()),
+        productPrice: item.productPrice,
+        productWeight: item.productWeight,
       });
     });
   }

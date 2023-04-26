@@ -86,13 +86,15 @@ describe("List customer by code", () => {
       {
         amount: 5,
         productInfoCode: product1.code,
-        totalValue: new Prisma.Decimal(500),
+        productPrice: product1.price,
+        productWeight: product1.weight,
         orderId: newOrder.id,
       },
       {
         amount: 10,
         productInfoCode: product2.code,
-        totalValue: new Prisma.Decimal(1000),
+        productPrice: product2.price,
+        productWeight: product2.weight,
         orderId: newOrder.id,
       },
     ]);

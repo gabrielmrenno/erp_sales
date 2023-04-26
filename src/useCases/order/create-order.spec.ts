@@ -85,12 +85,14 @@ describe("Create order use case", () => {
         {
           amount: 5,
           productInfoCode: product.code!,
-          totalValue: new Prisma.Decimal(500),
+          productPrice: product.price,
+          productWeight: product.weight,
         },
         {
           amount: 10,
           productInfoCode: product2.code!,
-          totalValue: new Prisma.Decimal(1000),
+          productPrice: product2.price,
+          productWeight: product2.weight,
         },
       ],
       customerCode: customer.code!,
