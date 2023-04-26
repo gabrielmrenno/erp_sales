@@ -18,4 +18,5 @@ export interface IOrdersRepository {
   create(newOrderData: ICreateOrderParams): Promise<Order>;
 
   fetchAll(data: IFetchAllOrderParams): Promise<Order[]>;
+  getById(id: number): Promise<Order | null>;
 }

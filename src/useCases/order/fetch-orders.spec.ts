@@ -253,8 +253,6 @@ describe("Fetch orders use case", () => {
       code: 2,
     });
 
-    console.log(orders);
-
     // expect(orders).toEqual([expect.objectContaining({ code: 2 })]);
   });
 });

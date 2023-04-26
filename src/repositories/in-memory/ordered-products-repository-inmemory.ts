@@ -5,6 +5,7 @@ export class OrderedProductsRepositoryInMemory
   implements IOrderedProductsRepository
 {
   items: OrderedProducts[] = [];
+
   async create(
     data: Prisma.OrderedProductsUncheckedCreateInput[]
   ): Promise<void> {
@@ -16,5 +17,9 @@ export class OrderedProductsRepositoryInMemory
         totalValue: new Prisma.Decimal(item.totalValue.toString()),
       });
     });
+  }
+
+  async getProductsByOrderId(id: number): Promise<OrderedProducts[]> {
+    return this.items.filter((item) => item.orderId === id);
   }
 }

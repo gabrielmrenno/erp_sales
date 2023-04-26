@@ -63,4 +63,8 @@ export class OrdersRepositoryInMemory implements IOrdersRepository {
 
     return filteredItems;
   }
+
+  async getById(id: number): Promise<Order | null> {
+    return this.items.find((item) => item.id === id) || null;
+  }
 }
