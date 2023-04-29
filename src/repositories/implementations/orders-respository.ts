@@ -83,4 +83,23 @@ export class OrdersRepository implements IOrdersRepository {
 
     return order;
   }
+
+  async update(updatedOrder: Order): Promise<void> {
+    await prisma.order.update({
+      where: {
+        id: updatedOrder.id,
+      },
+      data: updatedOrder,
+    });
+  }
+
+  async delete(id: number): Promise<void> {
+    console.log(id);
+
+    await prisma.order.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

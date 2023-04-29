@@ -13,4 +13,12 @@ export class OrderedProductsRepository implements IOrderedProductsRepository {
   getProductsByOrderId(id: number): Promise<OrderedProducts[]> {
     throw new Error("Method not implemented.");
   }
+
+  async deleteMany(orderId: number): Promise<void> {
+    await prisma.orderedProducts.deleteMany({
+      where: {
+        orderId,
+      },
+    });
+  }
 }

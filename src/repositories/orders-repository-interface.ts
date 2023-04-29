@@ -1,4 +1,4 @@
-import { Customer, Order, OrderedProducts, User } from "@prisma/client";
+import { Customer, Order, OrderedProducts, Prisma, User } from "@prisma/client";
 
 interface ICreateOrderParams {
   customerCode: number;
@@ -28,4 +28,8 @@ export interface IOrdersRepository {
 
   fetchAll(data: IFetchAllOrderParams): Promise<InOrder[]>;
   getById(id: number): Promise<GetOrderResponse | null>;
+
+  update(updatedOrder: Prisma.OrderUncheckedUpdateInput): Promise<void>;
+
+  delete(id: number): Promise<void>;
 }
