@@ -1,5 +1,6 @@
-import { Order } from "@prisma/client";
+import { Customer, Order, OrderedProducts } from "@prisma/client";
 import { IOrdersRepository } from "../../repositories/orders-repository-interface";
+import { calculateTotalsOnOrderedProduct } from "../utils/orders";
 
 interface FetchOrdersUseCaseRequest {
   page?: number;
@@ -8,8 +9,15 @@ interface FetchOrdersUseCaseRequest {
   code?: number;
 }
 
+interface OrderToBeReturned extends Order {
+  OrderedProducts: OrderedProducts[];
+  customer: Customer;
+  totalOrderValue: number;
+  totalOrderWeight: number;
+}
+
 interface FetchOrdersUseCaseResponse {
-  orders: Order[];
+  orders: OrderToBeReturned[];
 }
 export class FetchOrdersUseCase {
   constructor(private ordersRepository: IOrdersRepository) {}
@@ -27,6 +35,18 @@ export class FetchOrdersUseCase {
       code,
     });
 
-    return { orders };
+    const returnedOrders: OrderToBeReturned[] = orders.map((order) => {
+      const { totalValue, totalWeight } = calculateTotalsOnOrderedProduct(
+        order.OrderedProducts
+      );
+
+      return {
+        ...order,
+        totalOrderValue: totalValue,
+        totalOrderWeight: totalWeight,
+      };
+    });
+
+    return { orders: returnedOrders };
   }
 }

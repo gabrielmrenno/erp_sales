@@ -5,8 +5,12 @@ import { UsersRepository } from "../../../repositories/implementations/users-rep
 import { CreateOrderUseCase } from "../../../useCases/order/create-order";
 import { OrderedProducts } from "@prisma/client";
 import { OrderedProductsRepository } from "../../../repositories/implementations/ordered-products-repository";
+import { ProductsInfoRepository } from "../../../repositories/implementations/products-info-repository";
 
-type CreateOrderedProducts = Omit<OrderedProducts, "orderId">;
+interface CreateOrderedProducts {
+  amount: number;
+  productInfoCode: number;
+}
 
 interface CreateOrderUseCaseRequest {
   items: CreateOrderedProducts[];
@@ -19,11 +23,13 @@ export async function createOrder(request: Request, response: Response) {
   const customersRepository = new CustomersRepository();
   const usersRepository = new UsersRepository();
   const orderedProductsRepository = new OrderedProductsRepository();
+  const productsInfoRepository = new ProductsInfoRepository();
 
   const createOrderUseCase = new CreateOrderUseCase(
     ordersRepository,
     customersRepository,
     usersRepository,
+    productsInfoRepository,
     orderedProductsRepository
   );
 

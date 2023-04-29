@@ -1,4 +1,4 @@
-import { Order } from "@prisma/client";
+import { Customer, Order, OrderedProducts } from "@prisma/client";
 
 interface ICreateOrderParams {
   customerCode: number;
@@ -7,16 +7,21 @@ interface ICreateOrderParams {
   active: boolean;
 }
 
-interface IFetchAllOrderParams {
+export interface IFetchAllOrderParams {
   page?: number;
   initialInterval?: Date;
   finalInterval?: Date;
   code?: number;
 }
 
+export interface InOrder extends Order {
+  OrderedProducts: OrderedProducts[];
+  customer: Customer;
+}
+
 export interface IOrdersRepository {
   create(newOrderData: ICreateOrderParams): Promise<Order>;
 
-  fetchAll(data: IFetchAllOrderParams): Promise<Order[]>;
+  fetchAll(data: IFetchAllOrderParams): Promise<InOrder[]>;
   getById(id: number): Promise<Order | null>;
 }

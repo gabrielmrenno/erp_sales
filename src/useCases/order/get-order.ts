@@ -3,7 +3,7 @@ import { IOrdersRepository } from "../../repositories/orders-repository-interfac
 import { AppError } from "../../errors/app-error";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
 import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
-import { calculateTotalsOnOrder } from "../utils/orders";
+import { calculateTotalsOnOrderedProduct } from "../utils/orders";
 
 interface GetOrderUseCaseRequest {
   code: number;
@@ -46,7 +46,7 @@ export class GetOrderUseCase {
 
     const productsInfo = await this.productsInfoRepository.listAvailable();
 
-    const { totalValue, totalWeight } = calculateTotalsOnOrder(
+    const { totalValue, totalWeight } = calculateTotalsOnOrderedProduct(
       items,
       productsInfo
     );

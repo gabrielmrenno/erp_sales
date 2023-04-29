@@ -1,4 +1,4 @@
-import { ProductInfo } from "../../entities/product-info";
+import { ProductInfo } from "@prisma/client";
 import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
 
 export class ListAvailableProductsInfoUseCase {

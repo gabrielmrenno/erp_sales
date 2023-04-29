@@ -1,5 +1,9 @@
 import { Order, OrderedProducts } from "@prisma/client";
-import { IOrdersRepository } from "../orders-repository-interface";
+import {
+  IFetchAllOrderParams,
+  IOrdersRepository,
+  InOrder,
+} from "../orders-repository-interface";
 import { prisma } from "../../database/prisma-client";
 interface ICreateOrderParams {
   customerCode: number;
@@ -31,5 +35,40 @@ export class OrdersRepository implements IOrdersRepository {
     });
 
     return newOrder;
+  }
+
+  async fetchAll({
+    page = 1,
+    code,
+    initialInterval,
+    finalInterval,
+  }: IFetchAllOrderParams): Promise<InOrder[]> {
+    const orders = await prisma.order.findMany({
+      where: {
+        id: {
+          equals: code,
+        },
+        createdAt: {
+          gte: initialInterval,
+          lte: finalInterval,
+        },
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+      include: {
+        OrderedProducts: true,
+        customer: true,
+      },
+    });
+
+    const ordersToBeReturn: InOrder[] = orders.map((order) => ({
+      ...order,
+    }));
+
+    return ordersToBeReturn;
+  }
+
+  async getById(id: number): Promise<Order | null> {
+    throw new Error("Method not implemented.");
   }
 }

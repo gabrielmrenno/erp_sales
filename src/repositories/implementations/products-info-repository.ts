@@ -1,20 +1,18 @@
 import { Decimal } from "@prisma/client/runtime";
 import { prisma } from "../../database/prisma-client";
-import { ProductInfo } from "../../entities/product-info";
 import { IProductsInfoRepository } from "../product-repository-interface";
+import { ProductInfo } from "@prisma/client";
 
 export class ProductsInfoRepository implements IProductsInfoRepository {
   async create(data: ICreateProductInfo): Promise<ProductInfo> {
-    const newProductInfo = new ProductInfo(data);
     const product = await prisma.productInfo.create({
-      data: newProductInfo,
+      data: {
+        ...data,
+        active: true,
+      },
     });
 
-    return {
-      ...product,
-      price: product.price.toNumber(),
-      weight: product.weight.toNumber(),
-    };
+    return product;
   }
 
   async findByName(name: string): Promise<ProductInfo | null> {
@@ -28,11 +26,7 @@ export class ProductsInfoRepository implements IProductsInfoRepository {
       return null;
     }
 
-    return {
-      ...product,
-      price: product.price.toNumber(),
-      weight: product.weight.toNumber(),
-    };
+    return product;
   }
   async findByCode(code: number): Promise<ProductInfo | null> {
     const product = await prisma.productInfo.findUnique({
@@ -45,12 +39,9 @@ export class ProductsInfoRepository implements IProductsInfoRepository {
       return null;
     }
 
-    return {
-      ...product,
-      price: product.price.toNumber(),
-      weight: product.weight.toNumber(),
-    };
+    return product;
   }
+
   async listAvailable(): Promise<ProductInfo[]> {
     const products = await prisma.productInfo.findMany({
       where: {
@@ -58,13 +49,7 @@ export class ProductsInfoRepository implements IProductsInfoRepository {
       },
     });
 
-    const productsFormatted = products.map((item) => ({
-      ...item,
-      price: item.price.toNumber(),
-      weight: item.weight.toNumber(),
-    }));
-
-    return productsFormatted;
+    return products;
   }
   async update(
     code: number,
@@ -77,11 +62,7 @@ export class ProductsInfoRepository implements IProductsInfoRepository {
       data,
     });
 
-    return {
-      ...product,
-      price: product.price.toNumber(),
-      weight: product.weight.toNumber(),
-    };
+    return product;
   }
   async updatePrice(code: number, price: number): Promise<ProductInfo> {
     const product = await prisma.productInfo.update({
@@ -93,11 +74,7 @@ export class ProductsInfoRepository implements IProductsInfoRepository {
       },
     });
 
-    return {
-      ...product,
-      price: product.price.toNumber(),
-      weight: product.weight.toNumber(),
-    };
+    return product;
   }
   async delete(code: number): Promise<void> {
     await prisma.productInfo.update({

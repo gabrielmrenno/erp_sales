@@ -12,11 +12,13 @@ import { hash } from "bcrypt";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
 import { Prisma } from "@prisma/client";
 import { OrderedProductsRepositoryInMemory } from "../../repositories/in-memory/ordered-products-repository-inmemory";
+import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
 
 let ordersRepository: IOrdersRepository;
 let customersRepository: ICustomersRepository;
 let usersRepository: IUsersRepository;
 let orderedProductsRepository: IOrderedProductsRepository;
+let productsInfoRepository: IProductsInfoRepository;
 let sut: CreateOrderUseCase;
 
 describe("Create order use case", () => {
@@ -25,10 +27,12 @@ describe("Create order use case", () => {
     customersRepository = new CustomersRepositoryInMemory();
     usersRepository = new UsersRepositoryInMemory();
     orderedProductsRepository = new OrderedProductsRepositoryInMemory();
+    productsInfoRepository = new ProductsRepositoryInMemory();
     sut = new CreateOrderUseCase(
       ordersRepository,
       customersRepository,
       usersRepository,
+      productsInfoRepository,
       orderedProductsRepository
     );
   });

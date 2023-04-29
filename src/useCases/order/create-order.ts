@@ -5,8 +5,13 @@ import { AppError } from "../../errors/app-error";
 import { IUsersRepository } from "../../repositories/users-repository-interface";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
 import { InOrder } from "../../dtos/order";
+import { calculateTotalsOnOrderedProduct } from "../utils/orders";
+import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
 
-type CreateOrderedProducts = Omit<OrderedProducts, "orderId">;
+interface CreateOrderedProducts {
+  amount: number;
+  productInfoCode: number;
+}
 
 interface CreateOrderUseCaseRequest {
   items: CreateOrderedProducts[];
@@ -23,6 +28,7 @@ export class CreateOrderUseCase {
     private ordersRepository: IOrdersRepository,
     private customersRepository: ICustomersRepository,
     private usersRepository: IUsersRepository,
+    private productsInfoRepository: IProductsInfoRepository,
     private orderedProductsRepository: IOrderedProductsRepository
   ) {}
 
@@ -50,10 +56,23 @@ export class CreateOrderUseCase {
       active: true,
     });
 
-    const newOrderedProducts: OrderedProducts[] = items.map((item) => ({
-      ...item,
-      orderId: order.id,
-    }));
+    const products = await this.productsInfoRepository.listAvailable();
+
+    const newOrderedProducts: OrderedProducts[] = items.map((item) => {
+      const product = products.find(
+        (product) => product.code === item.productInfoCode
+      );
+      if (!product) {
+        throw new AppError("Product not found", 404);
+      }
+
+      return {
+        ...item,
+        orderId: order.id,
+        productPrice: product.price,
+        productWeight: product.weight,
+      };
+    });
 
     await this.orderedProductsRepository.create(newOrderedProducts);
 
