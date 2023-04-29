@@ -1,5 +1,8 @@
 import { Order, OrderedProducts } from "@prisma/client";
-import { IOrdersRepository } from "../../repositories/orders-repository-interface";
+import {
+  GetOrderResponse,
+  IOrdersRepository,
+} from "../../repositories/orders-repository-interface";
 import { AppError } from "../../errors/app-error";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
 import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
@@ -9,12 +12,8 @@ interface GetOrderUseCaseRequest {
   code: number;
 }
 
-interface OrderWithProducts extends Order {
-  items: OrderedProducts[];
-}
-
 interface GetOrderUseCaseResponse {
-  orderWithProducts: OrderWithProducts;
+  order: GetOrderResponse;
   totalValue: number;
   totalWeight: number;
 }
@@ -35,22 +34,10 @@ export class GetOrderUseCase {
       throw new AppError("Order not found", 404);
     }
 
-    const items = await this.orderedProductsInfoRepository.getProductsByOrderId(
-      order?.id
-    );
-
-    const orderWithProducts: OrderWithProducts = {
-      ...order,
-      items,
-    };
-
-    const productsInfo = await this.productsInfoRepository.listAvailable();
-
     const { totalValue, totalWeight } = calculateTotalsOnOrderedProduct(
-      items,
-      productsInfo
+      order.OrderedProducts
     );
 
-    return { orderWithProducts, totalValue, totalWeight };
+    return { order, totalValue, totalWeight };
   }
 }

@@ -1,5 +1,6 @@
-import { Order, OrderedProducts } from "@prisma/client";
+import { Order, OrderedProducts, User } from "@prisma/client";
 import {
+  GetOrderResponse,
   IFetchAllOrderParams,
   IOrdersRepository,
   InOrder,
@@ -68,7 +69,18 @@ export class OrdersRepository implements IOrdersRepository {
     return ordersToBeReturn;
   }
 
-  async getById(id: number): Promise<Order | null> {
-    throw new Error("Method not implemented.");
+  async getById(id: number): Promise<GetOrderResponse | null> {
+    const order = await prisma.order.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        OrderedProducts: true,
+        customer: true,
+        user: true,
+      },
+    });
+
+    return order;
   }
 }
