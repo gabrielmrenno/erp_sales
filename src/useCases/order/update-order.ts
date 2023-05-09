@@ -36,16 +36,26 @@ export class UpdateOrderUseCase {
     if (!order) {
       throw new AppError("Order not found", 404);
     }
-
+    const orderProductsObjectFormatted = order.OrderedProducts.map(
+      (orderedProduct) => {
+        return {
+          ...orderedProduct,
+          productPrice: Number(orderedProduct.productPrice),
+          productWeight: Number(orderedProduct.productWeight),
+        };
+      }
+    );
     // Compare products of order and orderUpdated, if not equal, delete product array and create a new one
-    const orderProductsObjectString = JSON.stringify(order.OrderedProducts);
+    const orderProductsObjectString = JSON.stringify(
+      orderProductsObjectFormatted
+    );
     const orderUpdatedProductsObjectString = JSON.stringify(OrderedProducts);
     if (orderProductsObjectString !== orderUpdatedProductsObjectString) {
-      this.orderedProductsInfo.deleteMany(order.id);
-      this.orderedProductsInfo.create(OrderedProducts);
+      await this.orderedProductsInfo.deleteMany(order.id);
+      await this.orderedProductsInfo.create(OrderedProducts);
     }
 
-    this.ordersRepository.update({
+    await this.ordersRepository.update({
       id: orderId,
       deliveryDate,
       customerCode,

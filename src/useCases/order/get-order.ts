@@ -19,11 +19,7 @@ interface GetOrderUseCaseResponse {
 }
 
 export class GetOrderUseCase {
-  constructor(
-    private ordersRepository: IOrdersRepository,
-    private orderedProductsInfoRepository: IOrderedProductsRepository,
-    private productsInfoRepository: IProductsInfoRepository
-  ) {}
+  constructor(private ordersRepository: IOrdersRepository) {}
 
   async execute({
     code,
