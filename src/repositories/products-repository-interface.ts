@@ -1,4 +1,5 @@
 import { Prisma, Product } from "@prisma/client";
+import { LargeNumberLike } from "crypto";
 
 interface GetProduct {
   productBatch: string;

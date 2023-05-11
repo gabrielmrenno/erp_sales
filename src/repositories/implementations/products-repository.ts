@@ -36,7 +36,7 @@ export class ProductsRepository implements IProductsRepository {
       },
       data: {
         amount: {
-          increment: amount,
+          [amount >= 0 ? "increment" : "decrement"]: Math.abs(amount),
         },
       },
     });
