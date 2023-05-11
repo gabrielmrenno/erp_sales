@@ -12,7 +12,7 @@ import { hash } from "bcrypt";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
 import { Prisma } from "@prisma/client";
 import { OrderedProductsRepositoryInMemory } from "../../repositories/in-memory/ordered-products-repository-inmemory";
-import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
+import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
 
 let ordersRepository: IOrdersRepository;
 let customersRepository: ICustomersRepository;

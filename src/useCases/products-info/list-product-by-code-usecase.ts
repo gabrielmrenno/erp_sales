@@ -1,6 +1,6 @@
 import { ProductInfo } from "../../entities/product-info";
 import { AppError } from "../../errors/app-error";
-import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
+import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
 
 export class ListProductInfoByCodeUseCase {
   constructor(private productsRepository: IProductsInfoRepository) {}

@@ -1,6 +1,6 @@
 import { ProductInfo } from "@prisma/client";
 import { AppError } from "../../errors/app-error";
-import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
+import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
 
 export class CreateProductInfoUseCase {
   constructor(private productsRepository: IProductsInfoRepository) {}

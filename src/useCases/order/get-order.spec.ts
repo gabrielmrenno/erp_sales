@@ -8,7 +8,7 @@ import { Prisma } from "@prisma/client";
 import { OrderedProductsRepositoryInMemory } from "../../repositories/in-memory/ordered-products-repository-inmemory";
 import { IOrdersRepository } from "../../repositories/orders-repository-interface";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
-import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
+import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
 import { ProductsRepositoryInMemory } from "../../repositories/in-memory/products-repository-inmemory";
 
 let ordersRepositoryInMemory: IOrdersRepository;

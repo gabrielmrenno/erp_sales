@@ -1,6 +1,6 @@
 import { Decimal } from "@prisma/client/runtime";
 import { prisma } from "../../database/prisma-client";
-import { IProductsInfoRepository } from "../product-repository-interface";
+import { IProductsInfoRepository } from "../products-info-repository-interface";
 import { ProductInfo } from "@prisma/client";
 
 export class ProductsInfoRepository implements IProductsInfoRepository {

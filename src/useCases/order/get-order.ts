@@ -5,7 +5,7 @@ import {
 } from "../../repositories/orders-repository-interface";
 import { AppError } from "../../errors/app-error";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
-import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
+import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
 import { calculateTotalsOnOrderedProduct } from "../utils/orders";
 
 interface GetOrderUseCaseRequest {

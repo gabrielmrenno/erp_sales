@@ -1,5 +1,5 @@
 import { Prisma, ProductInfo } from "@prisma/client";
-import { IProductsInfoRepository } from "../product-repository-interface";
+import { IProductsInfoRepository } from "../products-info-repository-interface";
 
 export class ProductsRepositoryInMemory implements IProductsInfoRepository {
   items: ProductInfo[] = [];

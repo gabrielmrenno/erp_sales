@@ -6,7 +6,7 @@ import { IUsersRepository } from "../../repositories/users-repository-interface"
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
 import { InOrder } from "../../dtos/order";
 import { calculateTotalsOnOrderedProduct } from "../utils/orders";
-import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
+import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
 
 interface CreateOrderedProducts {
   amount: number;

@@ -1,5 +1,5 @@
 import { ProductInfo } from "@prisma/client";
-import { IProductsInfoRepository } from "../../repositories/product-repository-interface";
+import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
 
 export class ListAvailableProductsInfoUseCase {
   constructor(private productsRepository: IProductsInfoRepository) {}
