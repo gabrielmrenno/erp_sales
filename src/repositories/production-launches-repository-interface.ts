@@ -4,4 +4,6 @@ export interface IProductionLaunchesRepository {
   create(
     data: Prisma.ProductionLaunchCreateManyInput
   ): Promise<ProductionLaunch>;
+
+  list(): Promise<ProductionLaunch[]>;
 }

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { isAuthenticated } from "../../middleware/isAuthenticated";
 import { createProductionLaunch } from "../controllers/production-launches/create-controller";
+import { listProductionLaunches } from "../controllers/production-launches/list-controller";
 
 export const productionLaunchesRoutes = Router();
 
@@ -10,7 +11,7 @@ productionLaunchesRoutes.use(isAuthenticated);
 productionLaunchesRoutes.post("/", createProductionLaunch);
 
 // // Read
-// productionLaunchesRoutes.get("/all", listProductionLaunches);
+productionLaunchesRoutes.get("/all", listProductionLaunches);
 // productionLaunchesRoutes.get("/production-launch/:code", getProductionLaunch);
 
 // // Update

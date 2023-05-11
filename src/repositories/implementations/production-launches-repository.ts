@@ -14,4 +14,10 @@ export class ProductionLaunchesRepository
 
     return productionLaunch;
   }
+
+  async list(): Promise<ProductionLaunch[]> {
+    const productionLaunches = await prisma.productionLaunch.findMany();
+
+    return productionLaunches;
+  }
 }
