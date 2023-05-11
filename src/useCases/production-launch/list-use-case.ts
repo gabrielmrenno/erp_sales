@@ -1,8 +1,5 @@
-import { Prisma, ProductionLaunch } from "@prisma/client";
-import { AppError } from "../../errors/app-error";
-import { IProductsRepository } from "../../repositories/products-repository-interface";
+import { ProductionLaunch } from "@prisma/client";
 import { IProductionLaunchesRepository } from "../../repositories/production-launches-repository-interface";
-import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
 
 export class ListAllProductionLaunchUseCase {
   constructor(

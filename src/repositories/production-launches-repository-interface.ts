@@ -6,4 +6,5 @@ export interface IProductionLaunchesRepository {
   ): Promise<ProductionLaunch>;
 
   list(): Promise<ProductionLaunch[]>;
+  getById(id: string): Promise<ProductionLaunch | null>;
 }

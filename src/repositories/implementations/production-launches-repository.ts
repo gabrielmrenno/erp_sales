@@ -20,4 +20,14 @@ export class ProductionLaunchesRepository
 
     return productionLaunches;
   }
+
+  async getById(id: string): Promise<ProductionLaunch | null> {
+    const productionLaunch = await prisma.productionLaunch.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return productionLaunch;
+  }
 }
