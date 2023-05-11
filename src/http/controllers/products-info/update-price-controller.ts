@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { ProductsInfoRepository } from "../../../repositories/implementations/products-info-repository";
 import { AppError } from "../../../errors/app-error";
-import { UpdateProductInfoUseCase } from "../../../useCases/products/update-product-usecase";
-import { UpdatePriceProductInfoUseCase } from "../../../useCases/products/update-price-product-usecase";
+import { UpdatePriceProductInfoUseCase } from "../../../useCases/products-info/update-price-product-usecase";
 
 export async function updateProductInfoPrice(
   request: Request,

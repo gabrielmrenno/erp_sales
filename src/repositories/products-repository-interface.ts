@@ -5,11 +5,16 @@ interface GetProduct {
   productInfoCode: number;
 }
 
-export interface ProductsRepository {
+interface UpdateProduct {
+  id: string;
+  amount: number;
+}
+
+export interface IProductsRepository {
   create(data: Prisma.ProductCreateManyInput): Promise<Product>;
 
   get(data: GetProduct): Promise<Product | null>;
 
   // update amount of stock
-  updateAmount(data: Prisma.ProductUncheckedUpdateManyInput): Promise<void>;
+  updateAmount(data: UpdateProduct): Promise<void>;
 }

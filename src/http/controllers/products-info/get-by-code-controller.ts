@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ProductsInfoRepository } from "../../../repositories/implementations/products-info-repository";
-import { ListProductInfoByCodeUseCase } from "../../../useCases/products/list-product-by-code-usecase";
+import { ListProductInfoByCodeUseCase } from "../../../useCases/products-info/list-product-by-code-usecase";
 import { AppError } from "../../../errors/app-error";
 
 export async function getProductsInfoByCode(

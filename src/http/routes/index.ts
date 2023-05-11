@@ -6,6 +6,7 @@ import { userRoutes } from "./users.routes";
 import { customerRoutes } from "./customers.route";
 import { productsInfoRoutes } from "./product-info.route";
 import { orderRoutes } from "./orders.route";
+import { productionLaunchesRoutes } from "./production-launches.route";
 
 const router = Router();
 
@@ -15,6 +16,7 @@ router.use("/users", userRoutes);
 router.use("/customers", customerRoutes);
 router.use("/products-info", productsInfoRoutes);
 router.use("/orders", orderRoutes);
+router.use("/production-launches", productionLaunchesRoutes);
 
 router.get(
   "/auth/login",

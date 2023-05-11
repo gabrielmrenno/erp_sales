@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ProductsInfoRepository } from "../../../repositories/implementations/products-info-repository";
 import { AppError } from "../../../errors/app-error";
-import { UpdateProductInfoUseCase } from "../../../useCases/products/update-product-usecase";
+import { UpdateProductInfoUseCase } from "../../../useCases/products-info/update-product-usecase";
 
 export async function updateProductInfo(request: Request, response: Response) {
   const productsInfoRepository = new ProductsInfoRepository();

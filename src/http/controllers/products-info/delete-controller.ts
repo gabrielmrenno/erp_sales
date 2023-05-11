@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ProductsInfoRepository } from "../../../repositories/implementations/products-info-repository";
 import { AppError } from "../../../errors/app-error";
-import { DeleteProductInfoUseCase } from "../../../useCases/products/delete-product-usecase";
+import { DeleteProductInfoUseCase } from "../../../useCases/products-info/delete-product-usecase";
 
 export async function deleteProductInfo(request: Request, response: Response) {
   const productsInfoRepository = new ProductsInfoRepository();

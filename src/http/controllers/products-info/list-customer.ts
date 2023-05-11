@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ProductsInfoRepository } from "../../../repositories/implementations/products-info-repository";
-import { ListAvailableProductsInfoUseCase } from "../../../useCases/products/list-available-products-usecase";
+import { ListAvailableProductsInfoUseCase } from "../../../useCases/products-info/list-available-products-usecase";
 
 export async function listProductsInfo(request: Request, response: Response) {
   const productsInfoRepository = new ProductsInfoRepository();

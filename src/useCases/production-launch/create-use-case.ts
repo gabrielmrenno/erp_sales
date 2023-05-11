@@ -1,13 +1,13 @@
 import { Prisma, ProductionLaunch } from "@prisma/client";
 import { AppError } from "../../errors/app-error";
-import { ProductsRepository } from "../../repositories/products-repository-interface";
-import { ProductionLaunchesRepository } from "../../repositories/production-launches-repository-interface";
+import { IProductsRepository } from "../../repositories/products-repository-interface";
+import { IProductionLaunchesRepository } from "../../repositories/production-launches-repository-interface";
 import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
 
 export class CreateProductionLaunchUseCase {
   constructor(
-    private productsRepository: ProductsRepository,
-    private productionLaunchesRepository: ProductionLaunchesRepository,
+    private productsRepository: IProductsRepository,
+    private productionLaunchesRepository: IProductionLaunchesRepository,
     private productsInfoRepository: IProductsInfoRepository
   ) {}
 
