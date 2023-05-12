@@ -22,4 +22,6 @@ export interface IProductionLaunchesRepository {
   getById(id: string): Promise<ProductionLaunch | null>;
 
   update(data: UpdateProductionLaunchUseCaseParams): Promise<ProductionLaunch>;
+
+  delete(id: string): Promise<void>;
 }

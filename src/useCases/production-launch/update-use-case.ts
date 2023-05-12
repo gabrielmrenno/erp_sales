@@ -2,7 +2,8 @@ import { ProductionLaunch } from "@prisma/client";
 import { IProductionLaunchesRepository } from "../../repositories/production-launches-repository-interface";
 import { AppError } from "../../errors/app-error";
 import { IProductsRepository } from "../../repositories/products-repository-interface";
-import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
+
+import dayjs from "dayjs";
 
 interface UpdateProductionLaunchUseCaseParams {
   id: string;
@@ -72,6 +73,19 @@ export class UpdateProductionLaunchUseCase {
       dateEndLaunch.setHours(Number(endHours));
       dateEndLaunch.setMinutes(Number(endMinutes));
     }
+
+    // Can update ProductionLaunch after 10min before created
+    const now = new Date();
+    const productionLaunchDate = new Date(productionLaunch.date);
+    const diff = dayjs(now).diff(productionLaunchDate, "minute");
+
+    if (diff > 10) {
+      throw new AppError(
+        "Can't update Production Launch after 10min before created",
+        400
+      );
+    }
+
     // Update all ProductionLaunches
     const productionLaunches = await this.productionLaunchesRepository.update({
       id,

@@ -4,6 +4,7 @@ import { createProductionLaunch } from "../controllers/production-launches/creat
 import { listProductionLaunches } from "../controllers/production-launches/list-controller";
 import { getProductionLaunch } from "../controllers/production-launches/get-controller";
 import { updateProductionLaunches } from "../controllers/production-launches/update-controller";
+import { deleteProductionLaunch } from "../controllers/production-launches/delete-controller";
 
 export const productionLaunchesRoutes = Router();
 
@@ -20,7 +21,4 @@ productionLaunchesRoutes.get("/:id", getProductionLaunch);
 productionLaunchesRoutes.put("/:id", updateProductionLaunches);
 
 // // Delete
-// productionLaunchesRoutes.delete(
-//   "/production-launch/:code",
-//   deleteProductionLaunch
-// );
+productionLaunchesRoutes.delete("/:id", deleteProductionLaunch);

@@ -56,4 +56,12 @@ export class ProductionLaunchesRepository
 
     return productionLaunched;
   }
+
+  async delete(id: string): Promise<void> {
+    await prisma.productionLaunch.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }
