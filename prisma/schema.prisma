@@ -42,19 +42,19 @@ model ProductInfo {
 
   Product          Product[]
   ProductionLaunch ProductionLaunch[]
+  OrderedProducts  OrderedProducts[]
 
   @@map("productInfo")
 }
 
 model Product {
-  id              String @id @default(uuid())
+  id              String   @id @default(uuid())
   amount          Int
   productInfoCode Int
   productBatch    String
+  createdAt       DateTime @default(now())
 
   ProductInfo ProductInfo @relation(fields: [productInfoCode], references: [code])
-
-  OrderedProducts OrderedProducts[]
 
   @@map("product")
 }
@@ -132,12 +132,12 @@ model OrderedProducts {
   productPrice  Decimal
   productWeight Decimal
 
-  orderId   Int
-  productId String
+  orderId         Int
+  productInfoCode Int @default(1)
 
-  order   Order   @relation(fields: [orderId], references: [id])
-  Product Product @relation(fields: [productId], references: [id])
+  order       Order       @relation(fields: [orderId], references: [id])
+  ProductInfo ProductInfo @relation(fields: [productInfoCode], references: [code])
 
-  @@id([orderId, productId])
+  @@id([orderId, productInfoCode])
   @@map("ordered_products")
 }

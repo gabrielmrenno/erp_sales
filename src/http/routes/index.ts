@@ -7,6 +7,8 @@ import { customerRoutes } from "./customers.route";
 import { productsInfoRoutes } from "./product-info.route";
 import { orderRoutes } from "./orders.route";
 import { productionLaunchesRoutes } from "./production-launches.route";
+import { listProducts } from "../controllers/products/list-controller";
+import { isAuthenticated } from "../../middleware/isAuthenticated";
 
 const router = Router();
 
@@ -17,6 +19,8 @@ router.use("/customers", customerRoutes);
 router.use("/products-info", productsInfoRoutes);
 router.use("/orders", orderRoutes);
 router.use("/production-launches", productionLaunchesRoutes);
+
+router.get("/stock", isAuthenticated, listProducts);
 
 router.get(
   "/auth/login",

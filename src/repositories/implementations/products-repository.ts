@@ -1,4 +1,4 @@
-import { Prisma, Product, ProductionLaunch } from "@prisma/client";
+import { Prisma, Product, ProductInfo, ProductionLaunch } from "@prisma/client";
 import { prisma } from "../../database/prisma-client";
 import { IProductsRepository } from "../products-repository-interface";
 
@@ -40,5 +40,51 @@ export class ProductsRepository implements IProductsRepository {
         },
       },
     });
+  }
+
+  async list(): Promise<Product[]> {
+    const products = await prisma.product.findMany();
+
+    return products;
+  }
+
+  listProductsGroupedByProductInfo(): Promise<ProductInfo[]> {
+    const products = prisma.productInfo.findMany({
+      include: {
+        Product: {
+          where: {
+            amount: {
+              gt: 0,
+            },
+          },
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
+      },
+      orderBy: {
+        code: "asc",
+      },
+    });
+
+    return products;
+  }
+
+  async getOldestProductWithAmount(
+    productInfoCode: number
+  ): Promise<Product | null> {
+    const oldestProductWithAmount = await prisma.product.findFirst({
+      where: {
+        amount: {
+          gt: 0,
+        },
+        productInfoCode: productInfoCode,
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+
+    return oldestProductWithAmount;
   }
 }

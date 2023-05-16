@@ -10,6 +10,7 @@ export class OrderedProductsRepository implements IOrderedProductsRepository {
       data,
     });
   }
+
   getProductsByOrderId(id: number): Promise<OrderedProducts[]> {
     throw new Error("Method not implemented.");
   }

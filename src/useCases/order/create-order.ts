@@ -1,11 +1,10 @@
-import { Order, OrderedProducts } from "@prisma/client";
+import { OrderedProducts } from "@prisma/client";
 import { ICustomersRepository } from "../../repositories/customers-repository-interface";
 import { IOrdersRepository } from "../../repositories/orders-repository-interface";
 import { AppError } from "../../errors/app-error";
 import { IUsersRepository } from "../../repositories/users-repository-interface";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
 import { InOrder } from "../../dtos/order";
-import { calculateTotalsOnOrderedProduct } from "../utils/orders";
 import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
 
 interface CreateOrderedProducts {

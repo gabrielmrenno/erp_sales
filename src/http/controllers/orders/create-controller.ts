@@ -3,7 +3,6 @@ import { OrdersRepository } from "../../../repositories/implementations/orders-r
 import { CustomersRepository } from "../../../repositories/implementations/customers-repository";
 import { UsersRepository } from "../../../repositories/implementations/users-repository";
 import { CreateOrderUseCase } from "../../../useCases/order/create-order";
-import { OrderedProducts } from "@prisma/client";
 import { OrderedProductsRepository } from "../../../repositories/implementations/ordered-products-repository";
 import { ProductsInfoRepository } from "../../../repositories/implementations/products-info-repository";
 

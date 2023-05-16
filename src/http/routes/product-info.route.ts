@@ -3,7 +3,7 @@ import { Router } from "express";
 import { createProductInfo } from "../controllers/products-info/create-controller";
 import { isAuthenticated } from "../../middleware/isAuthenticated";
 import { isAdmin } from "../../middleware/isAdmin";
-import { listProductsInfo } from "../controllers/products-info/list-customer";
+import { listProductsInfo } from "../controllers/products-info/list-controller";
 import { getProductsInfoByCode } from "../controllers/products-info/get-by-code-controller";
 import { updateProductInfo } from "../controllers/products-info/update-controller";
 import { updateProductInfoPrice } from "../controllers/products-info/update-price-controller";
