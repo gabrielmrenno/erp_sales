@@ -10,7 +10,7 @@ import { MissingProductsRepository } from "../../../repositories/implementations
 
 interface CreateOrderedProducts {
   amount: number;
-  productId: string;
+  productInfoCode: number;
 }
 
 interface CreateOrderUseCaseRequest {
@@ -23,19 +23,11 @@ export async function createOrder(request: Request, response: Response) {
   const ordersRepository = new OrdersRepository();
   const customersRepository = new CustomersRepository();
   const usersRepository = new UsersRepository();
-  const orderedProductsRepository = new OrderedProductsRepository();
-  const productsRepository = new ProductsRepository();
-  const productsInfoRepository = new ProductsInfoRepository();
-  const missingProductsRepository = new MissingProductsRepository();
 
   const createOrderUseCase = new CreateOrderUseCase(
     ordersRepository,
     customersRepository,
-    usersRepository,
-    productsRepository,
-    productsInfoRepository,
-    orderedProductsRepository,
-    missingProductsRepository
+    usersRepository
   );
 
   const { customerCode, items, userId }: CreateOrderUseCaseRequest =

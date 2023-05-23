@@ -12,6 +12,11 @@ interface UpdateProduct {
   amount: number;
 }
 
+interface StockGroupByProductInfo extends ProductInfo {
+  products: Product[];
+  total: number;
+}
+
 export class ProductsRepository implements IProductsRepository {
   async create(data: Prisma.ProductCreateManyInput): Promise<Product> {
     const product = await prisma.product.create({
@@ -60,8 +65,8 @@ export class ProductsRepository implements IProductsRepository {
     return products;
   }
 
-  listProductsGroupedByProductInfo(): Promise<ProductInfo[]> {
-    const products = prisma.productInfo.findMany({
+  async listProductsGroupedByProductInfo(): Promise<StockGroupByProductInfo[]> {
+    const products = await prisma.productInfo.findMany({
       include: {
         Product: {
           where: {
@@ -79,7 +84,25 @@ export class ProductsRepository implements IProductsRepository {
       },
     });
 
-    return products;
+    const productsFormatted: StockGroupByProductInfo[] = products.map(
+      (product) => {
+        // calculate total of products infos
+        const total = product.Product.reduce((acc, curr) => {
+          let totalQuantity = acc + curr.amount;
+          return totalQuantity;
+        }, 0);
+
+        const productFormatted: StockGroupByProductInfo = {
+          ...product,
+          products: product.Product,
+          total,
+        };
+
+        return productFormatted;
+      }
+    );
+
+    return productsFormatted;
   }
 
   async getOldestProductWithAmount(

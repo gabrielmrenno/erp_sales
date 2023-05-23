@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { AppError } from "../../errors/app-error";
 import { OrdersRepositoryInMemory } from "../../repositories/in-memory/orders-repository-inmemory";
 import { GetOrderUseCase } from "./get-order";
-import { createProducts, createUsers } from "../utils/test-utils";
+import { createProducts, createUsers } from "../../utils/test-utils";
 import { CustomersRepositoryInMemory } from "../../repositories/in-memory/customers-repository-inmemory";
 import { Prisma } from "@prisma/client";
 import { OrderedProductsRepositoryInMemory } from "../../repositories/in-memory/ordered-products-repository-inmemory";

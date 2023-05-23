@@ -1,9 +1,9 @@
 import { hash } from "bcrypt";
-import { User } from "../../entities/user";
-import { UsersRepositoryInMemory } from "../../repositories/in-memory/users-repository-inmemory";
+import { User } from "../entities/user";
+import { UsersRepositoryInMemory } from "../repositories/in-memory/users-repository-inmemory";
 import { Prisma, ProductInfo } from "@prisma/client";
-import { ProductsInfoRepository } from "../../repositories/implementations/products-info-repository";
-import { ProductsRepositoryInMemory } from "../../repositories/in-memory/products-repository-inmemory";
+import { ProductsInfoRepository } from "../repositories/implementations/products-info-repository";
+import { ProductsRepositoryInMemory } from "../repositories/in-memory/products-repository-inmemory";
 
 export async function createUsers(quantity: number) {
   const usersRepository = new UsersRepositoryInMemory();

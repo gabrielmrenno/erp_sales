@@ -1,6 +1,6 @@
 import { Customer, Order, OrderedProducts } from "@prisma/client";
 import { IOrdersRepository } from "../../repositories/orders-repository-interface";
-import { calculateTotalsOnOrderedProduct } from "../utils/orders";
+import { calculateTotalsOnOrderedProduct } from "../../utils/orders";
 
 interface FetchOrdersUseCaseRequest {
   page?: number;

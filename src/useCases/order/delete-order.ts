@@ -6,7 +6,7 @@ import {
 import { AppError } from "../../errors/app-error";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
 import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
-import { calculateTotalsOnOrderedProduct } from "../utils/orders";
+import { calculateTotalsOnOrderedProduct } from "../../utils/orders";
 import { IMissingProductsRepository } from "../../repositories/missing-products-repository-interface";
 
 interface DeleteOrderUseCaseRequest {

@@ -4,8 +4,12 @@ import {
   IFetchAllOrderParams,
   IOrdersRepository,
   InOrder,
+  PopulateOrderItemsParams,
 } from "../orders-repository-interface";
 import { prisma } from "../../database/prisma-client";
+import { OrderedProductsRepository } from "./ordered-products-repository";
+import { ProductsRepository } from "./products-repository";
+import { MissingProductsRepository } from "./missing-products-repository";
 interface ICreateOrderParams {
   customerCode: number;
   userId: string;
@@ -98,6 +102,62 @@ export class OrdersRepository implements IOrdersRepository {
       where: {
         id,
       },
+    });
+  }
+
+  async populateOrderItems({
+    items,
+    orderId,
+  }: PopulateOrderItemsParams): Promise<void> {
+    const orderedProductsRepository = new OrderedProductsRepository();
+    const productsRepository = new ProductsRepository();
+    const missingProductsRepository = new MissingProductsRepository();
+
+    // get list of available Products on stock -> replace products
+    const productsIStock =
+      await productsRepository.listProductsGroupedByProductInfo();
+
+    // for each product on items, verify if it has products available on Products
+
+    items.forEach(async (item) => {
+      const productIStock = productsIStock.find(
+        (productIStock) => productIStock.code === item.productInfoCode
+      );
+
+      // if it has product on stock, create OrderedProduct
+      if (productIStock!.total >= item.amount) {
+        let amountRemaining = item.amount;
+
+        while (amountRemaining > 0) {
+          const currentProduct =
+            await productsRepository.getOldestProductWithAmount(
+              productIStock?.code!
+            );
+
+          const amountToDecrease = Math.min(
+            currentProduct?.amount!,
+            amountRemaining
+          );
+
+          await orderedProductsRepository.create({
+            amount: amountToDecrease,
+            orderId: orderId,
+            productId: currentProduct?.id!,
+            productPrice: productIStock!.price,
+            productWeight: productIStock!.weight,
+          });
+
+          amountRemaining -= amountToDecrease;
+        }
+
+        return;
+      }
+      // TODO: if not, create an MissingProduct
+      await missingProductsRepository.create({
+        amount: item.amount,
+        orderId: orderId,
+        productInfoCode: productIStock?.code!,
+      });
     });
   }
 }

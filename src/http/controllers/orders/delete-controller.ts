@@ -33,8 +33,5 @@ export async function deleteOrder(
 
   await deleteOrderUseCase.execute({ code: codeNumber });
 
-  return response.status(204).json({
-    message: "Order deleted successfully",
-    data: {},
-  });
+  return response.status(204);
 }
