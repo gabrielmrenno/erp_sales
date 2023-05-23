@@ -15,6 +15,7 @@ export interface IProductsRepository {
 
   get(data: GetProduct): Promise<Product | null>;
   list(): Promise<Product[]>;
+  listProductsOnStock(): Promise<Product[]>;
 
   getOldestProductWithAmount(productInfoCode: number): Promise<Product | null>;
   listProductsGroupedByProductInfo(): Promise<ProductInfo[]>;

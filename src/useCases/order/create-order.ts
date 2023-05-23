@@ -1,15 +1,16 @@
-import { OrderedProducts } from "@prisma/client";
 import { ICustomersRepository } from "../../repositories/customers-repository-interface";
 import { IOrdersRepository } from "../../repositories/orders-repository-interface";
 import { AppError } from "../../errors/app-error";
 import { IUsersRepository } from "../../repositories/users-repository-interface";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
 import { InOrder } from "../../dtos/order";
+import { IProductsRepository } from "../../repositories/products-repository-interface";
 import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
+import { IMissingProductsRepository } from "../../repositories/missing-products-repository-interface";
 
 interface CreateOrderedProducts {
   amount: number;
-  productInfoCode: number;
+  productId: string;
 }
 
 interface CreateOrderUseCaseRequest {
@@ -19,7 +20,7 @@ interface CreateOrderUseCaseRequest {
 }
 
 interface CreateOrderUseCaseResponse {
-  order: InOrder;
+  orderId: number;
 }
 
 export class CreateOrderUseCase {
@@ -27,8 +28,10 @@ export class CreateOrderUseCase {
     private ordersRepository: IOrdersRepository,
     private customersRepository: ICustomersRepository,
     private usersRepository: IUsersRepository,
+    private productsRepository: IProductsRepository,
     private productsInfoRepository: IProductsInfoRepository,
-    private orderedProductsRepository: IOrderedProductsRepository
+    private orderedProductsRepository: IOrderedProductsRepository,
+    private missingProductsRepository: IMissingProductsRepository
   ) {}
 
   async execute({
@@ -55,31 +58,38 @@ export class CreateOrderUseCase {
       active: true,
     });
 
-    const products = await this.productsInfoRepository.listAvailable();
+    // get list of available Products on stock -> replace products
+    const products = await this.productsRepository.listProductsOnStock();
+    const productsInfo = await this.productsInfoRepository.listAvailable();
 
-    const newOrderedProducts: OrderedProducts[] = items.map((item) => {
-      const product = products.find(
-        (product) => product.code === item.productInfoCode
+    // for each product on items, verify if it has products available on Products
+
+    items.forEach(async (item) => {
+      const product = products.find((product) => product.id === item.productId);
+      const productInfo = productsInfo.find(
+        (productInfo) => productInfo.code === product?.productInfoCode
       );
-      if (!product) {
-        throw new AppError("Product not found", 404);
-      }
 
-      return {
-        ...item,
+      // if it has product on stock, create OrderedProduct
+      if (product!.amount >= item.amount) {
+        await this.orderedProductsRepository.create({
+          amount: item.amount,
+          orderId: order.id,
+          productId: item.productId,
+          productPrice: productInfo!.price,
+          productWeight: productInfo!.weight,
+        });
+
+        return;
+      }
+      // TODO: if not, create an MissingProduct
+      await this.missingProductsRepository.create({
+        amount: item.amount,
         orderId: order.id,
-        productPrice: product.price,
-        productWeight: product.weight,
-      };
+        productInfoCode: productInfo!.code,
+      });
     });
 
-    await this.orderedProductsRepository.create(newOrderedProducts);
-
-    const formattedOrder: InOrder = {
-      ...order,
-      orderedProducts: newOrderedProducts,
-    };
-
-    return { order: formattedOrder };
+    return { orderId: order.id };
   }
 }

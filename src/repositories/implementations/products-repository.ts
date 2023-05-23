@@ -48,6 +48,18 @@ export class ProductsRepository implements IProductsRepository {
     return products;
   }
 
+  async listProductsOnStock(): Promise<Product[]> {
+    const products = await prisma.product.findMany({
+      where: {
+        amount: {
+          gt: 0,
+        },
+      },
+    });
+
+    return products;
+  }
+
   listProductsGroupedByProductInfo(): Promise<ProductInfo[]> {
     const products = prisma.productInfo.findMany({
       include: {

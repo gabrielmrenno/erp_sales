@@ -4,17 +4,30 @@ import { Order, OrderedProducts } from "@prisma/client";
 import { OrderedProductsRepository } from "../../../repositories/implementations/ordered-products-repository";
 import { AppError } from "../../../errors/app-error";
 import { UpdateOrderUseCase } from "../../../useCases/order/update-order";
+import { MissingProductsRepository } from "../../../repositories/implementations/missing-products-repository";
+import { ProductsRepository } from "../../../repositories/implementations/products-repository";
+import { ProductsInfoRepository } from "../../../repositories/implementations/products-info-repository";
+interface UpdateOrderedProducts {
+  amount: number;
+  productId: string;
+}
 
 interface UpdateOrderRequest extends Order {
-  OrderedProducts: OrderedProducts[];
+  items: UpdateOrderedProducts[];
 }
 
 export async function updateOrder(request: Request, response: Response) {
   const ordersRepository = new OrdersRepository();
+  const missingProductsRepository = new MissingProductsRepository();
+  const productsRepository = new ProductsRepository();
+  const productsInfoRepository = new ProductsInfoRepository();
   const orderedProductsRepository = new OrderedProductsRepository();
 
   const createOrderUseCase = new UpdateOrderUseCase(
     ordersRepository,
+    missingProductsRepository,
+    productsRepository,
+    productsInfoRepository,
     orderedProductsRepository
   );
 
@@ -24,7 +37,7 @@ export async function updateOrder(request: Request, response: Response) {
     paymentDate,
     paymentStatus,
     userId,
-    OrderedProducts,
+    items,
   }: UpdateOrderRequest = request.body;
 
   const { id } = request.params;
@@ -44,7 +57,7 @@ export async function updateOrder(request: Request, response: Response) {
     paymentDate,
     paymentStatus,
     userId,
-    OrderedProducts,
+    items,
   });
 
   return response.status(204).json({

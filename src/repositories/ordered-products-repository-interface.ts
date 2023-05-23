@@ -1,7 +1,8 @@
 import { OrderedProducts, Prisma } from "@prisma/client";
 
 export interface IOrderedProductsRepository {
-  create(data: OrderedProducts[]): Promise<void>;
+  create(data: OrderedProducts): Promise<void>;
+  createMany(data: OrderedProducts[]): Promise<void>;
 
   getProductsByOrderId(id: number): Promise<OrderedProducts[]>;
 
