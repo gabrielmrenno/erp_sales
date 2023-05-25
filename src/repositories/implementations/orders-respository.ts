@@ -118,46 +118,46 @@ export class OrdersRepository implements IOrdersRepository {
       await productsRepository.listProductsGroupedByProductInfo();
 
     // for each product on items, verify if it has products available on Products
-
     items.forEach(async (item) => {
       const productIStock = productsIStock.find(
         (productIStock) => productIStock.code === item.productInfoCode
       );
 
-      // if it has product on stock, create OrderedProduct
-      if (productIStock!.total >= item.amount) {
-        let amountRemaining = item.amount;
+      // it will consume all products available on stock
+      let amountRemaining = item.amount;
+      let currentProductAmountInStock = productIStock?.total!;
 
-        while (amountRemaining > 0) {
-          const currentProduct =
-            await productsRepository.getOldestProductWithAmount(
-              productIStock?.code!
-            );
-
-          const amountToDecrease = Math.min(
-            currentProduct?.amount!,
-            amountRemaining
+      while (amountRemaining > 0 && currentProductAmountInStock > 0) {
+        const currentProduct =
+          await productsRepository.getOldestProductWithAmount(
+            productIStock?.code!
           );
 
-          await orderedProductsRepository.create({
-            amount: amountToDecrease,
-            orderId: orderId,
-            productId: currentProduct?.id!,
-            productPrice: productIStock!.price,
-            productWeight: productIStock!.weight,
-          });
+        const amountToDecrease = Math.min(
+          currentProduct?.amount!,
+          amountRemaining
+        );
 
-          amountRemaining -= amountToDecrease;
-        }
+        await orderedProductsRepository.create({
+          amount: amountToDecrease,
+          orderId: orderId,
+          productId: currentProduct?.id!,
+          productPrice: productIStock!.price,
+          productWeight: productIStock!.weight,
+        });
 
-        return;
+        amountRemaining -= amountToDecrease;
+        currentProductAmountInStock -= amountToDecrease;
       }
-      // TODO: if not, create an MissingProduct
-      await missingProductsRepository.create({
-        amount: item.amount,
-        orderId: orderId,
-        productInfoCode: productIStock?.code!,
-      });
+
+      if (amountRemaining > 0) {
+        //if there is amount of product to be took, create an MissingProduct
+        await missingProductsRepository.create({
+          amount: amountRemaining,
+          orderId: orderId,
+          productInfoCode: productIStock?.code!,
+        });
+      }
     });
   }
 }
