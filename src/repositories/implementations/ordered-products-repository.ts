@@ -1,6 +1,10 @@
 import { OrderedProducts, Prisma } from "@prisma/client";
-import { IOrderedProductsRepository } from "../ordered-products-repository-interface";
+import {
+  IOrderedProductsRepository,
+  IPutProductsOnOrderParams,
+} from "../ordered-products-repository-interface";
 import { prisma } from "../../database/prisma-client";
+import { AppError } from "../../errors/app-error";
 
 export class OrderedProductsRepository implements IOrderedProductsRepository {
   async create(data: OrderedProducts): Promise<void> {
@@ -36,6 +40,72 @@ export class OrderedProductsRepository implements IOrderedProductsRepository {
 
   getProductsByOrderId(id: number): Promise<OrderedProducts[]> {
     throw new Error("Method not implemented.");
+  }
+
+  async putProductsOnOrder({
+    amount,
+    orderId,
+    productId,
+  }: IPutProductsOnOrderParams): Promise<void> {
+    const product = await prisma.product.findFirst({
+      where: {
+        id: productId,
+      },
+    });
+
+    if (!product) throw new AppError("Product not found");
+
+    const productInfo = await prisma.productInfo.findFirst({
+      where: {
+        code: product!.productInfoCode,
+      },
+    });
+
+    // create ordered product or update if already exists
+    const orderedProduct = await prisma.orderedProducts.findFirst({
+      where: {
+        orderId,
+        productId,
+      },
+    });
+
+    if (orderedProduct) {
+      const newAmountOrderedProduct = orderedProduct.amount + amount;
+
+      await prisma.orderedProducts.update({
+        where: {
+          orderId_productId: {
+            orderId,
+            productId,
+          },
+        },
+        data: {
+          amount: newAmountOrderedProduct,
+        },
+      });
+    } else {
+      await prisma.orderedProducts.create({
+        data: {
+          amount,
+          orderId,
+          productId,
+          productPrice: productInfo?.price!,
+          productWeight: productInfo?.weight!,
+        },
+      });
+    }
+
+    // new amount on stock
+    const newAmount = product!.amount - amount;
+
+    await prisma.product.update({
+      where: {
+        id: productId,
+      },
+      data: {
+        amount: newAmount,
+      },
+    });
   }
 
   async deleteMany(orderId: number): Promise<void> {

@@ -1,4 +1,4 @@
-import { Prisma, MissingProducts } from "@prisma/client";
+import { Prisma, MissingProducts, ProductInfo } from "@prisma/client";
 import { IMissingProductsRepository } from "../missing-products-repository-interface";
 import { prisma } from "../../database/prisma-client";
 
@@ -16,10 +16,37 @@ export class MissingProductsRepository implements IMissingProductsRepository {
     return missingProducts;
   }
 
+  async listByProductInfoCode(productInfoCode: number) {
+    const missingProducts = await prisma.missingProducts.findMany({
+      where: {
+        productInfoCode,
+      },
+      include: {
+        order: true,
+      },
+    });
+
+    return missingProducts;
+  }
+
   async deleteMany(orderId: number): Promise<void> {
     await prisma.missingProducts.deleteMany({
       where: {
         orderId,
+      },
+    });
+  }
+
+  async delete({
+    orderId,
+    productInfoCode,
+  }: Prisma.MissingProductsOrderIdProductInfoCodeCompoundUniqueInput): Promise<void> {
+    await prisma.missingProducts.delete({
+      where: {
+        orderId_productInfoCode: {
+          orderId,
+          productInfoCode,
+        },
       },
     });
   }
