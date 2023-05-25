@@ -1,22 +1,22 @@
 import { Request, Response } from "express";
 import { OrdersRepository } from "../../../repositories/implementations/orders-respository";
-import { Order, OrderedProducts } from "@prisma/client";
-import { OrderedProductsRepository } from "../../../repositories/implementations/ordered-products-repository";
+import { Order } from "@prisma/client";
 import { AppError } from "../../../errors/app-error";
 import { UpdateOrderUseCase } from "../../../useCases/order/update-order";
 
+interface UpdateOrderedProducts {
+  amount: number;
+  productInfoCode: number;
+}
+
 interface UpdateOrderRequest extends Order {
-  OrderedProducts: OrderedProducts[];
+  items: UpdateOrderedProducts[];
 }
 
 export async function updateOrder(request: Request, response: Response) {
   const ordersRepository = new OrdersRepository();
-  const orderedProductsRepository = new OrderedProductsRepository();
 
-  const createOrderUseCase = new UpdateOrderUseCase(
-    ordersRepository,
-    orderedProductsRepository
-  );
+  const createOrderUseCase = new UpdateOrderUseCase(ordersRepository);
 
   const {
     customerCode,
@@ -24,7 +24,7 @@ export async function updateOrder(request: Request, response: Response) {
     paymentDate,
     paymentStatus,
     userId,
-    OrderedProducts,
+    items,
   }: UpdateOrderRequest = request.body;
 
   const { id } = request.params;
@@ -37,14 +37,14 @@ export async function updateOrder(request: Request, response: Response) {
     throw new AppError("Invalid order id");
   }
 
-  const responseData = await createOrderUseCase.execute({
+  await createOrderUseCase.execute({
     orderId,
     customerCode,
     deliveryDate,
     paymentDate,
     paymentStatus,
     userId,
-    OrderedProducts,
+    items,
   });
 
   return response.status(204).json({

@@ -3,6 +3,7 @@ import { OrdersRepository } from "../../../repositories/implementations/orders-r
 import { OrderedProductsRepository } from "../../../repositories/implementations/ordered-products-repository";
 import { AppError } from "../../../errors/app-error";
 import { DeleteOrderUseCase } from "../../../useCases/order/delete-order";
+import { MissingProductsRepository } from "../../../repositories/implementations/missing-products-repository";
 
 export async function deleteOrder(
   request: Request,
@@ -10,9 +11,12 @@ export async function deleteOrder(
 ): Promise<Response> {
   const ordersRepository = new OrdersRepository();
   const orderedProductsInfoRepository = new OrderedProductsRepository();
+  const missingProductsRepository = new MissingProductsRepository();
+
   const deleteOrderUseCase = new DeleteOrderUseCase(
     ordersRepository,
-    orderedProductsInfoRepository
+    orderedProductsInfoRepository,
+    missingProductsRepository
   );
 
   const { code } = request.params;
@@ -29,8 +33,5 @@ export async function deleteOrder(
 
   await deleteOrderUseCase.execute({ code: codeNumber });
 
-  return response.status(204).json({
-    message: "Order deleted successfully",
-    data: {},
-  });
+  return response.status(204);
 }

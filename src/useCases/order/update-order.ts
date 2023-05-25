@@ -1,8 +1,15 @@
-import { Order, OrderedProducts } from "@prisma/client";
+import { MissingProducts, OrderedProducts } from "@prisma/client";
 import { IOrdersRepository } from "../../repositories/orders-repository-interface";
 import { AppError } from "../../errors/app-error";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
-import { IOrderWithProductsAndCustomer } from "../../dtos/order";
+import { IMissingProductsRepository } from "../../repositories/missing-products-repository-interface";
+import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
+import { IProductsRepository } from "../../repositories/products-repository-interface";
+
+interface UpdateOrderedProducts {
+  amount: number;
+  productInfoCode: number;
+}
 
 interface UpdateOrderUseCaseRequest {
   orderId: number;
@@ -13,14 +20,11 @@ interface UpdateOrderUseCaseRequest {
   paymentStatus: string;
   paymentDate: Date | null;
 
-  OrderedProducts: OrderedProducts[];
+  items: UpdateOrderedProducts[];
 }
 
 export class UpdateOrderUseCase {
-  constructor(
-    private ordersRepository: IOrdersRepository,
-    private orderedProductsInfo: IOrderedProductsRepository
-  ) {}
+  constructor(private ordersRepository: IOrdersRepository) {}
 
   async execute({
     orderId,
@@ -29,7 +33,7 @@ export class UpdateOrderUseCase {
     userId,
     paymentStatus,
     paymentDate,
-    OrderedProducts,
+    items,
   }: UpdateOrderUseCaseRequest): Promise<void> {
     const order = await this.ordersRepository.getById(orderId);
 
@@ -49,10 +53,12 @@ export class UpdateOrderUseCase {
     const orderProductsObjectString = JSON.stringify(
       orderProductsObjectFormatted
     );
-    const orderUpdatedProductsObjectString = JSON.stringify(OrderedProducts);
+    const orderUpdatedProductsObjectString = JSON.stringify(items);
     if (orderProductsObjectString !== orderUpdatedProductsObjectString) {
-      await this.orderedProductsInfo.deleteMany(order.id);
-      await this.orderedProductsInfo.create(OrderedProducts);
+      await this.ordersRepository.populateOrderItems({
+        orderId: order.id,
+        items,
+      });
     }
 
     await this.ordersRepository.update({

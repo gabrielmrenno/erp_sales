@@ -28,26 +28,6 @@ export class CreateProductionLaunchUseCase {
       data
     );
 
-    // Verify if Product exists (by productBatch)
-    const productInStock = await this.productsRepository.get({
-      productBatch: data.batch,
-      productInfoCode: data.productInfoCode,
-    });
-
-    // If exists, update amount by currentAmount + amountProduction, if not create
-    if (productInStock) {
-      await this.productsRepository.updateAmount({
-        id: productInStock.id,
-        amount: data.amount,
-      });
-    } else {
-      await this.productsRepository.create({
-        amount: data.amount,
-        productBatch: data.batch,
-        productInfoCode: data.productInfoCode,
-      });
-    }
-
     return productionLaunch;
   }
 }

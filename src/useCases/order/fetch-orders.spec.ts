@@ -4,7 +4,7 @@ import { FetchOrdersUseCase } from "./fetch-orders";
 import { ICustomersRepository } from "../../repositories/customers-repository-interface";
 import { Prisma } from "@prisma/client";
 import { CustomersRepositoryInMemory } from "../../repositories/in-memory/customers-repository-inmemory";
-import { createProducts, createUsers } from "../utils/test-utils";
+import { createProducts, createUsers } from "../../utils/test-utils";
 
 let ordersRepositoryInMemory: OrdersRepositoryInMemory;
 let customersRepository: ICustomersRepository;

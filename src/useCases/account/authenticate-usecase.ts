@@ -37,6 +37,7 @@ export class AuthenticateUseCase {
         StatusCode.INTERNAL_SERVER_ERROR
       );
     }
+
     const token = sign({}, process.env.JWT_SECRET!, {
       subject: user.id,
       expiresIn: "1d",

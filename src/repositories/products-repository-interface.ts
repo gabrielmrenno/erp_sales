@@ -10,14 +10,20 @@ interface UpdateProduct {
   amount: number;
 }
 
+interface StockGroupByProductInfo extends ProductInfo {
+  products: Product[];
+  total: number;
+}
+
 export interface IProductsRepository {
   create(data: Prisma.ProductCreateManyInput): Promise<Product>;
 
   get(data: GetProduct): Promise<Product | null>;
   list(): Promise<Product[]>;
+  listProductsOnStock(): Promise<Product[]>;
 
   getOldestProductWithAmount(productInfoCode: number): Promise<Product | null>;
-  listProductsGroupedByProductInfo(): Promise<ProductInfo[]>;
+  listProductsGroupedByProductInfo(): Promise<StockGroupByProductInfo[]>;
 
   // update amount of stock
   updateAmount(data: UpdateProduct): Promise<void>;

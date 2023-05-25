@@ -5,6 +5,8 @@ import { UsersRepository } from "../../../repositories/implementations/users-rep
 import { CreateOrderUseCase } from "../../../useCases/order/create-order";
 import { OrderedProductsRepository } from "../../../repositories/implementations/ordered-products-repository";
 import { ProductsInfoRepository } from "../../../repositories/implementations/products-info-repository";
+import { ProductsRepository } from "../../../repositories/implementations/products-repository";
+import { MissingProductsRepository } from "../../../repositories/implementations/missing-products-repository";
 
 interface CreateOrderedProducts {
   amount: number;
@@ -21,15 +23,11 @@ export async function createOrder(request: Request, response: Response) {
   const ordersRepository = new OrdersRepository();
   const customersRepository = new CustomersRepository();
   const usersRepository = new UsersRepository();
-  const orderedProductsRepository = new OrderedProductsRepository();
-  const productsInfoRepository = new ProductsInfoRepository();
 
   const createOrderUseCase = new CreateOrderUseCase(
     ordersRepository,
     customersRepository,
-    usersRepository,
-    productsInfoRepository,
-    orderedProductsRepository
+    usersRepository
   );
 
   const { customerCode, items, userId }: CreateOrderUseCaseRequest =
@@ -44,7 +42,7 @@ export async function createOrder(request: Request, response: Response) {
   return response.status(201).json({
     message: "Order created successfully",
     data: {
-      id: responseData.order.id,
+      id: responseData.orderId,
     },
   });
 }

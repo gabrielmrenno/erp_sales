@@ -1,11 +1,12 @@
-import { OrderedProducts } from "@prisma/client";
 import { ICustomersRepository } from "../../repositories/customers-repository-interface";
 import { IOrdersRepository } from "../../repositories/orders-repository-interface";
 import { AppError } from "../../errors/app-error";
 import { IUsersRepository } from "../../repositories/users-repository-interface";
 import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
 import { InOrder } from "../../dtos/order";
+import { IProductsRepository } from "../../repositories/products-repository-interface";
 import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
+import { IMissingProductsRepository } from "../../repositories/missing-products-repository-interface";
 
 interface CreateOrderedProducts {
   amount: number;
@@ -19,16 +20,14 @@ interface CreateOrderUseCaseRequest {
 }
 
 interface CreateOrderUseCaseResponse {
-  order: InOrder;
+  orderId: number;
 }
 
 export class CreateOrderUseCase {
   constructor(
     private ordersRepository: IOrdersRepository,
     private customersRepository: ICustomersRepository,
-    private usersRepository: IUsersRepository,
-    private productsInfoRepository: IProductsInfoRepository,
-    private orderedProductsRepository: IOrderedProductsRepository
+    private usersRepository: IUsersRepository
   ) {}
 
   async execute({
@@ -55,31 +54,11 @@ export class CreateOrderUseCase {
       active: true,
     });
 
-    const products = await this.productsInfoRepository.listAvailable();
-
-    const newOrderedProducts: OrderedProducts[] = items.map((item) => {
-      const product = products.find(
-        (product) => product.code === item.productInfoCode
-      );
-      if (!product) {
-        throw new AppError("Product not found", 404);
-      }
-
-      return {
-        ...item,
-        orderId: order.id,
-        productPrice: product.price,
-        productWeight: product.weight,
-      };
+    await this.ordersRepository.populateOrderItems({
+      orderId: order.id,
+      items,
     });
 
-    await this.orderedProductsRepository.create(newOrderedProducts);
-
-    const formattedOrder: InOrder = {
-      ...order,
-      orderedProducts: newOrderedProducts,
-    };
-
-    return { order: formattedOrder };
+    return { orderId: order.id };
   }
 }

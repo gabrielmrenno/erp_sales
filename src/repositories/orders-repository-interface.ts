@@ -23,6 +23,16 @@ export interface GetOrderResponse extends InOrder {
   user: User;
 }
 
+interface CreateOrderedProducts {
+  amount: number;
+  productInfoCode: number;
+}
+
+export interface PopulateOrderItemsParams {
+  items: CreateOrderedProducts[];
+  orderId: number;
+}
+
 export interface IOrdersRepository {
   create(newOrderData: ICreateOrderParams): Promise<Order>;
 
@@ -32,4 +42,6 @@ export interface IOrdersRepository {
   update(updatedOrder: Prisma.OrderUncheckedUpdateInput): Promise<void>;
 
   delete(id: number): Promise<void>;
+
+  populateOrderItems(items: PopulateOrderItemsParams): Promise<void>;
 }
