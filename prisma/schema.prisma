@@ -11,17 +11,133 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  name          String   @unique
-  username      String   @unique
+  id            String    @id @default(uuid())
+  name          String    @unique
+  username      String    @unique
   password      String
   role          String
-  active        Boolean  @default(true)
-  isAdmin       Boolean  @default(false)
-  resetPassword Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  active        Boolean   @default(true)
+  isAdmin       Boolean   @default(false)
+  resetPassword Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   deletedAt     DateTime?
+  Order         Order[]
 
   @@map("user")
+}
+
+model ProductInfo {
+  code        Int       @id @default(autoincrement())
+  name        String    @unique
+  description String    @unique
+  group       String
+  unit        unit
+  price       Decimal
+  weight      Decimal
+  active      Boolean
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  Product          Product[]
+  ProductionLaunch ProductionLaunch[]
+  OrderedProducts  OrderedProducts[]
+
+  @@map("productInfo")
+}
+
+model Product {
+  id              String   @id @default(uuid())
+  amount          Int
+  productInfoCode Int
+  productBatch    String
+  createdAt       DateTime @default(now())
+
+  ProductInfo ProductInfo @relation(fields: [productInfoCode], references: [code])
+
+  @@map("product")
+}
+
+model ProductionLaunch {
+  id               String    @id @default(uuid())
+  batch            String
+  date             DateTime
+  startHour        DateTime
+  endHour          DateTime
+  rawMaterial      String
+  rawMaterialBatch String
+  description      String
+  productInfoCode  Int
+  amount           Int
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  deletedAt        DateTime?
+
+  productInfo ProductInfo @relation(fields: [productInfoCode], references: [code])
+
+  @@map("productionLaunch")
+}
+
+model Customer {
+  code        Int       @id @default(autoincrement())
+  name        String    @unique
+  fantasyName String    @unique
+  doc         String    @unique
+  email       String
+  phone       String
+  contactName String
+  address     String
+  city        String
+  zipCode     String
+  discount    Int
+  paymentTerm Int
+  active      Boolean
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+  Order       Order[]
+
+  @@map("customer")
+}
+
+enum unit {
+  FD
+  SC
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+
+  OrderedProducts OrderedProducts[]
+
+  deliveryDate  DateTime?
+  customer      Customer  @relation(fields: [customerCode], references: [code])
+  customerCode  Int
+  user          User      @relation(fields: [userId], references: [id])
+  userId        String
+  paymentStatus String
+  paymentDate   DateTime?
+
+  active    Boolean
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@map("order")
+}
+
+model OrderedProducts {
+  amount        Int
+  productPrice  Decimal
+  productWeight Decimal
+
+  orderId         Int
+  productInfoCode Int @default(1)
+
+  order       Order       @relation(fields: [orderId], references: [id])
+  ProductInfo ProductInfo @relation(fields: [productInfoCode], references: [code])
+
+  @@id([orderId, productInfoCode])
+  @@map("ordered_products")
 }

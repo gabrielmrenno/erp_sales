@@ -6,8 +6,10 @@ import { IUsersRepository } from "../users-repository-interface";
 export class UsersRepositoryInMemory implements IUsersRepository {
   private users: User[] = [];
 
-  public async save(user: User): Promise<void> {
+  public async save(user: User) {
     this.users.push(user);
+
+    return user;
   }
 
   async findByUniqueValues({
@@ -21,7 +23,7 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     return user || null;
   }
 
-  async findAllActive(): Promise<User[]> {
+  async findAll(): Promise<User[]> {
     const activeUsers = this.users.filter((user) => user.active === true);
     return activeUsers;
   }

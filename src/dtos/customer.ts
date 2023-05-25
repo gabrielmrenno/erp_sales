@@ -1,6 +1,6 @@
 export interface ICreateCustomerDTO {
-  name: string;
   code?: number;
+  name: string;
   fantasyName: string;
   doc: string;
   email: string;
@@ -14,7 +14,7 @@ export interface ICreateCustomerDTO {
 }
 
 export interface IUpdateCustomerDTO {
-  id: string;
+  code: number;
   name: string;
   fantasyName: string;
   doc: string;
@@ -26,4 +26,11 @@ export interface IUpdateCustomerDTO {
   contactName: string;
   discount: number;
   paymentTerm: number;
+}
+
+export interface ListCustomersParams {
+  active?: boolean;
+  page?: number;
+  stringQuery?: string;
+  numberQuery?: number;
 }

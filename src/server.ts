@@ -1,14 +1,18 @@
-import "reflect-metadata";
-import "./shared/container";
+import "express-async-errors";
 
 import express, { NextFunction, Request, Response } from "express";
-import "express-async-errors";
-import { router } from "./routes";
+import cors from "cors";
 
+import { router } from "./http/routes";
 import { AppError } from "./errors/app-error";
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.json());
 
 app.use(router);

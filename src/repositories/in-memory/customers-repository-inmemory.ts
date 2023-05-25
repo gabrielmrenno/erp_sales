@@ -1,4 +1,8 @@
-import { ICreateCustomerDTO, IUpdateCustomerDTO } from "../../dtos/customer";
+import {
+  ICreateCustomerDTO,
+  IUpdateCustomerDTO,
+  ListCustomersParams,
+} from "../../dtos/customer";
 import { Customer } from "../../entities/customer";
 import { ICustomersRepository } from "../customers-repository-interface";
 
@@ -9,12 +13,6 @@ export class CustomersRepositoryInMemory implements ICustomersRepository {
     await this.customers.push(newCustomer);
 
     return newCustomer;
-  }
-
-  async findById(id: string): Promise<Customer | null> {
-    const user = await this.customers.find((customer) => customer.id === id);
-
-    return user || null;
   }
 
   async findByName(name: string): Promise<Customer | null> {
@@ -47,14 +45,33 @@ export class CustomersRepositoryInMemory implements ICustomersRepository {
     return user || null;
   }
 
-  async listAvailable(): Promise<Customer[]> {
-    return this.customers;
+  async list({
+    active = true,
+    page = 1,
+    stringQuery,
+    numberQuery,
+  }: ListCustomersParams): Promise<Customer[]> {
+    let customersList = this.customers.filter((item) => item.active === active);
+
+    if (stringQuery) {
+      customersList = customersList.filter(
+        (item) =>
+          item.fantasyName.includes(stringQuery) ||
+          item.doc.includes(stringQuery)
+      );
+    }
+
+    if (numberQuery) {
+      customersList = customersList.filter((item) => item.code === numberQuery);
+    }
+
+    return customersList.slice((page - 1) * 20, page * 20);
   }
 
   async update(newCustomerData: IUpdateCustomerDTO): Promise<Customer> {
-    const updatedCustomer = await this.findById(newCustomerData.id);
+    const updatedCustomer = await this.findByCode(newCustomerData.code);
     const index = this.customers.findIndex(
-      (customer) => customer.id === newCustomerData.id
+      (customer) => customer.code === newCustomerData.code
     );
 
     Object.assign(updatedCustomer!, newCustomerData);
@@ -64,9 +81,9 @@ export class CustomersRepositoryInMemory implements ICustomersRepository {
     return updatedCustomer!;
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(code: number): Promise<void> {
     const customerToBeDeletedIndex = this.customers.findIndex(
-      (customer) => customer.id === id
+      (customer) => customer.code === code
     );
 
     this.customers.splice(customerToBeDeletedIndex, 1);

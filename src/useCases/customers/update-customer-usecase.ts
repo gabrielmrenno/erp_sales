@@ -7,8 +7,8 @@ export class UpdateCustomerUseCase {
   constructor(private readonly customersRepository: ICustomersRepository) {}
 
   async execute(newCustomerData: IUpdateCustomerDTO): Promise<Customer> {
-    const customerToUpdate = await this.customersRepository.findById(
-      newCustomerData.id
+    const customerToUpdate = await this.customersRepository.findByCode(
+      newCustomerData.code
     );
 
     if (!customerToUpdate) {
@@ -19,7 +19,7 @@ export class UpdateCustomerUseCase {
       newCustomerData.name
     );
 
-    if (nameAlreadyExists && nameAlreadyExists.id !== newCustomerData.id) {
+    if (nameAlreadyExists && nameAlreadyExists.code !== newCustomerData.code) {
       throw new AppError("Customer name already exists", 400);
     }
 
@@ -28,11 +28,9 @@ export class UpdateCustomerUseCase {
         newCustomerData.fantasyName
       );
 
-    console.log(fantasyNameAlreadyExists);
-
     if (
       fantasyNameAlreadyExists &&
-      fantasyNameAlreadyExists.id !== newCustomerData.id
+      fantasyNameAlreadyExists.code !== newCustomerData.code
     ) {
       throw new AppError("Customer fantasy name already exists", 400);
     }
@@ -41,7 +39,7 @@ export class UpdateCustomerUseCase {
       newCustomerData.doc
     );
 
-    if (docAlreadyExists && docAlreadyExists.id !== newCustomerData.id) {
+    if (docAlreadyExists && docAlreadyExists.code !== newCustomerData.code) {
       throw new AppError("Customer doc already exists", 400);
     }
 
