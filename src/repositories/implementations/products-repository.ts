@@ -1,4 +1,4 @@
-import { Prisma, Product, ProductInfo, ProductionLaunch } from "@prisma/client";
+import { Prisma, Product, ProductInfo } from "@prisma/client";
 import { prisma } from "../../database/prisma-client";
 import { IProductsRepository } from "../products-repository-interface";
 

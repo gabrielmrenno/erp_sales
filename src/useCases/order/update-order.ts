@@ -1,10 +1,7 @@
-import { MissingProducts, OrderedProducts } from "@prisma/client";
-import { IOrdersRepository } from "../../repositories/orders-repository-interface";
 import { AppError } from "../../errors/app-error";
-import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
 import { IMissingProductsRepository } from "../../repositories/missing-products-repository-interface";
-import { IProductsInfoRepository } from "../../repositories/products-info-repository-interface";
-import { IProductsRepository } from "../../repositories/products-repository-interface";
+import { IOrderedProductsRepository } from "../../repositories/ordered-products-repository-interface";
+import { IOrdersRepository } from "../../repositories/orders-repository-interface";
 
 interface UpdateOrderedProducts {
   amount: number;
@@ -24,7 +21,11 @@ interface UpdateOrderUseCaseRequest {
 }
 
 export class UpdateOrderUseCase {
-  constructor(private ordersRepository: IOrdersRepository) {}
+  constructor(
+    private ordersRepository: IOrdersRepository,
+    private orderedProductsRepository: IOrderedProductsRepository,
+    private missingProductsRepository: IMissingProductsRepository
+  ) {}
 
   async execute({
     orderId,
@@ -55,6 +56,8 @@ export class UpdateOrderUseCase {
     );
     const orderUpdatedProductsObjectString = JSON.stringify(items);
     if (orderProductsObjectString !== orderUpdatedProductsObjectString) {
+      await this.orderedProductsRepository.deleteMany(orderId);
+      await this.missingProductsRepository.deleteMany(orderId);
       await this.ordersRepository.populateOrderItems({
         orderId: order.id,
         items,

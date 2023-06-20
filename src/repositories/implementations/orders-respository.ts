@@ -1,4 +1,5 @@
-import { Order, OrderedProducts, User } from "@prisma/client";
+import { Order } from "@prisma/client";
+import { prisma } from "../../database/prisma-client";
 import {
   GetOrderResponse,
   IFetchAllOrderParams,
@@ -6,10 +7,9 @@ import {
   InOrder,
   PopulateOrderItemsParams,
 } from "../orders-repository-interface";
-import { prisma } from "../../database/prisma-client";
+import { MissingProductsRepository } from "./missing-products-repository";
 import { OrderedProductsRepository } from "./ordered-products-repository";
 import { ProductsRepository } from "./products-repository";
-import { MissingProductsRepository } from "./missing-products-repository";
 interface ICreateOrderParams {
   customerCode: number;
   userId: string;
@@ -79,7 +79,12 @@ export class OrdersRepository implements IOrdersRepository {
         id,
       },
       include: {
-        OrderedProducts: true,
+        OrderedProducts: {
+          include: {
+            Product: true,
+          },
+        },
+        MissingProducts: true,
         customer: true,
         user: true,
       },
